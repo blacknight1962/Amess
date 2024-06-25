@@ -1,0 +1,76 @@
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 8px 8px;
+}
+#jobcode {
+  text-align: center;
+}
+
+#jobcode_regist {
+  display: inline-block;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px 10px;
+  font-size: 14px;
+}
+
+#jobcode_regist th {
+  background-color: antiquewhite;
+}
+
+#jobcode_view_contents {
+  display: inline-block;
+  padding: 10px 10px;
+  margin-top: 20px auto;
+  font-size: 14px;
+}
+#jobcode_view_contents th {
+  background-color: antiquewhite;
+}
+#jobcode_view_contents tr:hover {
+  background: bisque;
+}
+
+/* 작업코드 관리 편집/삭제 */
+
+#job_se_code {
+  display: block;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  margin: 20px;
+  margin-left: 350px;
+  padding: 2px 8px;
+}
+
+#job_se_code .input {
+  width: 400px;
+  padding: 0px 10px;
+}
+
+.choice {
+  display: flex;
+  justify-content: left;
+
+  margin-left: 320px;
+  margin-top: 20px;
+  margin-bottom: 2px;
+  padding-bottom: 2px;
+}
+.choice a {
+  text-decoration: none;
+  color: azure;
+}
+.choice button {
+  font-size: 14px;
+  background-color: cadetblue;
+  color: azure;
+  width: 80px;
+  height: 30px;
+  margin: 4px 4px;
+}
+table {
+  margin-top: 0px !important;
+}

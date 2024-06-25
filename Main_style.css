@@ -1,0 +1,120 @@
+body {
+  background-color: #f8f9fa; /* 연한 회색 배경 */
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.card a {
+  text-decoration: none;
+  color: black;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 20px;
+}
+.settings-icon {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.settings-icon {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.settings-icon a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+body {
+  background-color: #f8f9fa; /* 연한 회색 배경 */
+}
+.card {
+  width: 14rem;
+  height: 19rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* 애니메이션 효과 */
+  position: relative; /* 서브메뉴의 위치 기준 설정 */
+}
+
+.card:hover {
+  transform: scale(1.05); /* 확대 효과 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 20px;
+}
+.card:hover .submenu {
+  display: block; /* 보이도록 설정 */
+}
+.submenu {
+  display: none; /* 기본적으로 서브메뉴는 숨겨져 있음 */
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  z-index: 1000;
+}
+.settings-icon {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  font-size: 3rem; /* 큰 톱니바퀴 아이콘 */
+}
+.card {
+  position: pointer;
+}
+.submenu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 10px; /* 패딩 추가 */
+  width: 100%; /* 부모 요소의 너비에 맞춤 */
+  z-index: 1000;
+}
+
+.submenu a {
+  display: block; /* 링크를 블록 요소로 설정 */
+  margin: 5px 0; /* 위아래 마진 추가 */
+  padding: 5px 10px; /* 패딩 추가 */
+  color: black; /* 글자색 설정 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.card:hover .submenu {
+  display: block;
+}
+.card img {
+  /*  width: 100%; /* 이미지가 카드의 전체 너비를 차지하도록 설정 */
+  /*  height: 100%; 이미지의 높이를 자동으로 조정*/
+  border-radius: 0.25rem; /* 카드의 모서리와 일치하도록 둥글게 처리 */
+  padding: 0px, 10px;
+}
+.custom-icon-size {
+  font-size: 1.5rem; /* 원하는 크기로 설정 */
+}

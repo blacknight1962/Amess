@@ -1,0 +1,199 @@
+/* 발주관리 체크박스 조정 */
+.center-checkbox {
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+}
+.center-checkbox input[type='checkbox'] {
+  display: block !important;
+  margin: auto !important;
+}
+
+.table-fixed {
+  width: 100%; /* 테이블 전체 너비를 100%로 설정 */
+  table-layout: fixed; /* 열 너비 고정 */
+}
+
+.table-fixed th,
+.table-fixed td {
+  overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+  text-overflow: ellipsis; /* 내용이 넘칠 경우 말줄임표로 표시 */
+  white-space: nowrap; /* 내용을 한 줄로 표시 */
+}
+.row-justify {
+  width: 100%; /* 너비를 100%로 설정하여 가능한 최대 너비를 사용하도록 함 */
+  max-width: 1920px; /* 최대 너비를 1920px로 설정 */
+}
+#orderItemRow {
+  text-align: center !important;
+}
+.input-group-text {
+  margin-right: 10px; /* 간격을 10px로 설정 */
+}
+
+.large-bold-text {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.modal body {
+  font-size: 14px;
+}
+/* 숫자를 오른쪽으로 정렬 */
+.right-aligned {
+  text-align: right;
+}
+/* 레이어 팝업 부분*/
+
+.S_container {
+  max-width: 1050px; /* 컨테이너 최대 너비 조정 */
+  margin: 0 auto; /* 상하 마진 제거 */
+}
+
+@media (max-width: 1000px) {
+  .table th,
+  .table td {
+    padding: 2px; /* 모바일에서는 더 작은 패딩 사용 */
+  }
+}
+
+.btn-extra-sm {
+  padding: 2px 5px; /* 패딩 줄임 */
+  font-size: 0.65rem; /* 폰트 크기 줄임 */
+  line-height: 1; /* 라인 높이 줄임 */
+  height: auto; /* 높이 자동 조정 */
+}
+.custom-tr,
+.custom-tr th,
+.custom-tr td {
+  height: 9px !important; /* 높이를 10px로 강제 설정 */
+  padding: 0 !important; /* 패딩을 제거하여 높이 조절에 영향을 주지 않도록 함 */
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+#salesDetailSection {
+  display: none; /* 초기 상태에서는 분할 매출 섹션을 숨김 */
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* 필요에 따라 조정 */
+}
+
+.header-container > h6 {
+  margin: 0;
+  line-height: 1.5;
+  flex: 1; /* 모든 h6 태그에 동일한 공간 배분 */
+  text-align: left;
+  background-color: rgb(217, 245, 229);
+}
+
+.header-container > div {
+  display: flex; /* div 내부도 flex로 설정 */
+  flex: 2; /* 버튼을 포함하는 div에 더 많은 공간 배분 */
+  justify-content: space-around; /* 내부 요소들 사이에 공간을 균등하게 배분 */
+}
+
+.header-container > div > h6 {
+  flex: 0.5; /* div 내부의 h6에도 flex 적용 */
+}
+
+.header-container > div > button {
+  flex: 0.25; /* 버튼에 적절한 flex 값 할당 */
+}
+/* 분할 매출에서 serial_no 입력 필드 숨김 */
+.hidden-but-focusable {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: -9999px;
+}
+.text-right {
+  text-align: right !important;
+}
+.active {
+  background-color: blue; /* 예시 색상 */
+  color: white;
+}
+#SA_Row td {
+  padding: 0px !important;
+}
+
+input[type='number'],
+select {
+  width: 100%; /* 입력 필드를 셀 너비에 맞춤 */
+  padding: 8px; /* 패딩 추가로 입력 공간 확보 */
+  border: 1px solid #ccc; /* 경계선 스타일 */
+  border-radius: 4px; /* 경계선 둥글게 처리 */
+  box-sizing: border-box; /* 박스 사이징 방법을 border-box로 설정 */
+  text-align: right;
+}
+button {
+  background-color: #4caf50; /* 배경 색상 */
+  color: white; /* 글자 색상 */
+  margin-left: 10px;
+  padding: 1px 4px; /* 내부 여백 */
+  border: none; /* 테두리 제거 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  cursor: pointer; /* 커서 모양을 손가락 모양으로 */
+  transition: background-color 0.3s; /* 호버 효과 */
+}
+
+button:hover {
+  background-color: #45a049; /* 호버 시 배경 색상 변경 */
+}
+
+table {
+  width: 50%; /* 테이블 너비 전체 사용 */
+  border-collapse: collapse; /* 테두리 겹치기 */
+  margin-top: 20px; /* 상단 여백 */
+}
+
+th,
+td {
+  padding: 8px; /* 셀 패딩 */
+  border-bottom: 1px solid #ddd; /* 하단 경계선 */
+}
+
+th {
+  background-color: #f2f2f2; /* 헤더 배경색 */
+}
+#numInstallments {
+  width: 150px; /* 너비 설정 */
+  padding: 8px; /* 패딩 추가 */
+  border: 1px solid #ccc; /* 경계선 스타일 */
+  border-radius: 4px; /* 경계선 둥글게 처리 */
+}
+
+button1 {
+  background-color: #f44336; /* 빨간색 배경 */
+  color: white; /* 흰색 텍스트 */
+  padding: 1px 1px; /* 패딩 조정 */
+  margin-right: 20px;
+  border: none; /* 테두리 제거 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  cursor: pointer; /* 포인터 커서 */
+  transition: background-color 0.3s; /* 배경색 변경 애니메이션 */
+}
+
+button1:hover {
+  background-color: #d32f2f; /* 호버 시 더 어두운 빨간색 */
+}
+
+.modal-footer-buttons {
+  text-align: right; /* 오른쪽 정렬 */
+  padding: 10px; /* 패딩 추가 */
+}
+
+.btn-primary {
+  margin-left: 10px; /* 왼쪽 마진 추가 */
+}
+
+.input-group-text {
+  width: 150px;
+  text-align: right !important;
+}
+.container {
+  transition: background-color 0.5s ease;
+}

@@ -1,0 +1,118 @@
+.table {
+  width: 100%;
+  table-layout: fixed; /* 테이블 레이아웃을 고정으로 설정 */
+}
+.container-custom {
+  max-width: 1550px !important; /* 최대 너비 설정 */
+  margin: auto; /* 중앙 정렬 */
+}
+
+.table-custom {
+  max-width: 100%; /* 테이블 최대 너비를 컨테이너 너비에 맞춤 */
+  overflow-x: auto; /* 너비가 넘칠 경우 스크롤바 생성 */
+}
+
+@media (max-width: 1550px) {
+  .container-custom {
+    padding: 0 15px; /* 모바일 화면에서의 패딩 조정 */
+  }
+}
+/* 아이콘 버튼 스타일 조정 */
+.link-info,
+.link-danger {
+  padding: 0.25rem 0.5rem; /* 패딩 조정 */
+  margin-right: 1px; /* 오른쪽 마진 추가 */
+  padding-left: 1px;
+  padding-right: 1px;
+  vertical-align: middle; /* 수직 정렬 */
+}
+.link-danger .fa-trash {
+  padding: 0px 2px; /* 상하 패딩을 0, 좌우 패딩을 1px로 설정 */
+}
+.link-primary .fa-pen-to-square {
+  padding-left: 0px;
+  padding-right: 1px; /* 상하 패딩을 0, 좌우 패딩을 1px로 설정 */
+  margin-right: 1px !important; /* 오른쪽 마진 추가 */
+}
+/* FontAwesome 아이콘 스타일 조정 */
+.fa-solid {
+  font-size: 1rem; /* 아이콘 크기 조정 */
+  vertical-align: middle; /* 수직 정렬 */
+}
+
+.container-custom {
+  position: relative; /* 상대적 위치 설정을 위해 추가 */
+  max-width: 1500px;
+  margin: auto;
+}
+
+.top-right-buttons {
+  display: block;
+  position: fixed; /* 페이지 레이아웃에 따라 변경 */
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+.custom-modal-size .modal-dialog {
+  max-width: 1800px !important; /* 최대 너비를 명시적으로 설정 */
+  height: auto;
+  width: auto !important; /* 너비를 자동으로 조절 */
+  margin: auto; /* 중앙 정렬 */
+}
+.modal-dialog {
+  margin-top: 20vh !important; /* 상단 여백을 뷰포트 높이의 10%로 설정 */
+  transform: translateY(
+    0%
+  ) !important; /* Y축 변환을 0%로 설정하여 추가 이동 없음 */
+}
+.modal-header {
+  height: 50px; /* 원하는 높이로 설정 */
+  padding: 10px; /* 상하 좌우 패딩 조정 */
+}
+.modal-footer {
+  height: 50px; /* 원하는 높이로 설정 */
+  padding: 5px; /* 상하 좌우 패딩 조정 */
+}
+#TU_Body,
+#TB_Body td {
+  padding: 2px 2px;
+  height: 90px;
+}
+#TU_Body,
+#TB_Body textarea {
+  height: 100%; /* 모든 textarea의 높이를 부모 td의 높이에 맞춤 */
+  width: 100%; /* 모든 textarea의 너비를 부모 td의 너비에 맞춤 */
+}
+.btn-minimal-padding {
+  padding: 0 2px; /* 상하 패딩 0, 좌우 패딩 2px */
+}
+
+.form-control,
+.form-select,
+.small-font {
+  font-size: 0.65rem !important;
+}
+/* popup 창 마진 조정 */
+.custom-margin {
+  margin-top: 20px; /* 상단 마진 */
+  margin-bottom: 20px; /* 하단 마진 */
+  margin-left: 10px; /* 왼쪽 마진 */
+  margin-right: 10px; /* 오른쪽 마진 */
+}
+.footer > div {
+  display: flex;
+  justify-content: center; /* 버튼들을 중앙에 위치시킴 */
+  gap: 20px; /* 버튼들 사이의 간격을 20px로 설정 */
+}
+.table-custom {
+  height: 140px; /* 원하는 높이 설정 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 생성 */
+}
+#newTaskPartForm .btn-primary {
+  margin-top: 5px; /* 상단 간격 추가 */
+  float: right; /* 우측 정렬 */
+}
+#data-table tr:hover {
+  background-color: #56d88c; /* 회색 톤으로 하이라이트 */
+  cursor: pointer; /* 마우스 오버 시 포인터 변경 */
+}
