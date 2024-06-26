@@ -7,9 +7,6 @@ $database = "amess";
 $conn = mysqli_connect($servername, $username, $password, $database);
 
 if (!$conn) {
-  echo "DB 접속실패";
-} 
-/* else {
-  echo "DB 접속 성공";
-}*/
+die("DB 접속 실패: " . mysqli_connect_error());
+}
 ?>

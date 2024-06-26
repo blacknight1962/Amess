@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-include('../db.php');
+include('../../db.php');
 ?>
 <!--신규장비 등록 Modal -->
 <div class="modal fade custom-modal-size" id="insertdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="insertdata" aria-hidden="true">

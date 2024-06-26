@@ -1,7 +1,7 @@
 <?php
-include('../db.php');
+include('../../db.php');
 
-include('../Selection_kit.php');
+include('../../public/Selection_kit.php');
 // include('task_add_modal.php'); 
 
 $user_id = $_SESSION['ss_id'];
@@ -35,8 +35,8 @@ if (!isset($_SESSION['ss_id']) or $_SESSION['ss_id'] == '') {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="style_equip.css?v=1.1">
+  <link rel="stylesheet" href="../../public/css/style.css">
+  <link rel="stylesheet" href="css/style_equip.css">
   
   <title>AMESS 장비관리</title>
 </head>
@@ -47,32 +47,10 @@ if (!isset($_SESSION['ss_id']) or $_SESSION['ss_id'] == '') {
     </div>
     <div id='menu'>
       <ul>
-        <li><a href='../quote/quote_index.php'>견적관리</a>
-
-        </li>
-        <li><a href='#'>작업코드</a>
-          <ul>
-            <li><a href='../job_code/jobcode_index.php'>작업코드 관리</a></li>
-            <li><a href='../job_code/search_jobcode.php'>검 색</a></li>
-            <li><a href='#'>상세정보</a></li>
-          </ul>
-        </li>
-        <li><a href='#'>영업관리</a>
-          <ul>
-            <li><a href='../Order/order_index.php'>발주관리</a></li>
-            <li><a href='../Order/sales_index.php'>매출관리</a></li>
-            <li><a href='../Order/manufact_view.php'>생산관리</a></li>
-          </ul>
-        </li>
-        <li><a href='equip_index.php'>장비관리</a>
-        </li>
-        <li><a href='#'>설정</a>
-          <ul>
-            <li><a href='../login/login.php'>로그인</a></li>
-            <li><a href='../login/login_edit.php'>사용자 관리</a></li>
-            <li><a href='../login/regist_customer.php'>고객관리</a></li>
-          </ul>
-        </li>
+        <li><a href='equip_index.php'>장비관리</a></li>
+        <li><a href='facility_index.php'>설비관리</a></li>
+        <li><a href='task_index.php'>작업관리</a></li>
+        <li><a href='task_search.php'>통합검색</a></li>
       </ul>
     </div>
     <div>

@@ -201,9 +201,11 @@ $(document).ready(function () {
 });
 
 // 일시불 입금확인 절차
-document.getElementById('confirmButton').addEventListener('click', function () {
-  if (confirm('입금을 확인하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-    sendData();
+document.body.addEventListener('click', function (event) {
+  if (event.target && event.target.id === 'confirmButton') {
+    if (confirm('입금을 확인하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+      sendData();
+    }
   }
 });
 // function sendData() {

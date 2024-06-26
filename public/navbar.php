@@ -1,5 +1,5 @@
 <?php
-include('db.php');
+include('../db.php');
 session_start();
 
 if (!isset($_SESSION['ss_id']) || $_SESSION['ss_id'] == '') {
@@ -25,7 +25,7 @@ $user_name = htmlspecialchars($row['ep_name']);
   <title>AmessManagementSystem</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">

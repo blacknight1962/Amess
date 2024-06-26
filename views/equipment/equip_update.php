@@ -1,8 +1,8 @@
 <?php
-include_once '../db.php';
+include_once '../../db.php';
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="style_equip.css" rel="stylesheet">
+<link href="css/style_equip.css" rel="stylesheet">
 
 <!--update equipment  -->
 <div class="card border-success custom-margin" style="width: 1780px; max-width: 1780px;">
@@ -12,7 +12,7 @@ include_once '../db.php';
         <div class='container-fluid' style='width: 1800px me-0 ms-0'>
           <form action='equip_process.php' method='POST'>
             <body>
-              <table class='table table-bordered mt-1 small-font' style="width: 100%;">
+              <table class='table table-bordered mt-1' style="font-size: .65rem; width: 100%;">
                 <thead style="max-width: 1800px; text-align: center;">
                   <tr class='table table-secondary'>
                     <th style="width: 5%;">부서</th>
@@ -26,7 +26,7 @@ include_once '../db.php';
                     <th style="width: 5%;">삭제</th>
                   </tr>
                 </thead>
-                <tbody id='editEquipData' data-e_no="" class='small-font' style="width: 1800px;">   
+                <tbody id='editEquipData' data-e_no="" style="width: 1800px; font-size: .65rem !important;">   
                   <?php
                     $equipmentId = isset($_GET['id']) ? $_GET['id'] : null;
                     $error_message = '';
@@ -56,7 +56,7 @@ include_once '../db.php';
                               'specif' => htmlspecialchars($row["specif"]),
                           );
                     ?>
-                  <tr data-equip-id="<?= $filtered["e_no"]; ?>" class='small-font'>
+                  <tr data-equip-id="<?= $filtered["e_no"]; ?>" style="font-size: .65rem !important;">
                     <input type="hidden" id="modal-e_no" name="e_no" value="<?= $filtered["e_no"]; ?>">
                     <td><input type="text" class="form-control" style="text-align: center;" id="picb" name="picb" value="<?= $filtered["picb"]; ?>"></td>
                     <td><input type="text" class="form-control" id="equip" name="equip" value="<?= $filtered["equip"]; ?>"></td>
@@ -85,8 +85,8 @@ include_once '../db.php';
               </body>
             </div>
           <div class="card-footer bg-transparent border-success">
-            <button type="submit" name='update_btn' class="btn btn-info btn-sm">UPDATE</button>
-            <button type="button" class="btn btn-secondary" onclick="window.close();">취소</button>
+            <button type="submit" name='update_btn' class="btn btn-info btn-sm" style="font-size: .65rem;">UPDATE</button>
+            <button type="button" class="btn btn-secondary" onclick="window.close();" style="font-size: .65rem;">취소</button>
           </div>
         </form>
       </div>

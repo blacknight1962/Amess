@@ -38,7 +38,8 @@ include('equip_modals.php');
       <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
       <!-- 숨겨진 입력 필드로 선택된 기간 저장 -->
       <input type="hidden" name="selectedPeriod" id="selectedPeriod">
-      <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 6%;">통합검색</button>
+      <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; ">
+      <a href="task_search.php" target="_blank">통합검색</a></button>
       <!-- 신규 견적 등록 버튼 -->
       <div style="margin-left: auto;">
         <!-- Button trigger modal -->
@@ -99,10 +100,10 @@ include('equip_modals.php');
                             <!-- <button type="button" class="btn btn-link p-0 border-0 background-transparent" data-bs-toggle="modal" data-bs-target="#editEquipData" data-equipmentId="<?= $filtered['e_no']; ?>" title="편집" style="background: none; border: none;"> -->
                             <!-- <i class="fa-solid fa-pen-to-square fs-6"></i> -->
                             </a>
-                            <button type="button" class="btn btn-link delete-button btn-minimal-padding" data-equip-id="<?= $filtered['e_no']; ?>" title="삭제">
-                                <i class="fa-solid fa-trash fs-6"></i>
+                            <button type="button" class="btn btn-link delete-button btn-minimal-padding btn-sm" data-equip-id="<?= $filtered['e_no']; ?>" title="삭제">
+                                <i class="fa-solid fa-trash fs-6" style="padding: 0px 2px;"></i>
                             </button>  
-                            <a href="facility.php?id=<?= $filtered['e_no'] ?>" class="link-secondary" title="상세정보">
+                            <a href="facility_index.php?id=<?= $filtered['e_no'] ?>" class="link-secondary" title="상세정보">
                                 <i class="fa-solid fa-arrow-right fs-6"></i>
                             </a>
                         </td>

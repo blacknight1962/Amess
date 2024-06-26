@@ -1,5 +1,5 @@
 <?php
-include('../db.php');
+include('../../db.php');
 
 $sql = "SELECT e.*, f.* FROM equipment e INNER JOIN facility f ON e.e_no = f.e_no WHERE 1=1";
 

@@ -44,9 +44,9 @@ include('include/header.php');
                     'picb' => htmlspecialchars($row['picb'] ?? ''),
                     'production_code' => htmlspecialchars($row['production_code'] ??''),
                     'production_start' => htmlspecialchars($row['production_start'] ?? ''),
-                    'Order_no' => htmlspecialchars($row['Order_no'] ?? ''),
+                    'order_no' => htmlspecialchars($row['order_no'] ?? ''),
 
-                    'Order_date' => htmlspecialchars($row['Order_date'] ?? ''),
+                    'order_date' => htmlspecialchars($row['order_date'] ?? ''),
                     'order_custo' => htmlspecialchars($row['order_custo']?? ''),
                     'specifi' => htmlspecialchars($row['specifi']?? ''),
                     'aparts' => htmlspecialchars($row['aparts'] ?? ''),
@@ -68,9 +68,9 @@ include('include/header.php');
                       <td><?= $filtered['picb'] ?></td>
                       <td><?= $filtered['production_code'] ?></td>
                       <td><?= $filtered['production_start'] ?></td>
-                      <td><?= $filtered["Order_no"] ?></td>
+                      <td><?= $filtered["order_no"] ?></td>
 
-                      <td><?= $filtered["Order_date"] ?></td>
+                      <td><?= $filtered["order_date"] ?></td>
                       <td><?= $filtered['order_custo'] ?></td>
                       <td><?= $filtered['specifi'] ?></td>
                       <td><?= $filtered["aparts"] ?></td>
@@ -84,8 +84,8 @@ include('include/header.php');
 
                       <td><?= $filtered['sales_date'] ?></td>
                       <td><?= $filtered['condit'] ?></td>
-                      <td><a href="order_new.php?id='<?= $filtered['Order_no'] ?>'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-6 me-3"></i></a>
-                        <a href="javascript:void()" onClick="confirmter(<?php echo $row['Order_no'] ?? 'null' ?>)" class=" link-secondary"><i class="fa-solid fa-trash fs-6"></i></a>
+                      <td><a href="order_new.php?id='<?= $filtered['order_no'] ?>'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-6 me-3"></i></a>
+                        <a href="javascript:void()" onClick="deleteSelectedManufact(<?php echo $row['order_no'] ?? 'null' ?>)" class=" link-secondary"><i class="fa-solid fa-trash fs-6"></i></a>
                       </td>
                                           </tr>
                   <?php
@@ -99,4 +99,5 @@ include('include/header.php');
   </div>
 </div>
 </div>
+<script src='js/manufact.js'></script>
 <?php include('include/footer.php'); ?>

@@ -136,12 +136,12 @@ function fetchOrderDetails($conn, $order_no) {
                       <td><input type='text' class='form-control amt small-input right-align' style='border:none' name='amt[]' value="<?php echo isset($detail['amt']) ? htmlspecialchars(number_format($detail['amt'])) : ''; ?>"></td>
                       <td><input type='text' class='form-control' style='border:none' name='curency_rate[]' value="<?php echo isset($detail['curency_rate']) ? htmlspecialchars($detail['curency_rate']) : ''; ?>"></td>
                       <td><input type='date' class='form-control' style='border:none' name='sales_date[]' value="<?php echo isset($detail['sales_date']) ? htmlspecialchars($detail['sales_date']) : ''; ?>"></td>
-                      <td><select class="form-select" id='condit' name='condit[]' aria-label="" style="font-size: .65rem">
+                      <td><select class="form-select" name='condit[]' aria-label="" style="font-size: .65rem">
                           <option value="선택" <?php echo (!isset($detail['condit']) || $detail['condit'] == '선택') ? 'selected' : ''; ?>>선택</option>
                           <option value="일시불" <?php echo (isset($detail['condit']) && $detail['condit'] == '일시불') ? 'selected' : ''; ?>>일시불</option>
-                          <option value="분할" <?php echo (isset($detail['condit']) && $detail['condit'] != '일시불') ? 'selected' : ''; ?>>분할</option>
-                        </select>
-                      </td>
+                          <option value="분할" <?php echo (isset($detail['condit']) && $detail['condit'] == '분할') ? 'selected' : ''; ?>>분할</option>
+                          <option value="완료" <?php echo (isset($detail['condit']) && $detail['condit'] == '완료') ? 'selected' : ''; ?>>완료</option>
+                      </select></td>  
                       <td><button type='button' id='delButton' class='btn btn-extra-sm' style='font-size: .65rem' onclick='BtnDel_o(this)'><i class="fa-solid fa-trash fs-6"></i></button></td>
                     </tr>
                     <?php

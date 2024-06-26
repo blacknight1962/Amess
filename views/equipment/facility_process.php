@@ -4,7 +4,7 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
-include('../db.php');
+include('../../db.php');
 
 // var_dump($_POST);
 // exit();

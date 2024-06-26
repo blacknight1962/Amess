@@ -35,3 +35,11 @@ table {
 input {
   padding: 1px 1px; /* 상하 2px, 좌우 5px로 조정 */
 }
+.small-input {
+  font-size: 0.65rem; /* 또는 14px */
+  text-align: right;
+}
+.small-btn {
+  padding: 0.2rem 0.2rem; /* 상하, 좌우 패딩 조정 */
+  font-size: 0.65rem; /* 글자 크기 조정 */
+}

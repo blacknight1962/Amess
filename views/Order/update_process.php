@@ -3,46 +3,98 @@ ob_start(); // 출력 버퍼링 시작
 session_start();
 header('Content-Type: application/json');
 include('../../db.php');
+
+$condit = isset($_POST['condit']) ? $_POST['condit'] : 'default_value';
 $_SESSION['condit'] = $condit;
 
-var_dump($_POST);
-exit(); 
+// var_dump($_POST);
+// exit(); 
 $action_type = isset($_POST['action_type']) ? $_POST['action_type'] : 'default';
+
+$condit = isset($_POST['condit']) ? $_POST['condit'] : 'default_value';
+$_SESSION['condit'] = $condit;
 
 switch ($action_type) {
     case 'delete_order':
         error_log("Entered delete_order case");
         if (isset($_POST['order_no'])) {
-            $orderNo = $_POST['order_no'];
-            error_log($orderNo);
+            $orderNos = explode(',', $_POST['order_no']); // 쉼표로 구분된 문자열을 배열로 변환
+            error_log(print_r($orderNos, true));
             $conn->begin_transaction();
             try {
-                $stmt = $conn->prepare("DELETE FROM order_data WHERE order_no = ?");
-                $stmt->bind_param("s", $orderNo);
-                $stmt->execute();
-                if ($stmt->affected_rows == 0) {
-                    throw new Exception("상세 정보 삭제 실패");
-                }
+                foreach ($orderNos as $orderNo) {
+                    $stmt = $conn->prepare("DELETE FROM order_data WHERE order_no = ?");
+                    $stmt->bind_param("s", $orderNo);
+                    $stmt->execute();
+                    if ($stmt->affected_rows < 0) {
+                        throw new Exception("상세 정보 삭제 실패: " . $orderNo);
+                    }
 
-                $stmt = $conn->prepare("DELETE FROM `order` WHERE order_no = ?");
-                $stmt->bind_param("s", $orderNo);
-                $stmt->execute();
-                if ($stmt->affected_rows == 0) {
-                    throw new Exception("기본 정보 삭제 실패");
+                    $stmt = $conn->prepare("DELETE FROM `order` WHERE order_no = ?");
+                    $stmt->bind_param("s", $orderNo);
+                    $stmt->execute();
+                    if ($stmt->affected_rows < 0) {
+                        throw new Exception("기본 정보 삭제 실패: " . $orderNo);
+                    }
                 }
-
                 $conn->commit();
-                echo json_encode(['status' => 'success', 'message' => '삭제 성공']);
+                $_SESSION['message'] = ['type' => 'success', 'content' => '삭제 성공'];
+                ob_end_clean(); // 출력 버퍼 비우기
+                echo 'success';
             } catch (Exception $e) {
                 $conn->rollback();
-                echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+                $_SESSION['message'] = ['type' => 'error', 'content' => $e->getMessage()];
+                ob_end_clean(); // 출력 버퍼 비우기
+                echo 'error: ' . $e->getMessage();
             }
             $stmt->close();
         } else {
-            echo json_encode(['status' => 'error', 'message' => '잘못된 요청입니다.']);
+            $_SESSION['message'] = ['type' => 'error', 'content' => '잘못된 요청입니다.'];
+            ob_end_clean(); // 출력 버퍼 비우기
+            echo 'error: 잘못된 요청입니다.';
         }
         break;
-    case 'update_basic':   
+    case 'delete_manufact':
+        error_log("Entered delete_manufact case");
+        if (isset($_POST['order_no'])) {
+            $orderNos = explode(',', $_POST['order_no']); // 쉼표로 구분된 문자열을 배열로 변환
+            error_log(print_r($orderNos, true));
+            $conn->begin_transaction();
+            try {
+                foreach ($orderNos as $orderNo) {
+                    $stmt = $conn->prepare("DELETE FROM order_data WHERE order_no = ?");
+                    $stmt->bind_param("s", $orderNo);
+                    $stmt->execute();
+                    if ($stmt->affected_rows < 0) {
+                        throw new Exception("상세 정보 삭제 실패: " . $orderNo);
+                    }
+
+                    $stmt = $conn->prepare("DELETE FROM `order` WHERE order_no = ?");
+                    $stmt->bind_param("s", $orderNo);
+                    $stmt->execute();
+                    if ($stmt->affected_rows < 0) {
+                        throw new Exception("기본 정보 삭제 실패: " . $orderNo);
+                    }
+                }
+                $conn->commit();
+                $_SESSION['message'] = ['type' => 'success', 'content' => '삭제 성공'];
+                ob_end_clean(); // 출력 버퍼 비우기
+                echo 'success';
+            } catch (Exception $e) {
+                $conn->rollback();
+                $_SESSION['message'] = ['type' => 'error', 'content' => $e->getMessage()];
+                ob_end_clean(); // 출력 버퍼 비우기
+                echo 'error: ' . $e->getMessage();
+            }
+            $stmt->close();
+        } else {
+            $_SESSION['message'] = ['type' => 'error', 'content' => '잘못된 요청입니다.'];
+            ob_end_clean(); // 출력 버퍼 비우기
+            echo 'error: 잘못된 요청입니다.';
+        }
+        break;
+
+case 'update_basic':   
         error_log("Entered update_basic case");      // 기본 정보 저장 로직
         if (isset($_POST['order_no'])) {
             $order_no = mysqli_real_escape_string($conn, $_POST['order_no']);

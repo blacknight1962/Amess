@@ -8,11 +8,10 @@ $(document).ready(function () {
     }
   );
 });
+
 function BtnAdd() {
   var lastSubNo = parseInt($('#TBody tr:last').find('.sub_no').val()) || 0;
   var newSubNo = lastSubNo + 1;
-  // console.log('Last sub_no: ' + lastSubNo);
-  // console.log('New sub_no: ' + newSubNo);
 
   let newRow = $('#TRow').clone().appendTo('#TBody');
   newRow.removeAttr('id'); // id 속성 제거
@@ -22,16 +21,8 @@ function BtnAdd() {
   newRow.find('select').prop('selectedIndex', 0);
 
   // 새로운 행의 sub_no 입력 필드에 새로운 sub_no 값을 설정
-  newRow.find('.sub_no').val(newSubNo);
+  newRow.find('.sub_no').val(newSubNo); // 새로운 sub_no 값을 설정
 }
-
-// 페이지 로드 시 첫 번째 행 자동 추가
-$(document).ready(function () {
-  // 페이지 로드 시 첫 번째 행을 추가하기 전에 기존 행이 있는지 확인
-  if ($('#TBody tr').length === 0) {
-    BtnAdd(); // 첫 번째 행을 추가
-  }
-});
 
 // 행 삭제
 function BtnDel(v) {
@@ -61,48 +52,11 @@ function BtnDel(v) {
   row.remove(); // 행 삭제
 }
 
-//**edit_quot.php 에서 1개 행을 DB에서 직접 삭제하는데 사용하는 함수 */
 function IcoDel(v) {
-  // 사용자에게 삭제를 확인받음
-  if (confirm('이 행을 삭제하시겠습니까?')) {
-    var row = $(v).closest('tr');
-    var subNo = row.find('.sub_no').val(); // 삭제할 행의 sub_no를 가져옴
-
-    // AJAX 요청을 통해 서버에 행 삭제 요청
-    $.ajax({
-      url: 'quot1_process.php', // 서버의 삭제 스크립트 경로
-      type: 'POST',
-      data: { sub_no: subNo }, // 서버에 전달할 데이터
-      success: function (response) {
-        console.log('서버에서 행 삭제 성공:', response);
-        var amtValue = parseFloat(
-          row.find('input[name="amt[]"]').val().replace(/,/g, '') || 0
-        );
-
-        // 행 삭제 전에 해당 행의 amt 값을 전체 합계에서 빼기
-        var currentTotal = parseFloat(
-          $('#FTotal').val().replace(/,/g, '') || 0
-        );
-        var newTotal = currentTotal - amtValue;
-        $('#FTotal').val(formatNumber(newTotal.toFixed(0))); // 새로운 합계 업데이트
-
-        row.remove(); // 화면에서 행 삭제
-
-        // 성공적으로 삭제되었다면, quote_index.php로 리다이렉트
-        if (response.status === 'success') {
-          window.location.href = 'quote_index.php'; // 리다이렉트 경로 확인 필요
-        }
-      },
-      error: function (xhr, status, error) {
-        // 서버에서의 삭제 실패 응답 처리
-        console.error('서버에서 행 삭제 실패:', error);
-      },
-    });
-  } else {
-    // 사용자가 삭제를 취소한 경우
-    console.log('행 삭제가 취소되었습니다.');
-  }
+  // 화면에서만 추가된 행삭제
+  $(v).closest('tr').remove(); // 행 삭제
 }
+
 //견적관리에서 직접 견적전체를 삭제 요청시
 function deleteSelectedQuotes() {
   const selectedQuotes = getSelectedRows(); // 선택된 견적 번호 가져오기

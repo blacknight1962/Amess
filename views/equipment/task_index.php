@@ -53,6 +53,8 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
         <!-- 검색란 -->
         <!-- 검색 버튼 -->
           <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 10%;">Search...</button>
+          <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; ">
+      <a href="task_search.php" target="_blank">통합검색</a></button>
         </div>
         <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .65rem'>
           <thead class='table-warning'>
@@ -147,9 +149,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
         <tbody style="width: 1550px;">
           <?php
           // print_r($_GET);
-          $seri_no = isset($_GET['seri_no']) ? $_GET['seri_no'] : '';
-          if (!empty($seri_no)) {
-              $query = "SELECT * FROM task_manage WHERE seri_no = '$seri_no'";
+              $query = "SELECT * FROM task_manage ORDER BY t_no DESC LIMIT 30";
               $result = mysqli_query($conn, $query);
               
               if (mysqli_num_rows($result) > 0) {
@@ -167,9 +167,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
               } else {
                   echo "<tr><td colspan='7' style='text-align: center;'>현재 데이터가 없습니다.</td></tr>";
               }
-          } else {
-              echo "<tr><td colspan='7' style='text-align: center;'>seri_no가 제공되지 않았습니다.</td></tr>";
-          }
+          
           ?>
         </tbody>
       </table>
@@ -226,7 +224,7 @@ if (isset($seri_no) && $seri_no !== '') {
                           'manage_stat' => htmlspecialchars($row_data["manage_stat"]),
                       );
                       ?>
-                <tr id="TB_Row">    
+                <tr id="TB_Row" style="line-height: 30px !important;">    
                   <td><input type="text" class="t_no" style="text-align: center;" name="t_no[]" value="<?= $filtered['t_no']; ?>"></td>
                   <td><input type="text" class="form-control date_task" style="font-size: .65rem" name="date_task[]" value="<?= $filtered['date_task']; ?>"></td>
                   <td><input type="text" class="form-control task_person" style="font-size: .65rem" name="task_person[]" value="<?= $filtered['task_person']; ?>"></td>

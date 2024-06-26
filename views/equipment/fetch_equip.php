@@ -1,7 +1,5 @@
 <?php
-include('../db.php'); // 데이터베이스 연결
-include('style_equip.css');
-
+include('../../db.php'); // 데이터베이스 연결
 
 $period = $_GET['period'];
 

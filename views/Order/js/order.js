@@ -173,14 +173,20 @@ function deleteSelectedQuotes() {
       $.ajax({
         url: 'update_process.php',
         type: 'POST',
-        data: { order_no: selectedOrderNos.join(',') }, // 여러 발주번호를 쉼표로 구분된 문자열로 전송
-        dataType: 'json',
+        data: {
+          action_type: 'delete_order', // action_type 추가
+          order_no: selectedOrderNos.join(','), // 여러 발주번호를 쉼표로 구분된 문자열로 전송
+          condit: 'some_value', // 필요에 따라 적절한 값을 할당하세요.
+        },
+        dataType: 'text', // 응답을 텍스트로 설정
         success: function (response) {
-          if (response.status === 'success') {
+          if (response.trim() === 'success') {
             console.log('발주 삭제 완료');
             location.reload(); // 성공적으로 삭제 후 페이지 새로고침
+          } else if (response.startsWith('error:')) {
+            console.error('발주 삭제 실패:', response.substring(6).trim());
           } else {
-            console.error('발주 삭제 실패:', response.message);
+            console.error('발주 삭제 실패: 알 수 없는 오류');
           }
         },
         error: function (xhr, status, error) {

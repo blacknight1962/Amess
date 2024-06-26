@@ -21,7 +21,7 @@ session_start();
 <body>
     <div class="d-flex justify-content-between align-items-center p-3">
         <img src="../public/img/amess_logo.png" width="150" height="20">
-        <i class="fa-solid fa-person-running custom-icon-size"></i>
+        <a href="../views/login/logout.php"><i class="fa-solid fa-person-running custom-icon-size"></i></a>
     </div>
     <div class="container">
         <div class="card shadow" onclick="openInNewTab('../views/quote/quote_index.php')">

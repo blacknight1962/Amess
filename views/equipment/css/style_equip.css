@@ -91,6 +91,7 @@
 .form-select,
 .small-font {
   font-size: 0.65rem !important;
+  width: 100%;
 }
 /* popup 창 마진 조정 */
 .custom-margin {

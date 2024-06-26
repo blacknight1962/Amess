@@ -1,9 +1,11 @@
 <?php
 session_start();
 $userName = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+
 include('include/header.php');
-include('../public/Selection_kit.php');
+include('../../public/Selection_kit.php');
 include('../../db.php');
+
 if (isset($_SESSION['status'])) {
   echo "<div class='alert alert-info' role='alert'>" . $_SESSION['status'] . "</div>";
   unset($_SESSION['status']); // 메시지를 한 번만 표시하고 세션에서 제거
@@ -139,5 +141,5 @@ if (isset($_SESSION['status'])) {
     </div>
   </section>
 </div>
-<script src="js/1search_jobcode.js"></script>
+<script src="js/search_jobcode.js"></script>
 <?php include('include/footer.php'); ?>

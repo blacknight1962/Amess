@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //분할매출 섹션 배경색 변경
 function changeBackground(selectElement) {
-  var parentDiv = selectElement.closest('.container-a'); // 부모 컨테이너를 찾습니다.
-  if (selectElement.value === 'Installment') {
+  var parentDiv = selectElement.closest('#installmentDetails'); // 부모 컨테이너를 찾습니다.
+  if (selectElement.value === '분할') {
     parentDiv.style.backgroundColor = '#f0f8ff'; // 분할을 선택했을 때의 배경색
   } else {
     parentDiv.style.backgroundColor = ''; // 기본 배경색

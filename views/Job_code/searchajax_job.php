@@ -3,7 +3,7 @@ include('../../db.php');
 
 if (isset($_POST['input'])) {
   $input = $_POST['input'];
-  $period = $_POST['period'];
+  $period = isset($_POST['period']) ? $_POST['period'] : '';
 
   $dateCondition = "";
   if ($period == '1year') {

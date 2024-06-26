@@ -1,5 +1,5 @@
 <?php
-include('../db.php');  // 데이터베이스 연결 포함
+include('../../db.php');  // 데이터베이스 연결 포함
 // var_dump($_POST);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $t_no = $_POST['t_no'];

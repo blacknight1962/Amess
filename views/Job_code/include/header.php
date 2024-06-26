@@ -35,16 +35,14 @@ $user_name = htmlspecialchars($row['ep_name']);
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../../public/css/style.css">
   <style>
     body {
       font-family: "Helvetica Nene", Helvetica, Arial, "malgun gothic", sans-serif;
     }
   </style>
-  <?php include('../../db.php'); ?>
 
-
-  <title>AMESS 장비관리</title>
+  <title>AMESS 작업코드</title>
 
   <header id='navbar'>
     <div class='title'><a href='../views/main.php'>Amess Management System</a></div>

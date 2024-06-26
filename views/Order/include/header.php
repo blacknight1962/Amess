@@ -49,29 +49,9 @@ if (basename($_SERVER['PHP_SELF']) != 'login.php') {
     </div>
     <div id='menu'>
       <ul>
-        <li><a href='../views/quote/quote_index.php'>견적관리</a></li>
-        <li><a href='#'>작업코드</a>
-          <ul>
-            <li><a href='../views/job_code/jobcode_index.php'>작업코드 관리</a></li>
-            <li><a href='../views/job_code/search_jobcode.php'>검 색</a></li>
-            <li><a href='#'>상세정보</a></li>
-          </ul>
-        </li>
-        <li><a href='#'>영업관리</a>
-          <ul>
-            <li><a href='../views/order/order_index.php'>발주관리</a></li>
-            <li><a href='../views/order/sales_index.php'>매출관리</a></li>
-            <li><a href='../views/order/manufact_view.php'>생산관리</a></li>
-          </ul>
-        </li>
-        <li><a href='../views/equipment/equip_index.php'>장비관리</a></li>
-        <li><a href='#'>설정</a>
-          <ul>
-            <li><a href='../views/login/login.php'>로그인</a></li>
-              <li><a href='../views/login/login_edit.php'>사용자 관리</a></li>
-            <li><a href='../views/login/regist_customer.php'>고객관리</a></li>
-          </ul>
-        </li>
+        <li><a href='order_index.php'>발주관리</a></li>
+        <li><a href='sales_index.php'>매출관리</a></li>
+        <li><a href='manufact_view.php'>생산관리</a></li>
       </ul>
     </div>
     <div>

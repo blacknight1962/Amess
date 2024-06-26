@@ -134,7 +134,7 @@ $o_no = isset($o_no) ? $o_no : 'default_o_no';
     </div>
   </div>
 </div>
-<script src='sales_modal.js'></script>
+<script src='js/sales_modal.js'></script>
 <script>
 
   // 이벤트 위임을 사용하여 동적 요소에 대응

@@ -2,6 +2,18 @@
 session_start();
 include('include/header.php');
 include('../../db.php');
+
+
+// 세션 메시지 확인 및 출력
+if (isset($_SESSION['message'])) {
+    // 메시지가 배열인 경우, 배열의 특정 요소를 출력하거나 배열을 문자열로 변환하여 출력
+    if (is_array($_SESSION['message'])) {
+        echo '<div class="alert alert-info">' . implode(' ', $_SESSION['message']) . '</div>';
+    } else {
+        echo '<div class="alert alert-info">' . $_SESSION['message'] . '</div>';
+    }
+    unset($_SESSION['message']); // 메시지 출력 후 세션에서 제거
+}
 ?>
 
 <div class='bg-success bg-opacity-10' style='text-align: center;'>

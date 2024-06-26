@@ -163,31 +163,22 @@ if (isset($_POST['update_btn'])) {
     exit;
 }
 
-//견적 삭제 처리
-
-
 // 견적 상세 삭제
+// POST 요청으로 받은 sub_no 값 확인
 
-if (isset($_POST["sub_no"])) {
-    $sub_no = $_POST["sub_no"];
-    $sql = "DELETE FROM quote_data WHERE sub_no = '$sub_no'";
-    $result = mysqli_query($conn, $sql);
-
-    if ($result) {
-        $response = ['status' => 'success', 'message' => '성공적으로 데이터를 삭제했습니다.'];
+if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['sub_no'])) {
+    $subNo = mysqli_real_escape_string($conn, $_POST['sub_no']);
+    $sql = "DELETE FROM quote_data WHERE sub_no = '$subNo'";
+    if (mysqli_query($conn, $sql)) {
+        $response = ['status' => 'success', 'message' => '삭제 성공'];
     } else {
-        $response = ['status' => 'error', 'message' => '데이터 삭제 하지 못했습니다.'];
+        $response = ['status' => 'error', 'message' => '삭제 실패: ' . mysqli_error($conn)];
     }
-    header('Content-Type: application/json');
+    // JSON 응답을 반환하기 전에 출력 버퍼를 비웁니다.
+    ob_end_clean();
     echo json_encode($response);
-    exit;
-} else {
-    $response = ['status' => 'error', 'message' => '데이터가 정상적이지 않아서 처리되지 못했습니다'];
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit;
+    exit();
 }
-
 
 
 // 견적관리 메인화면으로 DB에 요청하는 기간만큼 데이터 불어오기

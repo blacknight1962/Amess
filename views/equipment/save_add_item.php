@@ -1,5 +1,5 @@
 <?php
-include('../db.php');
+include('../../db.php');
 
 // 오류 보고를 비활성화하고, 모든 오류를 JSON으로 처리
 error_reporting(0);
