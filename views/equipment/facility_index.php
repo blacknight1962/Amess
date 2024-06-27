@@ -106,8 +106,7 @@ if ($e_no !== 'undefined') {
     <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
       <!-- 검색란 -->
       <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
-      <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none;">
-        <a href="task_search.php" target="_blank">통합검색</a>
+      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;"><a href="task_search.php" target="_blank" style="text-decoration: none; color:inherit;">통합검색</a>
       </button>
     </div>
     <!-- 장비관리- 설비 추가 -->

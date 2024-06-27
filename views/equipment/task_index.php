@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include('include/header.php'); 
 include('task_add_modal.php');
+include('task_parts_modal.php');
 include('delete_task.php');
 ?>
 <script>
@@ -53,8 +54,8 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
         <!-- 검색란 -->
         <!-- 검색 버튼 -->
           <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 10%;">Search...</button>
-          <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; ">
-      <a href="task_search.php" target="_blank">통합검색</a></button>
+      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;"><a href="task_search.php" target="_blank" style="text-decoration: none; color:inherit;">통합검색</a>
+      </button>
         </div>
         <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .65rem'>
           <thead class='table-warning'>
@@ -130,6 +131,97 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
       </section>
     </div>
 </div>
+<!-- 작업 상세 정보 -->
+<?php
+$date_task = isset($_POST['date_task']) ? $_POST['date_task'] : date('Y-m-d');
+if (isset($seri_no) && $seri_no !== '') {
+  $sql_data = "SELECT * FROM task_manage WHERE seri_no = '$seri_no'";
+  $result_data = mysqli_query($conn, $sql_data);
+  $dataExists = mysqli_num_rows($result_data) > 0;
+?>
+<div id="addTaskSection" class='bg-dark bg-opacity-10'> 
+  <div class='row justify-content-center' style="max-width: 1900px; margin: 0 auto;">
+    <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
+      <div class='container-fluid' style='width: 1850px me-0 ms-0'>
+        <form id="addTaskForm" action="task_process.php" method="POST">
+          <input type="hidden" name="action" value="saveTask">
+          <input type="hidden" id="seri_no" name="seri_no" value="<?= $seri_no ?>">
+          <table class='table table-custom table-bordered mt-1' style="font-size: .65rem; width: 100%;">
+            <thead style="max-width: 1850px; text-align: center;">
+              <tr class='table table-secondary'>
+                <th style="width: 3%;">No</th>
+                <th style="width: 7%;">작업일자</th>
+                <th style="width: 6%;">담당자</th>
+                <th style="width: 5%;">구분</th>
+                <th style="width: 7%;">항목</th>
+
+                <th style="width: 18%;">작업내용</th>
+                <th style="width: 28%;">세부내용</th>
+                <th style="width: 16%;">특기사항</th>
+                <th style="width: 6%;">가동상황</th>
+                <th style="width: 4%;">
+                  <button type="button" class="btn btn-success btn-sm" style="font-size: .65rem" onclick="TB_BtnAdd()" title="작업 추가">+</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="TB_Body" style="width: 1800px;">
+              <?php      
+              if (mysqli_num_rows($result_data) > 0) {
+                  while ($row_data = mysqli_fetch_array($result_data)) {
+                      $filtered = array(
+                          'seri_no' => htmlspecialchars($row_data["seri_no"]),
+                          't_no' => htmlspecialchars($row_data["t_no"]),
+                          'date_task' => htmlspecialchars($row_data["date_task"]),
+                          'task_person' => htmlspecialchars($row_data["task_person"]),
+                          'task_title' => htmlspecialchars($row_data["task_title"]),
+                          'task_content' => htmlspecialchars($row_data["task_content"]),
+                          'task_aparts' => htmlspecialchars($row_data["task_aparts"]),
+                          'hangmok' => htmlspecialchars($row_data["hangmok"]),
+                          'specification' => htmlspecialchars($row_data["specification"]),
+                          'manage_stat' => htmlspecialchars($row_data["manage_stat"]),
+                      );
+                      ?>
+                <tr id="TB_Row" style="line-height: 30px !important;">    
+                  <td><input type="text" class="form-control t_no" style="text-align: center;" name="t_no[]" value="<?= $filtered['t_no']; ?>"></td>
+                  <td><input type="text" class="form-control date_task" style="font-size: .65rem" name="date_task[]" value="<?= $filtered['date_task']; ?>"></td>
+                  <td><input type="text" class="form-control task_person" style="font-size: .65rem" name="task_person[]" value="<?= $filtered['task_person']; ?>"></td>
+                  <td><?= createSelectTask($conn, 'task_aparts[]', $filtered['task_aparts']); ?></td>                  
+                  <td><?= updateSelectTaskPart($conn, 'hangmok[]', $filtered['hangmok']); ?></td>
+
+                  <td><textarea class="form-control task_title" name="task_title[]" rows="1" style="font-size: .65rem; resize: none;"><?= $filtered["task_title"]; ?></textarea></td>
+                  <td><textarea class="form-control task_content" name="task_content[]" rows="1" style="font-size: .65rem; resize: none;"><?= $filtered["task_content"]; ?></textarea></td>
+                  <td><input type="text" class="form-control specification" style="font-size: .65rem" name="specification[]" value="<?= $filtered["specification"]; ?>"></td>
+                  <td><?= createSelectStatus($conn, 'manage_stat[]', $filtered['manage_stat']); ?></td>
+                  <td><button type="button" class="btn link-danger small-btn deleteButton" style="font-size: .65rem" title="작업 삭제" data-t_no="<?= $filtered['t_no']; ?>" data-seri_no="<?= $filtered['seri_no']; ?>"><i class="fa-solid fa-trash fs-6"></i></button></td>
+                  <input type="hidden" class="seri_no" style="text-align: center;" name="seri_no" value="<?= $filtered['seri_no']; ?>">
+                </tr>
+                <?php
+                  } // while 문 종료
+              } else {
+                  echo "<tr><td colspan='10' style='text-align: center;'> 작업정보를 추가 하려면 아래 작업추가 버튼을 클릭하십시오 " . mysqli_error($conn) . "</td></tr>";
+              }
+              ?>
+            </tbody>
+          </table>     
+        <div class="footer">
+            <div>
+              <div>
+                <button type="button" class="btn btn-outline-primary small-btn" style="font-size: .65rem" data-bs-toggle="modal" data-bs-target="#addTaskModal" data-seri_no="<?= $seri_no ?>">작업 추가</button>
+
+                <button type="button" class="btn btn-outline-primary small-btn" style="font-size: .65rem" onclick="openAddOptionModal();">새항목 추가</button>
+                <button type="submit" class="btn btn-outline-primary small-btn" style="font-size: .65rem">Save changes</button>
+                <!-- <button type="button" class="btn btn-secondary small-btn" style="font-size: .65rem">Close</button> -->
+              </div>
+            </div>
+        </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+<?php 
+} ?>
+
 <!-- 작업 정보 요약 버젼 화면-->
 <div class='bg-dark bg-opacity-10'>
   <div class='row justify-content-center' style="max-width: 1550px; margin: 0 auto;">
@@ -173,106 +265,13 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
       </table>
     </section>
   </div>
-</div>
-<!-- 작업 상세 정보 -->
-<?php
-$date_task = isset($_POST['date_task']) ? $_POST['date_task'] : date('Y-m-d');
-if (isset($seri_no) && $seri_no !== '') {
-  $sql_data = "SELECT * FROM task_manage WHERE seri_no = '$seri_no'";
-  $result_data = mysqli_query($conn, $sql_data);
-  $dataExists = mysqli_num_rows($result_data) > 0;
-?>
-<div id="addTaskSection" class='bg-dark bg-opacity-10'> 
-  <div class='row justify-content-center' style="max-width: 1900px; margin: 0 auto;">
-    <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
-      <div class='container-fluid' style='width: 1850px me-0 ms-0'>
-        <form id="addTaskForm" action="task_process.php" method="POST">
-          <input type="hidden" name="action" value="saveTask">
-          <input type="hidden" id="seri_no" name="seri_no" value="<?= $seri_no ?>">
-          <table class='table table-custom table-bordered mt-1' style="font-size: .65rem; width: 100%;">
-            <thead style="max-width: 1850px; text-align: center;">
-              <tr class='table table-secondary'>
-                <th style="width: 3%;">No</th>
-                <th style="width: 7%;">작업일자</th>
-                <th style="width: 6%;">담당자</th>
-                <th style="width: 5%;">구분</th>
-                <th style="width: 7%;">항목</th>
-
-                <th style="width: 18%;">작업내용</th>
-                <th style="width: 28%;">세부내용</th>
-                <th style="width: 16%;">특기사항</th>
-                <th style="width: 6%;">가동상황</th>
-                <th style="width: 4%;">
-                  <button type="button" class="btn btn-success " style="font-size: .65rem" onclick="TB_BtnAdd()" title="작업 추가">+</button>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="TB_Body" style="width: 1800px;">
-              <?php      
-              if (mysqli_num_rows($result_data) > 0) {
-                  while ($row_data = mysqli_fetch_array($result_data)) {
-                      $filtered = array(
-                          'seri_no' => htmlspecialchars($row_data["seri_no"]),
-                          't_no' => htmlspecialchars($row_data["t_no"]),
-                          'date_task' => htmlspecialchars($row_data["date_task"]),
-                          'task_person' => htmlspecialchars($row_data["task_person"]),
-                          'task_title' => htmlspecialchars($row_data["task_title"]),
-                          'task_content' => htmlspecialchars($row_data["task_content"]),
-                          'task_aparts' => htmlspecialchars($row_data["task_aparts"]),
-                          'hangmok' => htmlspecialchars($row_data["hangmok"]),
-                          'specification' => htmlspecialchars($row_data["specification"]),
-                          'manage_stat' => htmlspecialchars($row_data["manage_stat"]),
-                      );
-                      ?>
-                <tr id="TB_Row" style="line-height: 30px !important;">    
-                  <td><input type="text" class="t_no" style="text-align: center;" name="t_no[]" value="<?= $filtered['t_no']; ?>"></td>
-                  <td><input type="text" class="form-control date_task" style="font-size: .65rem" name="date_task[]" value="<?= $filtered['date_task']; ?>"></td>
-                  <td><input type="text" class="form-control task_person" style="font-size: .65rem" name="task_person[]" value="<?= $filtered['task_person']; ?>"></td>
-                  <td><?= createSelectTask($conn, 'task_aparts[]', $filtered['task_aparts']); ?></td>                  
-                  <td><?= updateSelectTaskPart($conn, 'hangmok[]', $filtered['hangmok']); ?></td>
-
-                  <td><textarea class="form-control task_title" name="task_title[]" rows="1" style="font-size: .65rem; resize: none;"><?= $filtered["task_title"]; ?></textarea></td>
-                  <td><textarea class="form-control task_content" name="task_content[]" rows="1" style="font-size: .65rem; resize: none;"><?= $filtered["task_content"]; ?></textarea></td>
-                  <td><input type="text" class="form-control specification" style="font-size: .65rem" name="specification[]" value="<?= $filtered["specification"]; ?>"></td>
-                  <td><?= createSelectStatus($conn, 'manage_stat[]', $filtered['manage_stat']); ?></td>
-                  <td><button type="button" class="btn link-danger small-btn deleteButton" style="font-size: .65rem" title="작업 삭제" data-t_no="<?= $filtered['t_no']; ?>" data-seri_no="<?= $filtered['seri_no']; ?>"><i class="fa-solid fa-trash fs-6"></i></button></td>
-                  <input type="hidden" class="seri_no" style="text-align: center;" name="seri_no" value="<?= $filtered['seri_no']; ?>">
-                </tr>
-                <?php
-                  } // while 문 종료
-              } else {
-                  echo "<tr><td colspan='10' style='text-align: center;'> 작업정보를 추가 하려면 아래 작업추가 버튼을 클릭하십시오 " . mysqli_error($conn) . "</td></tr>";
-              }
-              ?>
-            </tbody>
-          </table>     
-        <div class="footer">
-            <div>
-              <div>
-                <?php if (!$dataExists): ?>             
-                  <button type="button" class="btn btn-primary small-btn" style="font-size: .65rem" data-bs-toggle="modal" data-bs-target="#addTaskModal" data-seri_no="<?= $seri_no ?>">작업 추가</button>
-                <?php endif; ?></div>
-                <!-- <button type="button" class="btn btn-primary small-btn" style="font-size: .65rem" onclick="$('#addOptionModal').modal('show');">항목 추가</button> -->
-                <button type="submit" class="btn btn-primary small-btn" style="font-size: .65rem">Save changes</button>
-                <!-- <button type="button" class="btn btn-secondary small-btn" style="font-size: .65rem">Close</button> -->
-            </div>
-          </div>
-        </div>
-        </form>
-      </div>
-    </section>
-  </div>
-</div>
-<?php 
-} ?>
-  <!-- Bootstrap JavaScript -->
-  </div>
+</div> 
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="equipment.js"></script>
-  <script src="facility.js"></script>
-  <script src="task.js"></script>
-  <script src="delete_task.js"></script>
+  <script src="js/equipment.js"></script>
+  <script src="js/facility.js"></script>
+  <script src="js/task.js"></script>
+  <script src="js/delete_task.js"></script>
             
 </body>
 <?php include('include/footer.php'); ?>

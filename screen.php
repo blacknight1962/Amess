@@ -25,25 +25,21 @@ session_start();
     </div>
     <div class="container">
         <div class="card shadow" onclick="openInNewTab('../views/quote/quote_index.php')">
-            <img src="../public/img/blue-flower-1.png" width="280" height="310">
             <div class="card-body">
                 <h5 class="card-title">견적관리</h5>
             </div>
         </div>
         <div class="card shadow" onclick="openInNewTab('../views/job_code/jobcode_index.php')">
-            <img src="../public/img/colors-1.png" width="280" height="310">
             <div class="card-body text-center">
                 <h5 class="card-title">작업코드</h5>
             </div>
         </div>
         <div class="card shadow" onclick="openInNewTab('../views/order/order_index.php')">
-            <img src="../public/img/plants-1.png" width="280" height="310">
             <div class="card-body text-center">
                 <h5 class="card-title">영업관리</h5>
             </div>
         </div>
         <div class="card shadow" onclick="openInNewTab('../views/equipment/equip_index.php')">
-            <img src="../public/img/seeds-1.png" width="280" height="310">
             <div class="card-body text-center">
                 <h5 class="card-title">장비관리</h5>
             </div>

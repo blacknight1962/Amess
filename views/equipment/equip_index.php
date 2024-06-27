@@ -1,20 +1,18 @@
 <?php
 session_start();
-
-
 $_SESSION['date'] = date('Y-m-d');
-if (isset($_SESSION['status'])) {
-    $message = $_SESSION['status'];
 
-    unset($_SESSION['status']); // 메시지 출력 후 세션에서 삭제
-    echo "<script type='text/javascript'>alert('$message');</script>";
-}
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include('include/header.php');
 include('equip_modals.php');
-?>
 
+if (isset($_SESSION['status'])) {
+    $message = $_SESSION['status'];
+    unset($_SESSION['status']); // 메시지 출력 후 세션에서 삭제
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+?>
 <body>
 <!-- 메인화면 -->
 <div class='bg-success bg-opacity-10' style='text-align: center;'>
@@ -38,8 +36,8 @@ include('equip_modals.php');
       <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
       <!-- 숨겨진 입력 필드로 선택된 기간 저장 -->
       <input type="hidden" name="selectedPeriod" id="selectedPeriod">
-      <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; ">
-      <a href="task_search.php" target="_blank">통합검색</a></button>
+      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;"><a href="task_search.php" target="_blank" style="text-decoration: none; color:inherit;">통합검색</a>
+      </button>
       <!-- 신규 견적 등록 버튼 -->
       <div style="margin-left: auto;">
         <!-- Button trigger modal -->
@@ -124,11 +122,8 @@ include('equip_modals.php');
     </div>
   </div>
 </div>
-  <!-- Bootstrap JavaScript -->
-  <!-- Bootstrap Bundle JS (Bootstrap + Popper) -->
-  <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
-  <script src="equipment.js"></script>
-  <script src='task.js'></script>
+  <script src="js/equipment.js"></script>
+  <script src='js/task.js'></script>
   <!-- <script src="equip.js"></script> -->
 </body>
 <?php include('include/footer.php'); ?>

@@ -157,3 +157,56 @@ $(document).ready(function () {
 document.getElementById('searchButton').addEventListener('click', function () {
   window.open('task_search.php', '_blank');
 });
+
+// 항목 추가 모달을 호출하는 함수
+function openAddOptionModal() {
+  $('#addOptionModal').modal('show');
+}
+
+// 항목 호출 모달
+// 항목 호출 모달
+$(document).ready(function () {
+  console.log('항목호출 모달');
+  // 기존 모달에서 항목추가를 위해 새모달 호출
+  $('#taskPartSelect').change(function () {
+    if ($(this).val() == '항목추가') {
+      openAddOptionModal(); // 새 항목 추가 모달을 열기
+    }
+  });
+
+  // 모달 저장 버튼 클릭 이벤트 핸들러 추가
+  $('#addOptionModal .btn-primary').click(function () {
+    addNewTaskPart(); // 저장 버튼 클릭 시 addNewTaskPart 함수 호출
+  });
+});
+
+// 작업 항목 불러오기
+function addNewTaskPart() {
+  var newTaskPart = $('input[name="hangmok"]').val(); // 모달 내의 항목명 입력값 가져오기
+  var tpNo = $('input[name="tp_no"]').val(); // 모달 내의 항목번호 입력값 가져오기
+  $.ajax({
+    url: 'task_parts_save.php',
+    type: 'POST',
+    data: { add_task_part: true, taskpart: newTaskPart, tp_no: tpNo },
+    success: function (response) {
+      console.log(response); // 응답 로깅
+      if (response.error) {
+        alert('오류가 발생했습니다: ' + response.error);
+      } else {
+        $('#taskPartSelect').append(
+          $('<option>', {
+            value: response.tp_no,
+            text: response.taskpart,
+          })
+        );
+        $('#taskPartSelect').val(response.tp_no);
+        alert('저장이 완료되었습니다.');
+        $('#addOptionModal').modal('hide');
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error('AJAX error:', error);
+      alert('오류가 발생했습니다: ' + error);
+    },
+  });
+}

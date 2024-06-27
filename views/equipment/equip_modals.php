@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include('../../db.php');
 ?>
+<link rel="stylesheet" href="css/style_equip.css">
 <!--신규장비 등록 Modal -->
 <div class="modal fade custom-modal-size" id="insertdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="insertdata" aria-hidden="true">
   <div class="modal-dialog">
@@ -15,7 +16,7 @@ include('../../db.php');
         <div class='container-fluid' style='width: 1800px me-0 ms-0'>
         <form action='equip_process.php' method="POST">
           <div class="modal-body">
-          <table class='table table-bordered mt-1 small-font table-custom' style="width: 100%;">
+          <table class='table table-bordered mt-1 small-font' style="width: 100%;">
             <thead style="max-width: 1800px; text-align: center;">
                   <tr class='table table-secondary'>
                     <th style="width: 5%;">No</th>
