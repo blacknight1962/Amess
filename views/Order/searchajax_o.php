@@ -1,5 +1,5 @@
 <?php
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 if (isset($_POST['input'])) {
   $input = mysqli_real_escape_string($conn, $_POST['input']);

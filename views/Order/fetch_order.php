@@ -1,5 +1,5 @@
 <?php
-include('../../db.php'); // 데이터베이스 연결
+include(__DIR__ . '/../../db.php');// 데이터베이스 연결
 include('css/style_order.css');
 
 
@@ -21,8 +21,10 @@ switch ($period) {
     break;
 }
 
-$query = "SELECT o.*, od.* FROM `order` o JOIN order_data od ON o.order_no = od.order_no WHERE o.order_date BETWEEN '$startDate' AND '$endDate' ORDER BY o.order_no DESC";
+$query = "SELECT o.*, od.* FROM `order` o JOIN order_data od ON o.order_no = od.order_no WHERE o.order_date BETWEEN '$startDate' AND '$endDate' ORDER BY o.order_date DESC";
 $result = mysqli_query($conn, $query);
+
+// 디버깅: 쿼리 오류 확인
 
 $output = '';
 if (mysqli_num_rows($result) > 0) {

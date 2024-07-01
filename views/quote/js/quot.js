@@ -7,7 +7,29 @@ $(document).ready(function () {
       updatePrice(this); // 콤마 추가 및 amt 계산
     }
   );
+
+  // 편집 버튼에 대한 이벤트 리스너 설정
+  // $('#edit-button').off('click').on('click', redirectToEdit);
+
+  // 기타 초기화 함수 호출
+  initializeEditButton();
+  setupCheckboxHandlers();
+  setupSearchHandler();
 });
+
+// 편집
+function redirectToEdit() {
+  console.log('편집 버튼 클릭됨');
+  var selectedRows = getSelectedRows();
+  if (selectedRows.length === 0) {
+    alert('편집할 항목을 선택하세요.');
+    return;
+  }
+  window.open(
+    '/practice/AMESystem/views/quote/edit_quot.php?quote_no=' + selectedRows[0],
+    '_blank'
+  );
+}
 
 function BtnAdd() {
   var lastSubNo = parseInt($('#TBody tr:last').find('.sub_no').val()) || 0;
@@ -38,6 +60,7 @@ function BtnDel(v) {
         .text(index + 1);
     });
 }
+
 function BtnDel(v) {
   var row = $(v).closest('tr');
   var amtValue = parseFloat(
@@ -57,7 +80,7 @@ function IcoDel(v) {
   $(v).closest('tr').remove(); // 행 삭제
 }
 
-//견적관리에서 직접 견적전체를 삭제 요청시
+// 견적관리에서 직접 견적전체를 삭제 요청시
 function deleteSelectedQuotes() {
   const selectedQuotes = getSelectedRows(); // 선택된 견적 번호 가져오기
   if (selectedQuotes.length === 0) {
@@ -68,10 +91,11 @@ function deleteSelectedQuotes() {
     deleteAllQuotes(quoteNo); // 각 견적 번호에 대해 삭제 함수 호출
   });
 }
+
 function deleteAllQuotes(quoteNo) {
   if (confirm('정말로 이 견적번호에 대한 모든 데이터를 삭제하시겠습니까?')) {
     $.ajax({
-      url: 'quot1_process.php',
+      url: '/practice/AMESystem/views/quote/quot1_process.php',
       type: 'POST',
       data: { quote_no: quoteNo },
       dataType: 'json',
@@ -90,7 +114,8 @@ function deleteAllQuotes(quoteNo) {
     });
   }
 }
-//천단위 콤마 삽입을 위한 함수
+
+// 천단위 콤마 삽입을 위한 함수
 function formatNumber(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -154,7 +179,6 @@ function saveQuoteInfo($data) {
   // 데이터베이스에 견적 정보 저장
   saveQuoteInfo($data);
 }
-//<!-- HTML 폼 및 기타 사용자 인터페이스 -->
 
 // 입력 필드에서 숫자를 입력할 때 콤마 자동 추가 및 amt 계산
 $('input[name="price[]"], input[name="qty[]"]').on('input', function () {
@@ -189,12 +213,11 @@ function updateTotal() {
   document.getElementById('FTotal').value = formatNumber(total.toFixed(0)); // 결과를 포맷하여 총합에 표시
 }
 
-//검색어와 체크박스 선택후 액션
+// 검색어와 체크박스 선택 후 액션
 $(document).ready(function () {
   initializeEditButton();
   setupCheckboxHandlers();
   setupSearchHandler();
-  $(document).on('click', '#edit-button', redirectToEdit); // 이벤트 위임을 사용하여 편집 버튼에 대한 리스너 설정
 });
 
 function handleYearChange(selectedYear) {
@@ -202,7 +225,7 @@ function handleYearChange(selectedYear) {
   // 필요한 로직 추가, 예를 들어 AJAX 호출 등
   fetchQuotesByPeriod(selectedYear);
 }
-//여기 부터 수정안 함
+
 function initializeEditButton() {
   $('#edit-button').prop('disabled', true);
 }
@@ -219,7 +242,7 @@ function setupSearchHandler() {
     if (input) {
       $.ajax({
         method: 'POST',
-        url: 'searchajax_q.php',
+        url: '/practice/AMESystem/views/quote/searchajax_q.php',
         data: { input: input },
         success: function (response) {
           $('#searchResultContainer').html(response);
@@ -238,24 +261,15 @@ function getSelectedRows() {
     })
     .get();
 }
-//편집
-function redirectToEdit() {
-  console.log('편집 버튼 클릭됨');
-  var selectedRows = getSelectedRows();
-  if (selectedRows.length === 0) {
-    alert('편집할 항목을 선택하세요.');
-    return;
-  }
-  window.location.href = 'edit_quot.php?quote_no=' + selectedRows[0];
-}
-//기간 선택에 따른 데이터 가져오기
+
+// 기간 선택에 따른 데이터 가져오기
 function setPeriod(period) {
   fetchQuotesByPeriod(period);
 }
 
 function fetchQuotesByPeriod(period) {
   $.ajax({
-    url: 'fetch_quotes.php',
+    url: '/practice/AMESystem/views/quote/fetch_quotes.php',
     type: 'GET',
     data: { period: period },
     success: function (data) {
@@ -267,10 +281,11 @@ function fetchQuotesByPeriod(period) {
     },
   });
 }
-$(document).on('click', '#edit-button', redirectToEdit);
+
 function attachEditButtonListener() {
-  $('#edit-button').on('click', redirectToEdit);
+  $('#edit-button').off('click').on('click', redirectToEdit);
 }
+
 // 기간 선택자 이벤트 핸들러
 $('#oneYearBtn').click(function () {
   fetchQuotesByPeriod('1year');

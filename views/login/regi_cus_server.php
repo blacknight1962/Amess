@@ -1,5 +1,5 @@
 <?php
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 if (
   isset($_POST['custo_name']) && ($_POST['type_cu'])

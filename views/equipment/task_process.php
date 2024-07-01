@@ -3,7 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
-include('../db.php');
+include(__DIR__ . '/../../db.php');
 
 ob_start(); // 출력 버퍼링 시작
 // var_dump($_POST);

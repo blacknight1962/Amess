@@ -1,27 +1,40 @@
 <?php
 $pageTitle = "발주관리-정보 UPDATE";
 include('include/header.php');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 function fetchOrderInfo($conn, $order_no) {
+    $order_no = trim($order_no); // 앞뒤 공백 제거
     $query = "SELECT * FROM `order` WHERE order_no = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $order_no);
+    if (!$stmt) {
+        die('쿼리 준비 실패: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $order_no); // 숫자형으로 처리
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    } else {
-        return null;
+    if (!$result) {
+        die('쿼리 실행 오류: ' . $conn->error);
     }
+    $order_info = [];
+    while ($row = $result->fetch_assoc()) {
+        $order_info[] = $row;
+    }
+    return $order_info;
 }
 
-$order_info = array();
+$order_info = [];
 $order_no = ""; // 초기 order_no를 빈 문자열로 설정
 
 if (isset($_GET['order_no'])) {
-    $order_no = $_GET['order_no'];
+    $order_no = trim($_GET['order_no']); // 앞뒤 공백 제거
+
     $order_info = fetchOrderInfo($conn, $order_no);
+    if (!empty($order_info)) {
+        $order_info = $order_info[0]; // 배열의 첫 번째 요소만 사용
+    } else {
+        echo "Order not found.<br>";
+    }
 }
 ?>
   <!-- 발주 기본정보 입력 -->
@@ -62,7 +75,7 @@ if (isset($_GET['order_no'])) {
                       <td><input type='text' class='form-control' placeholder='생산코드' name='production_code' value="<?php echo isset($order_info['production_code']) ? $order_info['production_code'] : ''; ?>"></td>
                       <td><input type='date' class='form-control' placeholder='착수일자' name='production_start' value="<?php echo isset($order_info['production_start']) ? $order_info['production_start'] : ''; ?>"></td>
                       <td><button type="submit" id="saveButton" class="btn btn-outline-success btn-sm" style="font-size: .65rem">UPDATE</button></td>
-                      </tr>
+                    </tr>
                   </tbody>
                 </table>
               </form>
@@ -74,11 +87,18 @@ if (isset($_GET['order_no'])) {
 </div>   
 <?php
 function fetchOrderDetails($conn, $order_no) {
-    $query = "SELECT * FROM `order_data` WHERE order_no = ? ORDER BY o_no ASC";
+    $order_no = trim($order_no); // 앞뒤 공백 제거
+    $query = "SELECT * FROM order_data WHERE order_no = ? ORDER BY o_no ASC";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $order_no);
+    if (!$stmt) {
+        die('쿼리 준비 실패: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $order_no); // 숫자형으로 처리
     $stmt->execute();
     $result = $stmt->get_result();
+    if (!$result) {
+        die('쿼리 실행 오류: ' . $conn->error);
+    }
     $details = [];
     while ($row = $result->fetch_assoc()) {
         $details[] = $row;

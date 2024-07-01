@@ -1,6 +1,6 @@
 <?php
 include('include/header.php');
-include("../../db.php");
+include(__DIR__ . '/../../db.php');
 
 $id = $_GET['id'];
 

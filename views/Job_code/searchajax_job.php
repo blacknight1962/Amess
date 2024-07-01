@@ -1,7 +1,7 @@
 <?php
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
-if (isset($_POST['input'])) {
+if (isset($_POST['input'])) { 
   $input = $_POST['input'];
   $period = isset($_POST['period']) ? $_POST['period'] : '';
 

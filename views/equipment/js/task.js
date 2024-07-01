@@ -154,9 +154,11 @@ $(document).ready(function () {
   });
 });
 //검색을 위한 새로운 윈도우 창 열기
-document.getElementById('searchButton').addEventListener('click', function () {
-  window.open('task_search.php', '_blank');
-});
+document
+  .getElementById('#searchButton_t')
+  .addEventListener('click', function () {
+    window.open('task_search.php', '_blank');
+  });
 
 // 항목 추가 모달을 호출하는 함수
 function openAddOptionModal() {

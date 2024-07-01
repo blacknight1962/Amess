@@ -1,6 +1,13 @@
 $(document).ready(function () {
   initializeEventHandlers();
   $('#TBody .sub_no').first().val(1);
+
+  // searchButton에 대한 이벤트 리스너 설정
+  $('#searchButton')
+    .off('click')
+    .on('click', function () {
+      window.open('task_search.php', '_blank');
+    });
 });
 
 $(document).ready(function () {
@@ -25,7 +32,7 @@ function someOtherFunction() {
   console.log('Using equipment ID:', currentEquipmentId);
 }
 
-//삭제를 위해 이벤트 처리 전담 핸들러
+// 삭제를 위해 이벤트 처리 전담 핸들러
 $(document).on('click', '.delete-button', function () {
   var equipId = $(this).data('equip-id');
   if (confirm('이 장비를 삭제하시겠습니까?')) {
@@ -50,8 +57,8 @@ function BtnDel(element) {
     updateSubNos();
   }
 }
-// 행삭제 2단계
 
+// 행 삭제 2단계
 function deleteEquipment(equipId) {
   $.ajax({
     url: 'equip_process.php',
@@ -98,6 +105,7 @@ function performSearch(input) {
     },
   });
 }
+
 function handleYearChange(selectedYear) {
   console.log('선택된 연도:', selectedYear);
   fetchQuotesByPeriod(selectedYear);
@@ -151,7 +159,3 @@ function openPopupWindow(equipmentId) {
   var windowFeatures = 'width=1800,height=300';
   window.open(url, windowName, windowFeatures);
 }
-//통합검색을 위한 새로운 윈도우 창 열기
-document.getElementById('searchButton').addEventListener('click', function () {
-  window.open('task_search.php', '_blank');
-});

@@ -1,7 +1,7 @@
 <?php
 include('include/header.php');
-include('../public/Selection_kit.php');
-include('../../db.php');
+include(__DIR__ . '/../../public/Selection_kit.php');
+include(__DIR__ . '/../../db.php');
 ?>
 
 <!--insert customer's data by Modal -->
@@ -70,7 +70,7 @@ include('../../db.php');
       } ?>
       <!-- regist_customer main screen -->
       <div class="bg-success bg-opacity-10">
-        <h4 class="bg-primary bg-opacity-10 mb-2 p-2" style='text-align: center'>설정 - 고객관리</h4>
+        <h4 class="bg-primary bg-opacity-10 mb-2 p-2" style='text-align: center'>고객관리</h4>
         <section class="w-100 m-auto shadow-lg p-2 my-4 rounded-3 container text-center justify-content-center ms-0" style=' width:1280px'>
           <div class='container-fluid'>
             <!-- Button trigger modal -->
@@ -98,8 +98,8 @@ include('../../db.php');
                     $filtered = array(
                       'custo_id' => htmlspecialchars($row['custo_id']),
                       'custo_name' => htmlspecialchars($row['customer_na']),
-                      'type_name' => nullable_htmlspecialchars($row['type_name']),
-                      'regi_date' => nullable_htmlspecialchars($row['regi_date']),
+                      'type_name' => htmlspecialchars($row['type_name']),
+                      'regi_date' => htmlspecialchars($row['regi_date']),
                       'specification' => htmlspecialchars($row['specification'])
                     );
                   ?>

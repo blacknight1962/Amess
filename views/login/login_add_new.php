@@ -1,5 +1,5 @@
 <?php
-include("../../db.php");
+include(__DIR__ . '/../../db.php');
 include('include/header.php');
 
 if (isset($_POST['submit'])) {

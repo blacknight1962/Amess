@@ -1,7 +1,6 @@
 <?php
-
 include('include/header.php');
-include('../../db.php')
+include(__DIR__ . '/../../db.php');
 ?>
 <!--edit data -->
 <div class='"bg-success bg-opacity-20"'>

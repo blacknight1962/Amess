@@ -1,5 +1,5 @@
 <?php
-include("../../db.php");
+include(__DIR__ . '/../../db.php');
 include("include/header.php")
 ?>
 <title>AMESS 사용자 등록</title>
@@ -17,7 +17,7 @@ include("include/header.php")
     <div class='row justify-content-center'>
       <div class='col-md-12'>
         <div class="container-fluid justify-content-center">
-          <h4 class='bg-primary bg-opacity-10 mt-1 mb-1 p-2' style='text-align: center'>환경설정- 사용자 관리</h4>
+          <h4 class='bg-primary bg-opacity-10 mt-1 mb-1 p-2' style='text-align: center'>사용자 관리</h4>
           <section class="w-75 m-auto shadow-lg p-2 my-4 rounded-3 container text-center">
             <div>
               <a href="login_add_new.php" class="btn btn-outline-success btn-sm mb-2 justify-content-start" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;">신규등록</a>
@@ -51,7 +51,7 @@ include("include/header.php")
                         'ep_name' => htmlspecialchars($row["ep_name"]),
                         'J_level' => htmlspecialchars($row["J_level"]),
 
-                        'gender' => nullable_htmlspecialchars($row["gender"]),
+                        'gender' => htmlspecialchars($row["gender"]),
                         'Mphone' => htmlspecialchars($row["Mphone"]),
                         'ep_addr' => htmlspecialchars($row["ep_addr"]),
                         'acc_right' => htmlspecialchars($row["acc_right"])

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 /* 고객 등록 데이터 저장 */
 if (isset($_POST['save_data'])) {

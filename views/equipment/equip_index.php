@@ -36,8 +36,7 @@ if (isset($_SESSION['status'])) {
       <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
       <!-- 숨겨진 입력 필드로 선택된 기간 저장 -->
       <input type="hidden" name="selectedPeriod" id="selectedPeriod">
-      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;"><a href="task_search.php" target="_blank" style="text-decoration: none; color:inherit;">통합검색</a>
-      </button>
+      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;">통합검색</button>
       <!-- 신규 견적 등록 버튼 -->
       <div style="margin-left: auto;">
         <!-- Button trigger modal -->
@@ -123,7 +122,7 @@ if (isset($_SESSION['status'])) {
   </div>
 </div>
   <script src="js/equipment.js"></script>
-  <script src='js/task.js'></script>
+  <!-- <script src='js/task.js'></script> -->
   <!-- <script src="equip.js"></script> -->
 </body>
 <?php include('include/footer.php'); ?>

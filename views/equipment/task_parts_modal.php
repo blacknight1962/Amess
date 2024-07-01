@@ -1,5 +1,5 @@
 <?php
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 // 쿼리 실행
 $sql = "SELECT * FROM task_part ORDER BY tp_no DESC";
@@ -32,7 +32,7 @@ if(mysqli_num_rows($result) > 0){
 
         <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .65rem" name="hangmok" placeholder="추가 할 항목명">
         
-        <table class="table table-bordered" style="font-size: .65rem">
+        <table class="table table-bordered table-striped" style="font-size: .65rem">
           <thead>
             <tr>
               <th>항목번호</th>

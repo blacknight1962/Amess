@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "발주관리-발주등록";
 include('include/header.php');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 function fetchOrderInfo($conn, $order_no) {
     $query = "SELECT * FROM `order` WHERE order_no = ?";

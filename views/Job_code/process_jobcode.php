@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 /* 장비등록 데이터 저장 */
 if (isset($_POST['save_data'])) {
@@ -53,21 +53,21 @@ if (isset($_POST['update_btn'])) {
 }
 
 /* 장비 Delete data */
-if (isset($_GET["id"])) {
-  $id = $_GET["id"];
+if (isset($_POST["seri_no"])) {
+  $seriNo = $_POST["seri_no"];
 
   $sql = "DELETE FROM jobcode WHERE j_no = ?";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s", $id);
+  $stmt->bind_param("s", $seriNo);
 
   if ($stmt->execute()) {
-    $_SESSION['status'] = "성공적으로 데이터를 삭제했습니다.";
+    $response = array("status" => "success", "message" => "성공적으로 데이터를 삭제했습니다.");
   } else {
-    $_SESSION['status'] = "데이터 삭제에 실패했습니다: " . $stmt->error;
+    $response = array("status" => "error", "message" => "데이터 삭제에 실패했습니다: " . $stmt->error);
   }
   $stmt->close();
-  header('location: jobcode_index.php');
+  echo json_encode($response);
 } else {
-  echo '잘못된 데이터입니다.';
+  echo json_encode(array("status" => "error", "message" => "잘못된 데이터입니다."));
 }
 ?>

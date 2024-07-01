@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "AMESS 발주관리";
 include('include/header.php');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 
 if (isset($_SESSION['message'])) {
@@ -99,12 +99,12 @@ if (isset($_GET['id'])) {
               <th style="width: 5%;">발주사</th>
 
               <th style="width: 5%;">고객사</th>
-              <th style="width: 3%;">특기</th>
+              <th style="width: 5%;">특기</th>
               <th style="width: 4%;">구분</th>
               <th style="width: 5%;">담당자</th>
               <th style="width: 7%;">자재코드</th>
 
-              <th style="width: 9%;">품명</th>
+              <th style="width: 7%;">품명</th>
               <th style="width: 8%;">사양</th>
               <th style="width: 5%;">요청납기</th>
               <th style="width: 5%;">단가</th>
@@ -120,7 +120,13 @@ if (isset($_GET['id'])) {
           <tbody>
             <?php
 
-            $sql = 'SELECT * FROM `order` o LEFT JOIN `order_data` od ON o.order_no = od.order_no ORDER BY o.order_no DESC';
+$sql = 'SELECT o.*, od.*, s.*
+        FROM `order` o
+        LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no
+        LEFT JOIN `sales_data` s ON od.order_no = s.order_no AND od.o_no = s.serial_no
+        ORDER BY o.order_no DESC, o.o_no ASC';
+
+$result = mysqli_query($conn, $sql);
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_array($result)) {

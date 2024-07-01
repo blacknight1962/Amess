@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include(__DIR__ . '/../../db.php');
 
 /* User Delete data */
 if (isset($_GET["id"])) {

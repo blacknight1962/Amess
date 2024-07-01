@@ -1,3 +1,10 @@
+<?php
+session_start();
+include('include/header.php');
+include(__DIR__ . '/../../db.php');
+include ("task_searchajax_f.php");
+include ("task_searchajax_t.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +13,10 @@
     <title>Search Equipment</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="style_equip.css?v=1.2">
-    <script src="task_search.js"></script>
-    <script src="task_searchajax_f.php"></script>
+    <link rel="stylesheet" href="/practice/AMESystem/public/style.css">
+    <link rel="stylesheet" href="/practice/AMESystem/public/style_equip.css">
+    <script src="js/task_search.js"></script>
+    
 </head>
 
 <body>
@@ -91,24 +98,24 @@
               <tr>
                 <th style="width: 3%;">No</th>
                 <th style="width: 4%;">부서</th>
-                <th style="width: 11%;">장비명</th>
-                <th style="width: 10%;">모델명</th>
-                <th style="width: 9%;">S/N</th>
+                <th style="width: 8%;">장비명</th>
+                <th style="width: 8%;">모델명</th>
+                <th style="width: 8%;">S/N</th>
 
-                <th style="width: 9%;">S/W ver.</th>
-                <th style="width: 6%;">작업자</th>
-                <th style="width: 7%;">작업일자</th>
-                <th style="width: 6%;">가동상황</th>
-                <th style="width: 7%;">고객명</th>
+                <th style="width: 7%;">S/W ver.</th>
+                <th style="width: 5%;">작업자</th>
+                <th style="width: 5%;">작업일자</th>
+                <th style="width: 5%;">가동상황</th>
+                <th style="width: 5%;">고객명</th>
 
-                <th style="width: 7%;">사업장</th>
+                <th style="width: 6%;">사업장</th>
                 <th style="width: 5%;">설치장소</th>
-                <th style="width: 7%;">공정</th>
-                <th style="width: 7%;">고객명칭</th>
+                <th style="width: 5%;">공정</th>
+                <th style="width: 6%;">고객명칭</th>
                 <th style="width: 4%;">구분</th>
 
                 <th style="width: 7%;">작업항목</th>
-                <th style="width: 16%;">작업내용</th>
+                <th style="width: 9%;">작업내용</th>
               </tr>
             </thead>
             <tbody id="taskSearchBody" style="font-size: .65rem;">

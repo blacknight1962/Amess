@@ -208,44 +208,6 @@ document.body.addEventListener('click', function (event) {
     }
   }
 });
-// function sendData() {
-//   var form = document.getElementById('paymentForm');
-//   var formData = new FormData(form);
-//   formData.append('action_type', 'save_sales'); // action_type 설정
-//   formData.set('order_no', formData.get('order_no')); // order_no 수정
-
-//   fetch(form.action, {
-//     method: 'POST',
-//     body: formData,
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.text(); // JSON 대신 텍스트로 응답을 받습니다.
-//     })
-//     .then((text) => {
-//       console.log('Server Response:', text); // 서버 응답을 콘솔에 로그로 남깁니다.
-//       try {
-//         const data = JSON.parse(text); // 텍스트를 JSON으로 파싱합니다.
-//         if (data.status === 'success') {
-//           alert('입금이 확인되었습니다.');
-//           location.reload(); // 성공 시 페이지 새로고침
-//         } else {
-//           alert('입금 확인에 실패했습니다: ' + data.message);
-//         }
-//       } catch (e) {
-//         alert('응답 파싱 중 오류가 발생했습니다: ' + e.message);
-//         console.error('Parsing error:', e, 'Response:', text);
-//       }
-//     })
-//     .catch((error) => {
-//       alert(
-//         '네트워크 오류가 발생했습니다. 다시 시도해주세요. ' + error.message
-//       );
-//       console.error('Fetch error:', error);
-//     });
-// }
 
 function sendData() {
   var form = document.getElementById('paymentForm');
@@ -283,7 +245,7 @@ function redirectToSalesEdit() {
   console.log('선택된 발주번호:', selectedOrderNo); // 콘솔에 선택된 발주번호 출력
 
   if (selectedOrderNo) {
-    window.open('order_new.php?order_no=' + selectedOrderNo, '_blank');
+    window.open('order_update.php?order_no=' + selectedOrderNo, '_blank');
   } else {
     alert('발주를 선택해주세요.');
   }

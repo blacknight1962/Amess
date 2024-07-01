@@ -2,7 +2,7 @@
 ob_start(); // 출력 버퍼링 시작
 session_start();
 header('Content-Type: application/json');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 $condit = isset($_POST['condit']) ? $_POST['condit'] : 'default_value';
 $_SESSION['condit'] = $condit;

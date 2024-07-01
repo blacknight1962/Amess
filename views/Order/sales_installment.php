@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "매출관리-매출등록";
 include('include/header.php');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 // header('Content-Type: application/json');
 
 

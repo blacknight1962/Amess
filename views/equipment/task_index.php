@@ -3,6 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include('include/header.php'); 
+include(__DIR__ . '/../../db.php');
 include('task_add_modal.php');
 include('task_parts_modal.php');
 include('delete_task.php');
@@ -53,9 +54,8 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
         <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
         <!-- 검색란 -->
         <!-- 검색 버튼 -->
-          <button type="button" class="btn btn-outline-primary" id="searchButton" style="font-size: .65rem; width: 10%;">Search...</button>
-      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;"><a href="task_search.php" target="_blank" style="text-decoration: none; color:inherit;">통합검색</a>
-      </button>
+          <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
+      <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton_t" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;">통합검색</button>
         </div>
         <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .65rem'>
           <thead class='table-warning'>

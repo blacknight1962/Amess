@@ -2,7 +2,7 @@
 ob_start();
 session_start();
 header('Content-Type: application/json');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 // var_dump($_POST);
 // ob_end_flush();

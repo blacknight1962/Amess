@@ -6,10 +6,7 @@
         <h4 class="modal-title fs-5" id="updatemodalLabel">작업 추가</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <?php
-print_r($_GET);
-exit();
-?>
+
         <div class="modal-body">
           <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
             <div class='container-fluid' style='width: 1800px me-0 ms-0'>

@@ -3,8 +3,8 @@ session_start();
 $userName = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
 include('include/header.php');
-include('../../public/Selection_kit.php');
-include('../../db.php');
+include(__DIR__ . '/../../public/Selection_kit.php');
+include(__DIR__ . '/../../db.php');
 
 if (isset($_SESSION['status'])) {
   echo "<div class='alert alert-info' role='alert'>" . $_SESSION['status'] . "</div>";
@@ -132,7 +132,7 @@ if (isset($_SESSION['status'])) {
                 <td><?= $filtered['regi_date'] ?></td>
                 <td><?= $filtered['jobcode_specifi'] ?></td>
                 <td><a href="edit_jobcode.php?id='<?= $filtered['seri_no'] ?>'" class="link-primary" target="_blank"><i class="fa-solid fa-pen-to-square fs-6 me-3"></i></a>
-                  <a href="javascript:void()" onClick="confirmter(<?php echo $row['seri_no'] ?>)" class=" link-secondary"><i class="fa-solid fa-trash fs-6"></i></a>
+                  <a href="javascript:void()" onClick="deleteAllQuotes('<?= $filtered['seri_no'] ?>')" class=" link-secondary"><i class="fa-solid fa-trash fs-6"></i></a>
                 </td>
               </tr>
             <?php } ?>
@@ -141,5 +141,6 @@ if (isset($_SESSION['status'])) {
     </div>
   </section>
 </div>
-<script src="js/search_jobcode.js"></script>
+<script src="/practice/AMESystem/views/job_code/js/jobcode.js"></script>
+<script src="/practice/AMESystem/views/job_code/js/search_jobcode.js"></script>
 <?php include('include/footer.php'); ?>

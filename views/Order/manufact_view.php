@@ -36,7 +36,11 @@ include('include/header.php');
           </thead>
           <tbody>
               <?php
-              $sql = 'SELECT * FROM `order` o LEFT JOIN `order_data` od ON o.order_no = od.order_no ORDER BY o.order_no DESC';
+              $sql = 'SELECT o.*, od.*, s.*
+              FROM `order` o
+              LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no
+              LEFT JOIN `sales_data` s ON od.order_no = s.order_no AND od.o_no = s.serial_no
+              ORDER BY o.order_no DESC, o.o_no ASC';
               $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_array($result)) {
@@ -84,10 +88,15 @@ include('include/header.php');
 
                       <td><?= $filtered['sales_date'] ?></td>
                       <td><?= $filtered['condit'] ?></td>
-                      <td><a href="order_new.php?id='<?= $filtered['order_no'] ?>'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-6 me-3"></i></a>
-                        <a href="javascript:void()" onClick="deleteSelectedManufact(<?php echo $row['order_no'] ?? 'null' ?>)" class=" link-secondary"><i class="fa-solid fa-trash fs-6"></i></a>
+                      <td>
+                        <a href="order_update.php?order_no=<?= $filtered['order_no'] ?>" class="link-primary" target="_blank">
+                          <i class="fa-solid fa-pen-to-square fs-6 me-3"></i>
+                        </a>
+                        <a href="javascript:void()" onClick="deleteSelectedManufact(<?php echo $row['order_no'] ?? 'null' ?>)" class="link-secondary">
+                          <i class="fa-solid fa-trash fs-6"></i>
+                        </a>
                       </td>
-                                          </tr>
+                    </tr>
                   <?php
                   }
                 ?>

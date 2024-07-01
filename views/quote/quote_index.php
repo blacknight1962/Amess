@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('include/header.php');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 
 // 세션 메시지 확인 및 출력
@@ -123,7 +123,7 @@ if (isset($_SESSION['message'])) {
     <button id="edit-button" onclick="redirectToEdit()" style="margin-right: 10px; background-color: #007bff; color: white; border: none; padding: 6px 12px; font-size: 14px;">편집</button>
     <button id="delete-button" onclick="deleteSelectedQuotes()" style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; font-size: 14px;">삭제</button>
 </div>
-<script src="js/quot.js" defer></script>
+<script src="/practice/AMESystem/views/quote/js/quot.js" defer></script>
 </body>
 <?php
 include('include/footer.php');

@@ -1,7 +1,6 @@
 <?php
-include('../../db.php');
-
-include('../../public/Selection_kit.php');
+include(__DIR__ . '/../../../db.php');
+include(__DIR__ . '/../../../public/Selection_kit.php');
 // include('task_add_modal.php'); 
 
 $user_id = $_SESSION['ss_id'];
@@ -16,7 +15,7 @@ if (!isset($_SESSION['ss_id']) or $_SESSION['ss_id'] == '') {
     if (!isset($_GET['skip_redirect']) || $_GET['skip_redirect'] != 'true') {
         echo "<script> 
         alert('로그인 후 사용가능합니다');
-        self.location.href='../login/login.php';
+        self.location.href='/practice/AMESystem/views/login/login.php';
         </script>";
         exit();
     }

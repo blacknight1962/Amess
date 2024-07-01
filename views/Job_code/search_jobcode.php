@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('include/header.php');
-include('../../db.php')
+include(__DIR__ . '/../../db.php');
 ?>
 
 <body class='bg-primary bg-opacity-10'>
