@@ -12,7 +12,7 @@
             <div class="py-1" style="margin:10px">
               <h6 class="fw-bold">로그인</h6>
             </div>
-            <form action='login/login_server.php' method='post' autocomplete="off">
+            <form action='views/login/login_server.php' method='post' autocomplete="off">
               <div class="col col-xl-10 m-auto">
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" name="id" id='id' placeholder="ID" style="height: 55px !important;">
