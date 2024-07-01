@@ -15,4 +15,4 @@
     if (!$conn) {
         die("DB 접속 실패: " . mysqli_connect_error());
     }
-?>
+    ?>
