@@ -1,0 +1,9 @@
+# 모든 텍스트 파일에 대해 LF를 사용
+* text=auto
+
+# Windows에서 CRLF를 사용해야 하는 파일
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Unix에서 LF를 사용해야 하는 파일
+*.sh text eol=lf
