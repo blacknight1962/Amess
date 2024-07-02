@@ -13,11 +13,24 @@ if (isset($_POST['id']) && isset($_POST['password'])) {
     header('location: /practice/amesystem/views/main_index.php?error=비밀번호가 비어 있어요');
     exit();
   } else {
-    // pw_board 테이블에서 일치하는 아이디의 데이터를 가져오기
-    $sql = "SELECT * FROM pw_board where id = '$user_id'";
-    $result = mysqli_query($conn, $sql);
+    // 데이터베이스 연결 설정
+    $url = parse_url(getenv("DATABASE_URL"));
+    $server = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
 
-    if (mysqli_num_rows($result) === 1) {
+    $conn = new mysqli($server, $username, $password, $database);
+
+    if ($conn->connect_error) {
+        die("DB 접속 실패: " . $conn->connect_error);
+    }
+
+    // pw_board 테이블에서 일치하는 아이디의 데이터를 가져오기
+    $sql = "SELECT * FROM pw_board WHERE id = '$user_id'";
+    $result = $conn->query($sql);
+
+    if ($result && mysqli_num_rows($result) === 1) {
       $row = mysqli_fetch_assoc($result);
       $hash = $row['pw'];
 
@@ -30,7 +43,7 @@ if (isset($_POST['id']) && isset($_POST['password'])) {
 
         // 사용자 이름을 가져오기 위한 쿼리
         $sql_name = "SELECT * FROM employee WHERE ep_id='$user_id'";
-        $result_name = mysqli_query($conn, $sql_name);
+        $result_name = $conn->query($sql_name);
         if ($row_name = mysqli_fetch_assoc($result_name)) {
           $_SESSION['username'] = htmlspecialchars($row_name['ep_name']);  // 사용자 이름을 세션에 저장
         }
