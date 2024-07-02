@@ -1,5 +1,9 @@
 <?php
 
+// 에러 보고 활성화
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include(__DIR__ . '/../../db.php');
 
 if (isset($_POST['id']) && isset($_POST['password'])) {
