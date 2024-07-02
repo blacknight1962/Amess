@@ -30,6 +30,10 @@ if (isset($_POST['id']) && isset($_POST['password'])) {
     $sql = "SELECT * FROM pw_board WHERE id = '$user_id'";
     $result = $conn->query($sql);
 
+    if (!$result) {
+        die("쿼리 실패: " . $conn->error);
+    }
+
     if ($result && mysqli_num_rows($result) === 1) {
       $row = mysqli_fetch_assoc($result);
       $hash = $row['pw'];
