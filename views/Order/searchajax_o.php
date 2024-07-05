@@ -1,27 +1,30 @@
 <?php
 include(__DIR__ . '/../../db.php');
+include('search_modules_order.php'); // 발주 검색 모듈 포함
 
-$input = $_POST['input'] ?? '';
-$page = $_POST['page'] ?? 1;
-$itemsPerPage = 10;
-$offset = ($page - 1) * $itemsPerPage;
+// POST 데이터 출력 (디버깅용)
+error_log("POST 데이터: " . print_r($_POST, true));
 
-$input = mysqli_real_escape_string($conn, $input);
+$period = isset($_POST['period']) ? mysqli_real_escape_string($conn, $_POST['period']) : '';
+$year = isset($_POST['year']) ? mysqli_real_escape_string($conn, $_POST['year']) : '';
+$input = isset($_POST['input']) ? mysqli_real_escape_string($conn, $_POST['input']) : '';
 
-$sql = "SELECT SQL_CALC_FOUND_ROWS o.*, od.* 
-FROM `order` o
-JOIN order_data od ON o.order_no = od.order_no
-WHERE (od.order_no LIKE '%{$input}%' OR od.product_na LIKE '%{$input}%' OR od.product_sp LIKE '%{$input}%'
-OR od.parts_code LIKE '%{$input}%' OR od.requi_date LIKE '%{$input}%' OR o.order_custo LIKE '%{$input}%' 
-OR o.customer LIKE '%{$input}%' OR o.custo_name LIKE '%{$input}%')
-ORDER BY o.order_date DESC, o.o_no ASC
-LIMIT $offset, $itemsPerPage";
+error_log("Period: $period, Year: $year, Input: $input");
 
-$result = mysqli_query($conn, $sql);
-$totalResult = mysqli_query($conn, "SELECT FOUND_ROWS() as total");
-$totalRows = mysqli_fetch_assoc($totalResult)['total'];
+$tables = [
+    '`order` o',
+    'LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no'
+];
 
-if (mysqli_num_rows($result) > 0) { ?>
+$result = performOrderSearch($conn, $tables, 'o.order_date', $period, $year, $input);
+
+if (!$result) {
+    error_log("SQL 에러: " . mysqli_error($conn));
+}
+
+$totalRows = mysqli_num_rows($result);
+
+if ($totalRows > 0) { ?>
 <table class="table table-striped table-bordered table-hover mt-2" style='font-size: .75rem'>
   <thead>
     <tr>

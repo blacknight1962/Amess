@@ -4,12 +4,12 @@ include('include/header.php');
 
 ?>
     <!-- equipment main screen -->
-<div class='"bg-success bg-opacity-10"'>
+<div class="bg-success bg-opacity-10" style='max-width: 1920px; margin: 0 auto; overflow-x: auto;'>
   <h4 class='bg-primary bg-opacity-10 mb-2 p-2' style='text-align: center'>영업관리 - 생산관리</h4>
-  <section class="shadow-lg p-2 my-1 rounded-3 container text-center justify-content-center ms-0" style='width:14400px'>
-    <div class='container'>
+  <section class="shadow-lg p-2 my-1 rounded-3 container text-center justify-content-center" style='max-width: 100%; margin: 0 auto; overflow-x: auto;'>
+    <div class='container' style='max-width: 100%; overflow-x: auto;'>
       <div class='card-body'>
-        <table class="table table-striped table-bordered table-hover mt-3 table-xl" style='font-size: .65rem'>
+        <table class="table table-striped table-bordered table-hover mt-3 table-xl" style='font-size: .75rem; width: 1900px; margin: 0 auto;'>
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -76,13 +76,13 @@ include('include/header.php');
 
                       <td><?= $filtered["order_date"] ?></td>
                       <td><?= $filtered['order_custo'] ?></td>
-                      <td><?= $filtered['specifi'] ?></td>
+                      <td style='text-align: left;'><?= $filtered['specifi'] ?></td>
                       <td><?= $filtered["aparts"] ?></td>
                       <td><?= $filtered['custo_name'] ?></td>
 
-                      <td><?= $filtered['parts_code'] ?></td>
-                      <td><?= $filtered['product_na'] ?></td>
-                      <td><?= $filtered["product_sp"] ?></td>
+                      <td style='text-align: left;'><?= $filtered['parts_code'] ?></td>
+                      <td style='text-align: left;'><?= $filtered['product_na'] ?></td>
+                      <td style='text-align: left;'><?= $filtered["product_sp"] ?></td>
                       <td><?= $filtered['requi_date'] ?></td>
                       <td><?= $filtered['qty'] ?></td>
 

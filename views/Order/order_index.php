@@ -67,14 +67,13 @@ if (isset($_GET['id'])) {
       <!-- 신규 발주 등록 버튼 -->
       <div style="margin-left: auto; margin-right: 20px;">
         <!-- Button trigger modal -->
-        <button type="button" id="resetBtn" class="btn btn-secondary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;">초기화</button>
         <button type="button" class="btn btn-primary mt-1 mb-0 float-end" name="submit" style="--bs-btn-padding-y: .4rem; --bs-btn-padding-x: .15rem; --bs-btn-font-size: .65rem;">
           <a href="order_new.php" target="_blank" style="color: white; text-decoration: none;">발주 등록</a>
         </button>
       </div>
     </div>
     <div class='card-body'>
-        <div id="searchResultContainer"></div>
+        <div id="searchResultContainer_o"></div>
         <table class="table table-striped table-bordered table-hover mt-2 table-xl" style='font-size: .75rem'>
           <thead style="text-align: center;">
             <tr>

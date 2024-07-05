@@ -1,85 +1,54 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const keywordInput = document.getElementById('getWords');
-  const resetBtn = document.getElementById('resetBtn');
-  const searchResultContainer = document.getElementById(
-    'searchResultContainer'
-  );
-  const yearInput = document.getElementById('yearSelect');
-  const selectedPeriodInput = document.getElementById('selectedPeriod');
-  let page = 1;
-  let isLoading = false;
-
-  function performSearch() {
-    if (isLoading) return;
-    isLoading = true;
-
-    const keyword = keywordInput.value;
-    const year = yearInput.value;
-    const period = selectedPeriodInput.value;
-
-    const params = new URLSearchParams({
-      input: keyword,
-      year,
-      period,
-      page,
-    });
-
-    fetch('searchajax_o.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
-    })
-      .then((response) => response.text())
-      .then((html) => {
-        searchResultContainer.innerHTML += html;
-        isLoading = false;
-        page++;
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        isLoading = false;
-      });
-  }
-
-  function handleYearChange() {
-    page = 1;
-    searchResultContainer.innerHTML = '';
-    performSearch();
-  }
-
-  if (keywordInput) {
-    keywordInput.addEventListener('input', function () {
-      page = 1;
-      searchResultContainer.innerHTML = '';
-      performSearch();
-    });
-  }
-
-  if (yearInput) {
-    yearInput.addEventListener('change', handleYearChange);
-  }
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', function () {
-      keywordInput.value = '';
-      yearInput.value = '';
-      selectedPeriodInput.value = '';
-      searchResultContainer.innerHTML = ''; // 검색 결과 초기화
-      window.location.href = 'order_index.php'; // 페이지를 새로고침하여 본래 화면으로 돌아감
-    });
-  }
-
-  window.addEventListener('scroll', function () {
-    if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 &&
-      !isLoading
-    ) {
-      performSearch();
-    }
-  });
-
-  // handleYearChange 함수를 전역으로 노출
-  window.handleYearChange = handleYearChange;
+$(document).ready(function () {
+  console.log('Document is ready');
+  initializeEventHandlers();
 });
+
+function initializeEventHandlers() {
+  console.log('Initializing event handlers...');
+  $(document).on('keyup', '#getWords', handleSearchInput);
+  $('#oneYearBtn').click(() => setPeriod('1year'));
+  $('#threeYearsBtn').click(() => setPeriod('3years'));
+  $('#yearSelect').change((event) => handleYearChange(event.target.value));
+}
+
+function handleSearchInput() {
+  var input = $('#getWords').val();
+  console.log('Input:', input);
+  if (input.length > 0) {
+    performSearch(input);
+  } else {
+    $('#searchResultContainer_o').html('');
+    console.log('Input length less than 2, cleared search results.');
+  }
+}
+
+function performSearch(input) {
+  var period = $('.btn-primary').data('period'); // 현재 선택된 기간 가져오기
+  var year = $('#yearSelect').val(); // 선택된 연도 가져오기
+  console.log('Performing search with:', { input, period, year });
+
+  $.ajax({
+    url: 'searchajax_o.php', // 발주 검색을 위한 서버 스크립트 URL
+    type: 'POST',
+    data: { input: input, period: period, year: year },
+    success: function (response) {
+      console.log('AJAX success:', response);
+      $('#searchResultContainer_o').html(response);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert('검색 중 오류가 발생했습니다.');
+    },
+  });
+}
+
+function setPeriod(period) {
+  $('.btn-primary').data('period', period); // 기간 데이터 설정
+  $('#yearSelect').val(''); // 기간 선택 시 연도 초기화
+  performSearch($('#getWords').val()); // 기간 변경 후 검색 재실행
+}
+
+function handleYearChange(selectedYear) {
+  console.log('선택된 연도:', selectedYear);
+  $('.btn-primary').data('period', ''); // 연도 선택 시 기간 초기화
+  performSearch($('#getWords').val()); // 연도 변경 후 검색 재실행
+}
