@@ -14,41 +14,41 @@ include('../../db.php');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action='process_equip.php' method="POST">
-        <div class="modal-body">
+        <div class="modal-body" style="font-size: .75rem !important;">
 
           <div class='form-floating mb-1'>
             <input type='text' class='form-control' name='codeg' placeholder="코드그룹">
-            <label for="floatingInput">코드그룹</label>
+            <label for="floatingInput" style="font-size: .75rem;">코드그룹</label>
           </div>
 
           <div class='form-floating mb-1'>
             <input type='text' class='form-control' name='q_system' placeholder="장비명" required>
-            <label for="floatingInput">장비명</label>
+            <label for="floatingInput" style="font-size: .75rem;">장비명</label>
           </div>
 
           <div class='form-floating mb-1'>
             <input type='text' class='form-control' name='model' placeholder="모델명" required>
-            <label for="floatingInput">모델명</label>
+            <label for="floatingInput" style="font-size: .75rem;">모델명</label>
           </div>
 
           <div class='form-floating mb-1'>
             <input type='text' class='form-control' name='eqip_ver' placeholder="버젼" required>
-            <label for="floatingInput">버젼</label>
+            <label for="floatingInput" style="font-size: .75rem;">버젼</label>
           </div>
 
           <div class='form-floating mb-1'>
             <input type='text' class='form-control' name='pic' placeholder="등록자" required>
-            <label for="floatingInput">등록자</label>
+            <label for="floatingInput" style="font-size: .75rem;">등록자</label>
           </div>
 
           <div class='form-group mb-1'>
-            <label for="" name='reg_date'>등록일자</label>
+            <label for="" name='reg_date' style="font-size: .75rem;">등록일자</label>
             <?php echo date('Y-m-d') ?>
           </div>
 
           <div class='form-floating mb-1'>
             <input type='text' class='form-control' name='jobcode_specifi' placeholder="비고">
-            <label for="floatingInput">비고</label>
+            <label for="floatingInput" style="font-size: .75rem;">비고</label>
           </div>
 
           <div class="modal-footer">

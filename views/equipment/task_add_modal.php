@@ -28,7 +28,7 @@ $seri_no = isset($_POST['seri_no']) ? $_POST['seri_no'] : 'default_value';
             <input type="hidden" name="action" value="saveTask">
             <input type="hidden" id="seri_no" name="seri_no" value="<?= $seri_no ?>">
               <div class="modal-body">
-                <table class='table table-custom table-bordered mt-1' style="font-size: .65rem; width: 100%;">
+                <table class='table table-custom table-bordered mt-1' style="font-size: .75rem; width: 100%;">
                   <thead style="max-width: 1850px; text-align: center;">
                     <tr class='table table-secondary'>
                       <th style="width: 4%;">No</th>
@@ -45,15 +45,15 @@ $seri_no = isset($_POST['seri_no']) ? $_POST['seri_no'] : 'default_value';
                       </th>
                   </thead>
                   <tbody id="TU_Body">
-                    <tr id="TU_Row" style="font-size: .65rem;">
+                    <tr id="TU_Row" style="font-size: .75rem;">
                       <td><input type="text" class="form-control t_no" style="text-align: center;" name="t_no[]" value="1"></td>
-                      <td><input type="text" class="form-control date_task" style="font-size: .65rem" name="date_task[]" value="<?= $_SESSION['date'] ?? '' ?>"></td>
-                      <td><input type="text" class="form-control task_person" style="font-size: .65rem" name="task_person[]" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>"></td>
+                      <td><input type="text" class="form-control date_task" style="font-size: .75rem" name="date_task[]" value="<?= $_SESSION['date'] ?? '' ?>"></td>
+                      <td><input type="text" class="form-control task_person" style="font-size: .75rem" name="task_person[]" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>"></td>
                       <td><?= createSelectTask($conn, 'task_aparts', 'taskaparts', 'taskaparts', 'task_aparts[]', '') ?></td>
                       <td><?= createSelectTaskPart($conn, 'task_part', 'hangmok', 'hangmok', 'hangmok[]', '') ?></td>
-                      <td><textarea class="form-control task_title" name="task_title[]" rows="1" style="font-size: .65rem; resize: none; width: 100%; height: 65px;"></textarea></td>
-                      <td><textarea class="form-control task_content" name="task_content[]" rows="1" style="font-size: .65rem; resize: none; width: 100%; height: 65px;"></textarea></td>
-                      <td><input type="text" class="form-control specification" style="font-size: .65rem; width: 100%; height: 65px;" name="specification[]" value=''></td>
+                      <td><textarea class="form-control task_title" name="task_title[]" rows="1" style="font-size: .75rem; resize: none; width: 100%; height: 65px;"></textarea></td>
+                      <td><textarea class="form-control task_content" name="task_content[]" rows="1" style="font-size: .75rem; resize: none; width: 100%; height: 65px;"></textarea></td>
+                      <td><input type="text" class="form-control specification" style="font-size: .75rem; width: 100%; height: 65px;" name="specification[]" value=''></td>
                       <td><?= createSelectStatus($conn, 'manage_stat', 'status', 'status', 'manage_stat[]', '') ?></td>
                       <td><button type="button" class="btn link-danger small-btn" style="font-size: .65rem" onclick="BtnDelTU(this)">
                           <i class="fa-solid fa-trash fs-6"></i></button>

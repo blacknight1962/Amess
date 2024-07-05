@@ -1,8 +1,6 @@
 $(document).ready(function () {
-  initializeEventHandlers();
   initializePage();
   GetTotal(); // 페이지 로드 시 총합 계산
-  setupSearchHandler(); // 검색 핸들러 설정
 });
 
 function initializePage() {
@@ -11,107 +9,6 @@ function initializePage() {
     // BtnAdd_o();
   });
   // 다른 필요한 초기화 코드
-}
-
-function initializeEventHandlers() {
-  console.log('Event handlers initialized');
-  $('#oneYearBtn').click(() => setPeriod('1year'));
-  $('#threeYearsBtn').click(() => setPeriod('3years'));
-  $('#yearSelect').change((event) => handleYearChange(event.target.value));
-  $('#edit-button').click(function (event) {
-    event.preventDefault(); // 기본 동작 방지
-    redirectToEdit();
-  });
-  $('#delete-button').click(function (event) {
-    event.preventDefault(); // 기본 동작 방지
-    deleteSelectedQuotes();
-  });
-  $('input[name="price[]"], input[name="qty[]"]').on('input', function () {
-    updatePrice(this); // 콤마 추가 및 amt 계산
-  });
-  $('body').on('click', '#addButton', function () {
-    // BtnAdd_o();
-  });
-  $('#tableBody').on('click', '.deleteButton', function () {
-    BtnDel_o(this);
-  });
-}
-
-function setupSearchHandler() {
-  var searchInput = $('#getWords');
-  if (searchInput.length > 0) {
-    console.log('Search input found');
-    searchInput.keyup(function () {
-      var input = $(this).val().trim();
-      console.log('Input value:', input);
-      if (input.length > 1) {
-        // 최소 2글자 이상 입력했을 때 검색 실행
-        $.ajax({
-          url: 'searchajax_o.php', // 검색 처리를 위한 서버 측 스크립트
-          type: 'POST',
-          data: { input: input },
-          success: function (response) {
-            $('#searchResultContainer').html(response); // 검색 결과를 표시할 요소
-          },
-          error: function () {
-            alert('검색을 수행할 수 없습니다.');
-          },
-        });
-      } else {
-        $('#searchResultContainer').html(''); // 입력 길이가 짧을 때 결과 비우기
-      }
-    });
-  } else {
-    console.log('Search input not found');
-  }
-}
-
-function handleYearChange(selectedYear) {
-  console.log('선택된 연도:', selectedYear);
-  fetchQuotesByPeriod(selectedYear);
-}
-
-function setPeriod(period) {
-  fetchQuotesByPeriod(period);
-}
-
-function fetchQuotesByPeriod(period) {
-  $.ajax({
-    url: 'fetch_order.php',
-    type: 'GET',
-    data: { period: period },
-    success: function (data) {
-      $('#order-table-body').html(data);
-      attachEditButtonListener(); // 이벤트 리스너 재설정
-    },
-    error: function () {
-      alert('데이터를 불러오는 데 실패했습니다.');
-    },
-  });
-}
-
-function handleYearChange(selectedYear) {
-  console.log('선택된 연도:', selectedYear);
-  fetchQuotesByPeriod(selectedYear);
-}
-
-function setPeriod(period) {
-  fetchQuotesByPeriod(period);
-}
-
-function fetchQuotesByPeriod(period) {
-  $.ajax({
-    url: 'fetch_order.php',
-    type: 'GET',
-    data: { period: period },
-    success: function (data) {
-      $('#order-table-body').html(data);
-      attachEditButtonListener(); // 이벤트 리스너 재설정
-    },
-    error: function () {
-      alert('데이터를 불러오는 데 실패했습니다.');
-    },
-  });
 }
 
 function GetTotal() {

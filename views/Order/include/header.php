@@ -36,7 +36,7 @@ if (basename($_SERVER['PHP_SELF']) != 'login.php') {
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/practice/AMESystem/public/css/style.css">
-  <link rel="stylesheet" href="/practice/AMESystem/views/order/css/style_order.css?v=1.1">
+  <link rel="stylesheet" href="/practice/AMESystem/views/order/css/style_order.css">
  
 
   

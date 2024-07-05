@@ -23,7 +23,7 @@ if (isset($_SESSION['status'])) {
       <button type="button" id="oneYearBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('1year')">최근 1년</button>
       <button type="button" id="threeYearsBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('3years')">최근 3년</button>
       <!-- 특정 년도 선택 드롭다운 -->
-      <select id="yearSelect" class="form-select form-select-sm me-2" style="font-size: .65rem; width: auto;">
+      <select id="yearSelect" class="form-select form-select-sm me-2" style="font-size: .75rem; width: auto;">
           <option value="">선택</option>
           <?php
           $currentYear = date("Y");
@@ -47,7 +47,7 @@ if (isset($_SESSION['status'])) {
     </div>
     <div class='card-body'>
       <div id="searchResultContainer"></div>
-      <table class="table table-striped table-bordered table-hover mt-1 table-xl table-custom" style='font-size: .65rem'>
+      <table class="table table-striped table-bordered table-hover mt-1 table-xl table-custom" style='font-size: .75rem'>
         <thead>
           <tr>
             <th style="width: 4%;">no</th>
@@ -63,7 +63,7 @@ if (isset($_SESSION['status'])) {
             <th style="width: 10%;">편집</th>
           </tr>
         </thead>
-        <tbody id="equipmentTableBody" style="font-size: .65rem;">
+        <tbody id="equipmentTableBody" style="font-size: .75rem;">
           <?php
           $sql = "SELECT * FROM equipment ORDER BY e_no DESC";
           $result = mysqli_query($conn, $sql);

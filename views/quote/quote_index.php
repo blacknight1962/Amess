@@ -44,7 +44,7 @@ if (isset($_SESSION['message'])) {
     </div>
     <div class='card-body'>
       <div id="searchResultContainer"></div>
-      <table class="table table-striped table table-hover tatable-bordered mt-3 table-xl" style='font-size: .65rem'>
+      <table class="table table-striped table table-hover tatable-bordered mt-3 table-xl" style='font-size: .75rem'>
         <thead>
           <tr>
             <th style="width: 2%;">#</th>
@@ -66,7 +66,7 @@ if (isset($_SESSION['message'])) {
             <th style="width: 4%;">진행</th>
           </tr>
         </thead>
-        <tbody id="quoteTableBody" style="font-size: .65rem;">
+        <tbody id="quoteTableBody" style="font-size: .75rem;">
           <?php
           $sql = "SELECT q.*, qd.* FROM quote q JOIN quote_data qd ON q.quote_no = qd.quote_no ORDER BY q.quote_no DESC LIMIT 30";
           $result = mysqli_query($conn, $sql);

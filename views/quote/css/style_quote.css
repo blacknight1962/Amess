@@ -9,7 +9,7 @@ table {
   overflow-x: auto;
 }
 .table td {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   padding: 0.2rem;
   margin: 10px, 0px;
   height: 40px;
@@ -29,6 +29,7 @@ table {
   background-color: #eee157;
 }
 .form-control {
+  font-size: 0.75rem;
   margin: 0px;
   padding: 0px;
 }
@@ -36,7 +37,7 @@ input {
   padding: 1px 1px; /* 상하 2px, 좌우 5px로 조정 */
 }
 .small-input {
-  font-size: 0.65rem; /* 또는 14px */
+  font-size: 0.75rem; /* 또는 14px */
   text-align: right;
 }
 .small-btn {

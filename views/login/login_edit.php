@@ -21,7 +21,7 @@ include("include/header.php")
           <section class="w-75 m-auto shadow-lg p-2 my-4 rounded-3 container text-center">
             <div>
               <a href="login_add_new.php" class="btn btn-outline-success btn-sm mb-2 justify-content-start" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;">신규등록</a>
-              <table class="table table-hover text-center" style='font-size: .65rem'>
+              <table class="table table-hover text-center" style='font-size: .75rem'>
                 <thead class="table-secondary" style='background-color: gray;'>
                   <tr>
                     <th scope="col">User ID</th>
@@ -69,8 +69,6 @@ include("include/header.php")
                         <td><?php echo $filtered["acc_right"] ?></td>
                         <td>
                           <a href="login_update.php?id=<?php echo $filtered["ep_id"] ?>" class="link-primary"><i class="fa-solid fa-pen-to-square fs-6 me-1 ms-0"></i></a>
-                          <!--<a href="login_delete.php?id=<?php echo $filtered["ep_id"]  ?>" class="link-secondary"><i class="fa-solid fa-trash fs-6"></i></a>-->
-                          <!-- Button trigger modal -->
                           <button type="button" class="btn btn-secondary mt-0 mb-0 me-0 float-end" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .55rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             del</button>
                         </td>

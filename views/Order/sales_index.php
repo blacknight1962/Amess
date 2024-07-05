@@ -34,9 +34,9 @@ $currentYear = date("Y");
         </div>
       </div>
     </div>
-      <div class='card-body' style='width: 1900px' ;>
-        <div id="searchResultContainer"></div>
-          <table class="table table-bordered mt-2 table-xl  table-hover" style='font-size: .65rem'>
+      <div class='card-body'>
+        <div id="searchResultContainer_s"></div>
+          <table class="table table-bordered mt-2 table-xl  table-hover" style='font-size: .75rem'>
             <thead class="table-secondary" style='background-color: gray;'>
               <tr style="text-align: center;">
                 <th style="width: 3%;">#</th>

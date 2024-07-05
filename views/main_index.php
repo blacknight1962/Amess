@@ -42,7 +42,7 @@ session_start();
             <!-- 메인 메뉴 카드들 -->
             <div class="col-md-3">
                 <div class="card shadow mb-3" onclick="openInNewTab('/practice/AMESystem/views/quote/quote_index.php')">
-                    <img src="/practice/AMESystem/public/img/blue-flower-1.png" width="280" height="310">
+                    <img src="/practice/AMESystem/public/img/blue-flower-1.png" width="280" height="300">
                     <div class="card-body text-center">
                         <h5 class="card-title">견적관리</h5>
                     </div>
@@ -50,7 +50,7 @@ session_start();
             </div>
             <div class="col-md-3">
                 <div class="card shadow mb-3" onclick="openInNewTab('/practice/AMESystem/views/job_code/jobcode_index.php')">
-                    <img src="/practice/AMESystem/public/img/colors-1.png" width="280" height="310">
+                    <img src="/practice/AMESystem/public/img/colors-1.png" width="280" height="300">
                     <div class="card-body text-center">
                         <h5 class="card-title">작업코드</h5>
                     </div>
@@ -58,7 +58,7 @@ session_start();
             </div>
             <div class="col-md-3">
                 <div class="card shadow mb-3" onclick="openInNewTab('/practice/AMESystem/views/order/order_index.php')">
-                    <img src="/practice/AMESystem/public/img/plants-1.png" width="280" height="310">
+                    <img src="/practice/AMESystem/public/img/plants-1.png" width="280" height="300">
                     <div class="card-body text-center">
                         <h5 class="card-title">영업관리</h5>
                     </div>
@@ -66,7 +66,7 @@ session_start();
             </div>
             <div class="col-md-3">
                 <div class="card shadow mb-3" onclick="openInNewTab('/practice/AMESystem/views/equipment/equip_index.php')">
-                    <img src="/practice/AMESystem/public/img/seeds-1.png" width="280" height="310">
+                    <img src="/practice/AMESystem/public/img/seeds-1.png" width="280" height="300">
                     <div class="card-body text-center">
                         <h5 class="card-title">장비관리</h5>
                     </div>

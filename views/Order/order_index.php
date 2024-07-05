@@ -4,6 +4,8 @@ include('include/header.php');
 include(__DIR__ . '/../../db.php');
 
 
+
+
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     echo "<script>alert('" . $message['content'] . "');</script>";
@@ -32,22 +34,6 @@ function fetchOrderInfo($order_no) {
 }
 ?>
 <body>
-<div class='container mt-1'>
-  <div class='row justify-content-center'>
-    <div class='col-md-12'>
-      <?php
-      if (isset($_SESSION['status']) && $_SESSION['status'] != "") {
-      ?>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Wow~!!!</strong><?php echo $_SESSION['status']; ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <?php
-        unset($_SESSION['status']);
-      } ?>
-    </div>
-  </div>
-</div>
 <!-- 발주번호 DB조회 -->
 <?php
 if (isset($_GET['id'])) {
@@ -59,8 +45,8 @@ if (isset($_GET['id'])) {
 <!-- 발주관리 main screen -->
 <div class='bg-success bg-opacity-10' style='text-align: center;'>
   <h4 class='bg-primary bg-opacity-10 mb-1 p-2' style='text-align: center'>영업관리 - 발주관리</h4>
-  <section class="shadow-lg mt-1 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0" style='width:1900px'>
-    <div class='container-fluid' style='width: 1920px; padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
+  <section class="shadow-lg mt-1 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0">
+    <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
       <!-- 기간 선택 버튼 -->
       <button type="button" id="oneYearBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('1year')">최근 1년</button>
       <button type="button" id="threeYearsBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('3years')">최근 3년</button>
@@ -81,14 +67,15 @@ if (isset($_GET['id'])) {
       <!-- 신규 발주 등록 버튼 -->
       <div style="margin-left: auto; margin-right: 20px;">
         <!-- Button trigger modal -->
+        <button type="button" id="resetBtn" class="btn btn-secondary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;">초기화</button>
         <button type="button" class="btn btn-primary mt-1 mb-0 float-end" name="submit" style="--bs-btn-padding-y: .4rem; --bs-btn-padding-x: .15rem; --bs-btn-font-size: .65rem;">
           <a href="order_new.php" target="_blank" style="color: white; text-decoration: none;">발주 등록</a>
         </button>
       </div>
     </div>
-      <div class='card-body'>
+    <div class='card-body'>
         <div id="searchResultContainer"></div>
-        <table class="table table-striped table-bordered table-hover mt-2 table-xl" style='font-size: .65rem'>
+        <table class="table table-striped table-bordered table-hover mt-2 table-xl" style='font-size: .75rem'>
           <thead style="text-align: center;">
             <tr>
               <th style="width: 3%;">#</th>
@@ -198,5 +185,6 @@ $result = mysqli_query($conn, $sql);
     <button id="delete-button" onclick="deleteSelectedQuotes()" style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; font-size: 14px;">삭제</button>
 </div>
 <script src="js/order.js"></script>
+<script src="js/order_search.js"></script>
 </body>
 <?php include('include/footer.php'); ?>

@@ -5,7 +5,7 @@ function createSelectCustomer($conn) {
     $stmt = $conn->prepare("SELECT * FROM customers");
     $stmt->execute();
     $result = $stmt->get_result();
-    $cho_customer = '<select name="customer_na[]" style="font-size: .65rem; border: none;">';
+    $cho_customer = '<select name="customer_na[]" style="font-size: .75rem; border: none;">';
     while ($row = $result->fetch_assoc()) {
         $cho_customer .= '<option value="' . htmlspecialchars($row['customer_na']) . '">' . htmlspecialchars($row['customer_na']) . '</option>';
     }
@@ -18,7 +18,7 @@ function createSelectOrderCustomer($conn, $nameAttribute = 'customer_na') {
     $stmt = $conn->prepare("SELECT * FROM customers");
     $stmt->execute();
     $result = $stmt->get_result();
-    $cho_od_customer = "<select name='{$nameAttribute}' style='font-size: .65rem; border: none;'>";
+    $cho_od_customer = "<select name='{$nameAttribute}' style='font-size: .75rem; border: none;'>";
     while ($row = $result->fetch_assoc()) {
         $cho_od_customer .= '<option value="' . htmlspecialchars($row['customer_na']) . '">' . htmlspecialchars($row['customer_na']) . '</option>';
     }
@@ -54,7 +54,7 @@ function createSelectPicb($conn) {
 $stmt = $conn->prepare("SELECT * FROM division");
 $stmt->execute();
 $result = $stmt->get_result();
-$cho_picb = '<select name="picb[]" style="font-size: .65rem; border: none;">';
+$cho_picb = '<select class="form-select" name="picb[]" style="font-size: .75rem; border: none;">';
     while ($row = $result->fetch_assoc()) {
         $cho_picb .= '<option value="' . htmlspecialchars($row['picb']) . '">' . htmlspecialchars($row['picb']) . "</option>";
     }

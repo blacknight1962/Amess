@@ -28,11 +28,11 @@ if(mysqli_num_rows($result) > 0){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;"> <!-- 스크롤 추가 -->
-        <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .65rem" name="tp_no" placeholder="항목번호" value="<?= htmlspecialchars($part_no) ?>">
+        <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .75rem" name="tp_no" placeholder="항목번호" value="<?= htmlspecialchars($part_no) ?>">
 
-        <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .65rem" name="hangmok" placeholder="추가 할 항목명">
-        
-        <table class="table table-bordered table-striped" style="font-size: .65rem">
+        <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .75rem" name="hangmok" placeholder="추가 할 항목명">
+        <br>
+        <table class="table table-bordered table-striped" style="font-size: .75rem">
           <thead>
             <tr>
               <th>항목번호</th>

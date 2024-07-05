@@ -63,9 +63,9 @@ if (isset($_GET['data'])) {
         <h4 class='bg-primary bg-opacity-10 justify-content-center text-center mb-2 p-2'>견적관리 - UPDATE</h4>
           <section class="shadow-lg p-2 my-4 rounded-3 container text-center">
             <h6 class='mt-1'>기본정보</h6>
-            <div class='container-fluid' style='width: 1820px me-1 ms-1'>
+            <div class='container-fluid' style='width: 1500px me-1 ms-1'>
               <form action="quot1_process.php" method='post'>
-                <table class='table table-bordered  mt-1 table-sm' style="font-size: .65rem">
+                <table class='table table-bordered  mt-1 table-sm' style="font-size: .75rem">
                   <thead>
                       <tr class='table table-secondary'>
                         <th class='col-xl-2'>견적번호</th>
@@ -128,7 +128,7 @@ if (isset($_GET['data'])) {
         <div class='container-fluid' style='width: 1900px me-1 ms-1'>
           <form action="quot1_process.php" method="post">
             <input type="hidden" name="quote_no" value="<?php echo $quote_no; ?>">
-              <table class='table table-bordered mt-1' style="font-size: .65rem; width: 100%;">
+              <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
                 <thead style="max-width: 1920px; text-align: center;">
                   <tr class='table table-secondary'>
                     <th style="width: 3%;">No</th>
@@ -150,7 +150,7 @@ if (isset($_GET['data'])) {
                     <th style="width: 3%;"><button type="button" class="btn btn-success btn-sm" style="font-size: .65rem" onclick="BtnAdd()">+</button></th>
                   </tr>
                 </thead>
-                <tbody id='TBody' style="width: 1920px;">
+                <tbody id='TBody' style="width: 1920px; font-size: .75rem;">
                   <?php
                   if (isset($_GET['quote_no'])) {
                     $quote_no = mysqli_real_escape_string($conn, $_GET['quote_no']);
@@ -179,32 +179,32 @@ if (isset($_GET['data'])) {
                 ?>
                       <tr id='TRow'>
                         <td><input type="text" class="form-control sub_no" style="text-align: center; border: none;" name="sub_no[]" value="<?php echo $filtered["sub_no"]; ?>"></td>
-                        <td><input type="text" class="form-control group_p" style="font-size: .65rem; border: none;" name="group_p[]" value="<?php echo $filtered["group_p"]; ?>"></td>
-                        <td><input type="text" class="form-control sulbi" style="font-size: .65rem; border: none;" name="sulbi[]" value="<?php echo $filtered["sulbi"]; ?>"></td>
-                        <td><input type="text" class="form-control model" style="font-size: .65rem; border: none;" name="model[]" value="<?php echo $filtered["model"]; ?>"></td>
-                        <td><select name="apart[]; ?>]" class="form-select" style="font-size: .65rem">
+                        <td><input type="text" class="form-control group_p" style="font-size: .75rem; border: none;" name="group_p[]" value="<?php echo $filtered["group_p"]; ?>"></td>
+                        <td><input type="text" class="form-control sulbi" style="font-size: .75rem; border: none;" name="sulbi[]" value="<?php echo $filtered["sulbi"]; ?>"></td>
+                        <td><input type="text" class="form-control model" style="font-size: .75rem; border: none;" name="model[]" value="<?php echo $filtered["model"]; ?>"></td>
+                        <td><select name="apart[]; ?>]" class="form-select" style="font-size: .75rem">
                               <option value="개조" <?php echo ($filtered['apart'] == '개조') ? 'selected' : ''; ?>>개조</option>
                               <option value="부품" <?php echo ($filtered['apart'] == '부품') ? 'selected' : ''; ?>>부품</option>
                               <option value="설비" <?php echo ($filtered['apart'] == '설비') ? 'selected' : ''; ?>>설비</option>
                               <option value="SW" <?php echo ($filtered['apart'] == 'SW') ? 'selected' : ''; ?>>SW</option>
                               <option value="기타" <?php echo ($filtered['apart'] == '기타') ? 'selected' : ''; ?>>기타</option>
                             </select></td>
-                        <td><input type="text" class="form-control product_na" style="font-size: .65rem; border: none;" name="product_na[]" value="<?php echo $filtered["product_na"]; ?>"></td>
-                        <td><input type="text" class="form-control product_sp" style="font-size: .65rem; border: none;" name="product_sp[]" value="<?php echo $filtered["product_sp"]; ?>"></td>
-                        <td><input type="text" class="form-control p_code" style="font-size: .65rem; border: none;" name="p_code[]" value="<?php echo $filtered["p_code"]; ?>"></td>
+                        <td><input type="text" class="form-control product_na" style="font-size: .75rem; border: none;" name="product_na[]" value="<?php echo $filtered["product_na"]; ?>"></td>
+                        <td><input type="text" class="form-control product_sp" style="font-size: .75rem; border: none;" name="product_sp[]" value="<?php echo $filtered["product_sp"]; ?>"></td>
+                        <td><input type="text" class="form-control p_code" style="font-size: .75rem; border: none;" name="p_code[]" value="<?php echo $filtered["p_code"]; ?>"></td>
                         <td><input type="text" class="form-control price small-input" style="text-align: right; border: none;" name="price[]" value="<?php echo number_format($filtered["price"]); ?>" oninput="updatePrice(this)"></td>
                         <td><input type="number" class="form-control qty small-input" style="text-align: right; border: none;" name="qty[]" value="<?php echo $filtered["qty"]; ?>" oninput="updateLineTotal(this)"></td>
                         <td><input type="text" class="form-control amt small-input" style="text-align: right; border: none;" name="amt[]" value="<?php echo number_format($filtered["amt"]); ?>" readonly></td>
-                        <td><select name="progress[]; ?>]" class="form-select" style="font-size: .65rem; border: none;">
+                        <td><select name="progress[]; ?>]" class="form-select" style="font-size: .75rem; border: none;">
                               <option value="진행" <?php echo ($filtered['progress'] == '진행') ? 'selected' : ''; ?>>진행</option>
                               <option value="대기" <?php echo ($filtered['progress'] == '대기') ? 'selected' : ''; ?>>대기</option>
                               <option value="변경" <?php echo ($filtered['progress'] == '변경') ? 'selected' : ''; ?>>변경</option>
                               <option value="취소" <?php echo ($filtered['progress'] == '취소') ? 'selected' : ''; ?>>취소</option>
                               <option value="기타" <?php echo ($filtered['progress'] == '기타') ? 'selected' : ''; ?>>기타</option>
                             </select></td>
-                        <td><input type="text" class="form-control r_quot" style="font-size: .65rem; border: none;" name="r_quot[]" value="<?php echo $filtered["r_quot"]; ?>"></td>
-                        <td><input type="text" class="form-control specif" style="font-size: .65rem; border: none;" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
-                        <td><button type="button" class="btn link-danger small-btn" style="font-size: .65rem" onclick="IcoDel(this)"><i class="fa-solid fa-trash fs-6"></i></button></td>
+                        <td><input type="text" class="form-control r_quot" style="font-size: .75rem; border: none;" name="r_quot[]" value="<?php echo $filtered["r_quot"]; ?>"></td>
+                        <td><input type="text" class="form-control specif" style="font-size: .75rem; border: none;" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
+                        <td><button type="button" class="btn link-danger small-btn" style="font-size: .75rem" onclick="IcoDel(this)"><i class="fa-solid fa-trash fs-6"></i></button></td>
                       </tr> 
                     <?php
                       }
@@ -218,7 +218,7 @@ if (isset($_GET['data'])) {
               </table>
                 <div class="row">
                   <div class="col-1">
-                  <button type="submit" name='update_btn' class="btn btn-success" style="font-size: .65rem">UPDATE</button>
+                  <button type="submit" name='update_btn' class="btn btn-outline-success" style="font-size: .65rem">UPDATE</button>
                   </div>
                     <script>
                       document.addEventListener('DOMContentLoaded', function() {
@@ -229,7 +229,7 @@ if (isset($_GET['data'])) {
                     <div class="col-3">
                       <div class="input-group mb-1">
                         <span class="input-group-tex">Total  </span>
-                        <input type="text" class="form-control text-end" id='FTotal' name='FTotal' disabled=""/>
+                        <input type="text" class="form-control text-end" style="font-size: .85rem;" id='FTotal' name='FTotal' disabled=""/>
                       </div>
                     </div>
                 </div>

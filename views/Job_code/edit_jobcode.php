@@ -3,7 +3,7 @@ session_start();
 include('include/header.php');
 include('../../db.php')
 ?>
-
+<link rel="stylesheet" href="css/style_jobcode.css">
 <!--edit data -->
 <div class='"bg-success bg-opacity-20"'>
   <section class="w-75 m-auto shadow-lg p-2 my-4 rounded-3 container text-center justify-content-center">

@@ -29,7 +29,7 @@ $result = mysqli_query($conn, $query);
 $output = '';
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $output .= '<tr class="table table-hover" style="font-size: 0.65rem; width: 100%;">' .
+        $output .= '<tr class="table table-hover" style="font-size: 0.75rem; width: 100%;">' .
                   '<td style="width: 3%;"><input type="checkbox" class="row-checkbox" value="' . htmlspecialchars($row['order_no']) . '"></td>' .
                   '<td style="width: 3%;">' . htmlspecialchars($row['o_no']) . '</td>' .
                   '<td style="width: 3%;">' . htmlspecialchars($row['picb']) . '</td>' .

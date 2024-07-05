@@ -8,6 +8,7 @@ include('task_add_modal.php');
 include('task_parts_modal.php');
 include('delete_task.php');
 ?>
+<link rel="stylesheet" href="css/style_equip.css">
 <script>
 var sessionDate = "<?= $_SESSION['date'] ?? ''; ?>";
 var sessionUsername = "<?= htmlspecialchars($_SESSION['username'] ?? ''); ?>";
@@ -57,7 +58,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
           <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
       <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton_t" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;">통합검색</button>
         </div>
-        <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .65rem'>
+        <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .75rem'>
           <thead class='table-warning'>
             <tr>
               <th style="width: 4%;">no</th>
@@ -77,7 +78,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
               <th style="width: 7%;">고객명칭</th>
             </tr>
           </thead>
-          <tbody class='' style="font-size: .65rem;">
+          <tbody class='' style="font-size: .75rem;">
             <?php
             // print_r($_GET);
             $sql = "SELECT e.*, f.* FROM equipment e INNER JOIN facility f ON e.e_no = f.e_no WHERE e.e_no = '$e_no' AND f.sub_no = '$sub_no'";
@@ -146,7 +147,7 @@ if (isset($seri_no) && $seri_no !== '') {
         <form id="addTaskForm" action="task_process.php" method="POST">
           <input type="hidden" name="action" value="saveTask">
           <input type="hidden" id="seri_no" name="seri_no" value="<?= $seri_no ?>">
-          <table class='table table-custom table-bordered mt-1' style="font-size: .65rem; width: 100%;">
+          <table class='table table-bordered table-custom mt-1' style="width: 100%;">
             <thead style="max-width: 1850px; text-align: center;">
               <tr class='table table-secondary'>
                 <th style="width: 3%;">No</th>
@@ -183,17 +184,17 @@ if (isset($seri_no) && $seri_no !== '') {
                       ?>
                 <tr id="TB_Row" style="line-height: 30px !important;">    
                   <td><input type="text" class="form-control t_no" style="text-align: center;" name="t_no[]" value="<?= $filtered['t_no']; ?>"></td>
-                  <td><input type="text" class="form-control date_task" style="font-size: .65rem" name="date_task[]" value="<?= $filtered['date_task']; ?>"></td>
-                  <td><input type="text" class="form-control task_person" style="font-size: .65rem" name="task_person[]" value="<?= $filtered['task_person']; ?>"></td>
+                  <td><input type="text" class="form-control date_task" style="font-size: .75rem" name="date_task[]" value="<?= $filtered['date_task']; ?>"></td>
+                  <td><input type="text" class="form-control task_person" style="font-size: .75rem" name="task_person[]" value="<?= $filtered['task_person']; ?>"></td>
                   <td><?= createSelectTask($conn, 'task_aparts[]', $filtered['task_aparts']); ?></td>                  
                   <td><?= updateSelectTaskPart($conn, 'hangmok[]', $filtered['hangmok']); ?></td>
 
-                  <td><textarea class="form-control task_title" name="task_title[]" rows="1" style="font-size: .65rem; resize: none;"><?= $filtered["task_title"]; ?></textarea></td>
-                  <td><textarea class="form-control task_content" name="task_content[]" rows="1" style="font-size: .65rem; resize: none;"><?= $filtered["task_content"]; ?></textarea></td>
-                  <td><input type="text" class="form-control specification" style="font-size: .65rem" name="specification[]" value="<?= $filtered["specification"]; ?>"></td>
+                  <td><textarea class="form-control task_title" name="task_title[]" rows="1" style="font-size: .75rem; resize: none;"><?= $filtered["task_title"]; ?></textarea></td>
+                  <td><textarea class="form-control task_content" name="task_content[]" rows="1" style="font-size: .75rem; resize: none;"><?= $filtered["task_content"]; ?></textarea></td>
+                  <td><input type="text" class="form-control specification" style="font-size: .75rem" name="specification[]" value="<?= $filtered["specification"]; ?>"></td>
                   <td><?= createSelectStatus($conn, 'manage_stat[]', $filtered['manage_stat']); ?></td>
-                  <td><button type="button" class="btn link-danger small-btn deleteButton" style="font-size: .65rem" title="작업 삭제" data-t_no="<?= $filtered['t_no']; ?>" data-seri_no="<?= $filtered['seri_no']; ?>"><i class="fa-solid fa-trash fs-6"></i></button></td>
-                  <input type="hidden" class="seri_no" style="text-align: center;" name="seri_no" value="<?= $filtered['seri_no']; ?>">
+                  <td><button type="button" class="btn link-danger small-btn deleteButton" style="font-size: .75rem" title="작업 삭제" data-t_no="<?= $filtered['t_no']; ?>" data-seri_no="<?= $filtered['seri_no']; ?>"><i class="fa-solid fa-trash fs-6"></i></button></td>
+                  <input type="hidden" class="form-control seri_no" style="text-align: center;" name="seri_no" value="<?= $filtered['seri_no']; ?>">
                 </tr>
                 <?php
                   } // while 문 종료
@@ -226,7 +227,7 @@ if (isset($seri_no) && $seri_no !== '') {
 <div class='bg-dark bg-opacity-10'>
   <div class='row justify-content-center' style="max-width: 1550px; margin: 0 auto;">
     <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
-      <table class='table table-bordered mt-1' style="font-size: .65rem; width: 100%;">
+      <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
         <thead style="max-width: 1500px; text-align: center;">
           <tr class="table-warning">
             <th style="width: 4%;">No</th>
@@ -238,7 +239,7 @@ if (isset($seri_no) && $seri_no !== '') {
             <th style="width: 27%;">특기사항</th>
           </tr>
         </thead>
-        <tbody style="width: 1550px;">
+        <tbody style="width: 1550px; font-size: .75rem;">
           <?php
           // print_r($_GET);
               $query = "SELECT * FROM task_manage ORDER BY t_no DESC LIMIT 30";

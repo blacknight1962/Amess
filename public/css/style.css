@@ -1,9 +1,4 @@
 /* 화면상단 메뉴 구성*/
-body {
-  min-width: 1280px;
-  max-width: 1920px !important;
-  margin: 0 auto;
-}
 
 * {
   box-sizing: border-box;
@@ -29,10 +24,6 @@ body {
 .link-secondary i {
   margin-right: 2px; /* 오른쪽 마진 조절 */
   padding: 0; /* 패딩 제거 */
-}
-.container {
-  max-width: 1920px;
-  margin: 0 auto;
 }
 
 .search-input {
@@ -118,7 +109,7 @@ header .title {
 .form-control,
 .form-select,
 .small-font {
-  font-size: 0.65rem !important;
+  font-size: 0.75rem !important;
 }
 .custom-modal-size .modal-dialog {
   max-width: 1800px !important; /* 최대 너비를 명시적으로 설정 */

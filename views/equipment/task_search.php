@@ -44,7 +44,7 @@ include ("task_searchajax_t.php");
     </div>
     <div id="searchResultContainer" style="width: 1900px; margin: 0 auto;">
     <table class="table table-bordered table-striped table-hover" style="width: 1900px; margin: 0 auto;">
-      <thead class="table-warning" style="font-size: .65rem;">
+      <thead class="table-warning" style="font-size: .75rem;">
         <tr>
           <th style="width: 3%;">No</th>
           <th style="width: 3%;">부서</th>
@@ -64,7 +64,7 @@ include ("task_searchajax_t.php");
           <th style="width: 11%;">특기사항</th>
         </tr>
       </thead>
-      <tbody id="facilityEquipmentBody" style="font-size: .65rem;">
+      <tbody id="facilityEquipmentBody" style="font-size: .75rem;">
 
       </tbody>
     </table>
@@ -94,7 +94,7 @@ include ("task_searchajax_t.php");
         </div>
         <div id="searchResultContainer_task" style="width: 1900px; margin: 0;">
           <table class="table table-bordered table-striped table-hover" id = "data-table" style="width: 1900px; margin: 0;">
-            <thead class="table-success" style="font-size: .65rem;">
+            <thead class="table-success" style="font-size: .75rem;">
               <tr>
                 <th style="width: 3%;">No</th>
                 <th style="width: 4%;">부서</th>

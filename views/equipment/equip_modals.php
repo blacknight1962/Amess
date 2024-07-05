@@ -16,7 +16,7 @@ include('../../db.php');
         <div class='container-fluid' style='width: 1800px me-0 ms-0'>
         <form action='equip_process.php' method="POST">
           <div class="modal-body">
-          <table class='table table-bordered mt-1 small-font' style="width: 100%;">
+          <table class='table table-bordered mt-1' style="width: 100%; font-size: .75rem;">
             <thead style="max-width: 1800px; text-align: center;">
                   <tr class='table table-secondary'>
                     <th style="width: 5%;">No</th>
@@ -31,7 +31,7 @@ include('../../db.php');
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr style="font-size: .75rem;">
                     <td><input type='text' class='form-control' name='e_no' value="<?php echo $equip_num ?>" required></td>
                     <td><?= createSelectPicb($conn, 'division', 'picb', 'picb', 'picb'); ?></td>
                     <td><input type='text' class='form-control' name='equip' placeholder="장비명" required></td>
