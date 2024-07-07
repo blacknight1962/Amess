@@ -13,6 +13,19 @@ function createSelectCustomer($conn) {
     $stmt->close();
     return $cho_customer;
 }
+
+function createSelectCustomer1($conn) {
+    $stmt = $conn->prepare("SELECT * FROM customers");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $cho_customer = '<select name="customer_na" style="font-size: .75rem; border: none;">';
+    while ($row = $result->fetch_assoc()) {
+        $cho_customer .= '<option value="' . htmlspecialchars($row['customer_na']) . '">' . htmlspecialchars($row['customer_na']) . '</option>';
+    }
+    $cho_customer .= '</select>';
+    $stmt->close();
+    return $cho_customer;
+}
 /*-- 고객명 선택 콤보 박스 --*/
 function createSelectOrderCustomer($conn, $nameAttribute = 'customer_na') {
     $stmt = $conn->prepare("SELECT * FROM customers");

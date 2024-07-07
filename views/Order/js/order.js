@@ -1,6 +1,7 @@
 $(document).ready(function () {
   initializePage();
   GetTotal(); // 페이지 로드 시 총합 계산
+  attachEditButtonListener(); // 페이지 로드 시 편집 버튼 리스너 추가
 });
 
 function initializePage() {
@@ -42,6 +43,7 @@ function updateLineTotal(input) {
   var qty =
     parseFloat($row.find('input[name="qty[]"]').val().replace(/,/g, '')) || 0;
   var amt = price * qty;
+  console.log('amt:', amt);
   $row.find('input[name="amt[]"]').val(formatNumber(amt.toFixed(0))); // amt 필드 업데이트
 
   updateTotal(); // 전체 합계 업데이트
@@ -49,13 +51,19 @@ function updateLineTotal(input) {
 
 function updateTotal() {
   var total = 0;
-  document.querySelectorAll('.amt').forEach(function (amtInput) {
+  document.querySelectorAll('input[name="amt[]"]').forEach(function (amtInput) {
     var value = parseFloat(amtInput.value.replace(/,/g, ''));
     if (!isNaN(value)) {
       total += value;
+      console.log('total:', total);
     }
   });
   document.getElementById('FTotal').value = formatNumber(total.toFixed(0)); // 결과를 포맷하여 총합에 표시
+}
+
+function Calc(input) {
+  updatePrice(input);
+  updateLineTotal(input);
 }
 
 function redirectToEdit() {
@@ -108,20 +116,29 @@ function deleteSelectedQuotes() {
 }
 
 function attachEditButtonListener() {
-  // 기존 이벤트 리스너 제거
-  document
-    .getElementById('edit-button')
-    .removeEventListener('click', editButtonClickHandler);
+  var editButton = document.getElementById('edit-button');
+  if (editButton) {
+    // 기존 이벤트 리스너 제거
+    editButton.removeEventListener('click', editButtonClickHandler);
+    console.log('editButtonClickHandler 제거');
 
-  // 새로운 이벤트 리스너 추가
-  document
-    .getElementById('edit-button')
-    .addEventListener('click', editButtonClickHandler);
+    // 새로운 이벤트 리스너 추가
+    editButton.addEventListener('click', editButtonClickHandler);
+    console.log('editButtonClickHandler 추가');
+  }
 }
 
 function editButtonClickHandler() {
-  // 페이지 로드 시 attachEditButtonListener 함수를 호출하여 이벤트 리스너를 추가합니다.
-  document.addEventListener('DOMContentLoaded', function () {
-    attachEditButtonListener();
-  });
+  console.log('editButtonClickHandler 호출됨');
+
+  // 선택된 발주번호 가져오기
+  var selectedOrderNo = $('input[type="checkbox"].row-checkbox:checked').val();
+  if (selectedOrderNo) {
+    console.log('선택된 발주번호:', selectedOrderNo); // 콘솔에 선택된 발주번호 출력
+
+    // order_new.php 페이지로 이동
+    window.open('order_edit.php?order_no=' + selectedOrderNo, '_blank');
+  } else {
+    alert('발주를 선택해주세요.');
+  }
 }

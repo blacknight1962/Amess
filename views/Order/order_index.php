@@ -3,15 +3,11 @@ $pageTitle = "AMESS 발주관리";
 include('include/header.php');
 include(__DIR__ . '/../../db.php');
 
-
-
-
+// 세션 메시지 확인 및 출력
 if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    echo "<script>alert('" . $message['content'] . "');</script>";
-    unset($_SESSION['message']); // 메시지 출력 후 세션에서 삭제
+    echo '<div class="alert alert-info" id="sessionMessage">' . $_SESSION['message'] . '</div>';
+    unset($_SESSION['message']); // 메시지 출력 후 세션에서 제거
 }
-
 
 function fetchOrderInfo($order_no) {
     global $conn; // 데이터베이스 연결 객체를 전역에서 가져옴
@@ -22,7 +18,6 @@ function fetchOrderInfo($order_no) {
     if ($stmt === false) {
         die('쿼리 준비 실패: ' . $conn->error);
     }
-
     $stmt->bind_param("s", $order_no);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -33,12 +28,39 @@ function fetchOrderInfo($order_no) {
     }
 }
 ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    if (status === 'saved') {
+        alert('저장되었습니다.');
+        const saveButton = document.getElementById('saveButton');
+        if (saveButton) {
+            saveButton.textContent = '저장됨';
+        }
+    }
+
+    // 성공 메시지를 일정 시간 후에 숨기기
+    const sessionMessage = document.getElementById('sessionMessage');
+    if (sessionMessage) {
+        setTimeout(() => {
+            sessionMessage.style.display = 'none';
+        }, 5000); // 5초 후에 메시지 숨기기
+    }
+});
+</script>
+<!--저장실패시 입력하던 데이터 유지-->
+<?php
+if (isset($_GET['data'])) {
+    $data = unserialize(urldecode($_GET['data']));
+    // 이제 $data 배열을 사용하여 폼 필드를 채울 수 있습니다.
+}
+?>
 <body>
 <!-- 발주번호 DB조회 -->
 <?php
 if (isset($_GET['id'])) {
     $order_no = $_GET['id'];
-    // 데이터베이스에서 견적 정보를 조회
     $order_info = fetchOrderInfo($order_no);
 }
 ?>
@@ -104,44 +126,41 @@ if (isset($_GET['id'])) {
             </tr>
           </thead>
           <tbody>
-            <?php
+          <?php
+          $sql = "SELECT o.order_no, od.picb, od.o_no, o.order_date, o.order_custo, o.customer, od.specifi, 
+                        od.aparts, o.custo_name, od.parts_code, od.product_na, od.product_sp, 
+                        od.requi_date, od.price, od.currency, od.qty, od.amt, od.curency_rate,od.sales_date, od.condit 
+                  FROM `order` o 
+                  LEFT JOIN `order_data` od ON o.order_no = od.order_no 
+                  ORDER BY o.order_date DESC, od.o_no ASC";
+          $result = mysqli_query($conn, $sql);
+          while ($row = mysqli_fetch_array($result)) {
+            $filtered = array(
+              'order_no' => htmlspecialchars($row['order_no'] ?? ''),
+              'picb' => htmlspecialchars($row['picb'] ?? ''),
+              'o_no' => htmlspecialchars($row['o_no'] ?? ''),
+              'order_date' => htmlspecialchars($row['order_date'] ?? ''),
+              'order_custo' => htmlspecialchars($row['order_custo'] ?? ''),
 
-$sql = 'SELECT o.*, od.*, s.*
-        FROM `order` o
-        LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no
-        LEFT JOIN `sales_data` s ON od.order_no = s.order_no AND od.o_no = s.serial_no
-        ORDER BY o.order_no DESC, o.o_no ASC';
+              'customer' => htmlspecialchars($row['customer'] ?? ''),
+              'specifi' => htmlspecialchars($row['od.specifi'] ?? ''),
+              'aparts' => htmlspecialchars($row['aparts'] ?? ''),
+              'custo_name' => htmlspecialchars($row['custo_name'] ?? ''),
+              'parts_code' => htmlspecialchars($row['parts_code'] ?? ''),
 
-$result = mysqli_query($conn, $sql);
-            $result = mysqli_query($conn, $sql);
-
-            while ($row = mysqli_fetch_array($result)) {
-              $filtered = array(
-                'o_no' => htmlspecialchars($row['o_no'] ?? ''),
-                'picb' => htmlspecialchars($row['picb'] ?? ''),
-                'order_date' => htmlspecialchars($row['order_date'] ?? ''),
-                'order_no' => htmlspecialchars($row['order_no'] ?? ''),
-                'order_custo' => htmlspecialchars($row['order_custo'] ?? ''),
-
-                'customer' => htmlspecialchars($row['customer'] ?? ''),
-                'specifi' => htmlspecialchars($row['specifi'] ?? ''),
-                'aparts' => htmlspecialchars($row['aparts'] ?? ''),
-                'custo_name' => htmlspecialchars($row['custo_name'] ?? ''),
-                'parts_code' => htmlspecialchars($row['parts_code'] ?? ''),
-
-                'product_na' => htmlspecialchars($row['product_na'] ?? ''),
-                'product_sp' => htmlspecialchars($row['product_sp'] ?? ''),
-                'requi_date' => htmlspecialchars($row['requi_date'] ?? ''),
-                'price' => htmlspecialchars($row['price'] ?? '0'),
-                'currency' => htmlspecialchars($row['currency'] ?? ''),
-
-                'qty' => htmlspecialchars($row['qty'] ?? '0'),
-                'amt' => htmlspecialchars($row['amt'] ?? '0'),
-                'curency_rate' => htmlspecialchars($row['curency_rate'] ?? ''),
-                'sales_date' => htmlspecialchars($row['sales_date'] ?? ''),
-                'condit' => htmlspecialchars($row['condit'] ?? ''),
-              );
-            ?>
+              'product_na' => htmlspecialchars($row['product_na'] ?? ''),
+              'product_sp' => htmlspecialchars($row['product_sp'] ?? ''),
+              'requi_date' => htmlspecialchars($row['requi_date'] ?? ''),
+              'price' => htmlspecialchars($row['price'] ?? 0),
+              'currency' => htmlspecialchars($row['currency'] ?? ''),
+              
+              'qty' => htmlspecialchars($row['qty'] ?? 0),
+              'amt' => htmlspecialchars($row['amt'] ?? 0),
+              'curency_rate' => htmlspecialchars($row['curency_rate'] ?? ''),
+              'sales_date' => htmlspecialchars($row['sales_date'] ?? ''),
+              'condit' => htmlspecialchars($row['condit'] ?? '')
+            );
+          ?>
           <tbody id="order-table-body">
             <tr>
               <td class="center-checkbox"><input type="checkbox" class="row-checkbox" value="<?= $row['order_no'] ?>"></td>

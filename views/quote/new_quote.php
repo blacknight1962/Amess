@@ -203,6 +203,7 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
           <td><input type='text' class="form-control" style='border:none; font-size:14px' name='price[]' onchange='Calc(this);' value="<?php echo isset($quote_info['price']) ? $quote_info['price'] : ''; ?>"></td>
           <td><input type='number' class="form-control" style='border:none; font-size:14px' name='qty[]' onchange='Calc(this);' value="<?php echo isset($quote_info['qty']) ? $quote_info['qty'] : ''; ?>"></td>
 
+
           <td><input type='text' class="form-control" style='border:none; font-size:14px' name='amt[]' value="<?php echo isset($quote_info['amt']) ? $quote_info['amt'] : ''; ?>"></td>
           <td><select class="form-select" name='progress[]' aria-label="" style="font-size: .75rem">
             <option selected>선택</option>
@@ -226,14 +227,16 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
       <div class='col-7'></div>
         <div class="col-3">
           <div class="input-group mb-1">
-            <span class="input-group-tex">Total  </span>
+            <span class="input-group-text">Total</span>
             <input type="text" class="form-control text-end" style="font-size: .85rem;" id='FTotal' name='FTotal' disabled=""/>
           </div>
         </div>
-      </div>
     </div>
-  </form>
+    </form>
   </div>
+  </section>
+  </div>
+</div>
               <!-- Bootstrap Bundle JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

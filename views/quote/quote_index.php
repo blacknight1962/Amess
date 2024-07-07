@@ -18,8 +18,8 @@ if (isset($_SESSION['message'])) {
 
 <div class='bg-success bg-opacity-10' style='text-align: center;'>
   <h4 class='bg-primary bg-opacity-10 mb-1 p-2' style='text-align: center'>견적관리</h4>
-  <section class="shadow-lg mt-2 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0" style='width:1900px'>
-    <div class='container-fluid' style='width: 1900px; padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
+  <section class="shadow-lg mt-2 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0" style='width:1920px'>
+    <div class='container-fluid' style='width: 1920px; padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
       <!-- 기간 선택 버튼 -->
       <button type="button" id="oneYearBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('1year')">최근 1년</button>
       <button type="button" id="threeYearsBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('3years')">최근 3년</button>
@@ -66,54 +66,56 @@ if (isset($_SESSION['message'])) {
             <th style="width: 4%;">진행</th>
           </tr>
         </thead>
-        <tbody id="quoteTableBody" style="font-size: .75rem;">
-          <?php
-          $sql = "SELECT q.*, qd.* FROM quote q JOIN quote_data qd ON q.quote_no = qd.quote_no ORDER BY q.quote_no DESC LIMIT 30";
-          $result = mysqli_query($conn, $sql);
-          while ($row = mysqli_fetch_array($result)) {
-            $filtered = array(
-              'picb' => htmlspecialchars($row['picb']),
-              'quote_no' => htmlspecialchars($row['quote_no']),
-              'quote_date' => htmlspecialchars($row['quote_date']),
-              'customer' => htmlspecialchars($row['customer']),
-
-              'customer_name' => htmlspecialchars($row['customer_name']),
-              'pic' => htmlspecialchars($row['pic']),
-              'group_p' => htmlspecialchars($row['group_p']),
-              'sulbi' => htmlspecialchars($row['sulbi']),
-              'model' => htmlspecialchars($row['model']),
-
-              'apart' => htmlspecialchars($row['apart']),
-              'product_na' => htmlspecialchars($row['product_na']),
-              'product_sp' => htmlspecialchars($row['product_sp']),
-              'p_code' => htmlspecialchars($row['p_code']),
-              'price' => htmlspecialchars($row['price']),
-
-              'qty' => htmlspecialchars($row['qty']),
-              'amt' => htmlspecialchars($row['amt']),
-              'progress' => htmlspecialchars($row['progress'])
-            );
-        ?>
-          <tr class="table table-hover">
-            <td><input type="checkbox" class="row-checkbox" value="<?= $row['quote_no'] ?>"></td>
-            <td><?= $filtered['picb'] ?></td>
-            <td><?= $filtered['quote_no'] ?></td>
-            <td><?= $filtered["quote_date"] ?></td>
-            <td><?= $filtered['customer'] ?></td>
-            <td><?= $filtered['customer_name'] ?></td>
-
-            <td><?= $filtered['pic'] ?></td>
-            <td><?= $filtered['apart'] ?></td>
-            <td class="left-align"><?= $filtered['product_na'] ?></td>
-            <td class="left-align"><?= $filtered['product_sp'] ?></td>
-            <td><?= $filtered['p_code'] ?></td>
-            <td class="right-align"><?= number_format($filtered['price']) ?></td>
-            <td class="right-align"><?= number_format($filtered['qty']) ?></td>
-            <td class="right-align"><?= number_format($filtered['amt']) ?></td>
-            <td><?= $filtered['progress'] ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
+<tbody id="quoteTableBody" style="font-size: .75rem;">
+  <?php
+  $sql = "SELECT q.quote_no, q.quote_date, q.customer, q.customer_name, q.pic, q.picb, 
+                qd.group_p, qd.sulbi, qd.model, qd.apart, qd.product_na, qd.product_sp, 
+                qd.p_code, qd.price, qd.qty, qd.amt, qd.progress 
+          FROM quote q 
+          LEFT JOIN quote_data qd ON q.quote_no = qd.quote_no 
+          ORDER BY q.quote_no DESC 
+          LIMIT 30";
+  $result = mysqli_query($conn, $sql);
+  while ($row = mysqli_fetch_array($result)) {
+    $filtered = array(
+      'picb' => htmlspecialchars($row['picb'] ?? ''),
+      'quote_no' => htmlspecialchars($row['quote_no'] ?? ''),
+      'quote_date' => htmlspecialchars($row['quote_date'] ?? ''),
+      'customer' => htmlspecialchars($row['customer'] ?? ''),
+      'customer_name' => htmlspecialchars($row['customer_name'] ?? ''),
+      'pic' => htmlspecialchars($row['pic'] ?? ''),
+      'group_p' => htmlspecialchars($row['group_p'] ?? ''),
+      'sulbi' => htmlspecialchars($row['sulbi'] ?? ''),
+      'model' => htmlspecialchars($row['model'] ?? ''),
+      'apart' => htmlspecialchars($row['apart'] ?? ''),
+      'product_na' => htmlspecialchars($row['product_na'] ?? ''),
+      'product_sp' => htmlspecialchars($row['product_sp'] ?? ''),
+      'p_code' => htmlspecialchars($row['p_code'] ?? ''),
+      'price' => htmlspecialchars($row['price'] ?? 0),
+      'qty' => htmlspecialchars($row['qty'] ?? 0),
+      'amt' => htmlspecialchars($row['amt'] ?? 0),
+      'progress' => htmlspecialchars($row['progress'] ?? '')
+    );
+  ?>
+  <tr class="table table-hover">
+    <td><input type="checkbox" class="row-checkbox" value="<?= $row['quote_no'] ?>"></td>
+    <td><?= $filtered['picb'] ?></td>
+    <td><?= $filtered['quote_no'] ?></td>
+    <td><?= $filtered["quote_date"] ?></td>
+    <td><?= $filtered['customer'] ?></td>
+    <td><?= $filtered['customer_name'] ?></td>
+    <td><?= $filtered['pic'] ?></td>
+    <td><?= $filtered['apart'] ?></td>
+    <td class="left-align"><?= $filtered['product_na'] ?></td>
+    <td class="left-align"><?= $filtered['product_sp'] ?></td>
+    <td><?= $filtered['p_code'] ?></td>
+    <td class="right-align"><?= number_format($filtered['price']) ?></td>
+    <td class="right-align"><?= number_format($filtered['qty']) ?></td>
+    <td class="right-align"><?= number_format($filtered['amt']) ?></td>
+    <td><?= $filtered['progress'] ?></td>
+  </tr>
+  <?php } ?>
+</tbody>
 
       </table>
     </div>

@@ -1,19 +1,19 @@
 <?php
 session_start();
 include('include/header.php');
-include('../../db.php')
+include('../../db.php');
 ?>
 <link rel="stylesheet" href="css/style_jobcode.css">
 <!--edit data -->
-<div class='"bg-success bg-opacity-20"'>
+<div class="bg-success bg-opacity-10" style="font-size: .75rem;">
   <section class="w-75 m-auto shadow-lg p-2 my-4 rounded-3 container text-center justify-content-center">
     <div class="row justify-content-center ">
       <div class="col-sm-6 ">
-        <div class="card bg-secondary">
-          <div class="card header">
-            <h4 class="fs-5" style="width:513px" id="insertdata">작업코드 편집</h4>
+        <div class="card bg-warning bg-opacity-10">
+          <div class="card header mt-1">
+            <h4 class="fs-5" style="width:513px; margin-top: 10px;" id="insertdata">작업코드 편집</h4>
           </div>
-          <div class='card-body'>
+          <div class='card-body' style="font-size: .75rem;">
             <?php if (isset($_GET['id'])) {
               $id = $_GET['id'];
 
@@ -25,45 +25,45 @@ include('../../db.php')
                   <form action='process_jobcode.php' method='POST'>
                     <div class="form-floating mb-1">
                       <input type='text' class='form-control' name='j_no' id='j_no' value='<?php echo $row['j_no'] ?>' placeholder="No">
-                      <label for="floatingInput">No</label>
+                      <label for="floatingInput" style="font-size: .75rem;">No</label>
                     </div>
 
                     <div class="form-floating mb-1">
                       <input type='text' class='form-control' name='seri_no' value='<?php echo $row['seri_no'] ?>' placeholder="부서명">
-                      <label for="floatingInput">코드그룹</label>
+                      <label for="floatingInput" style="font-size: .75rem;">코드그룹</label>
                     </div>
 
                     <div class='form-floating mb-1'>
                       <input type='text' class='form-control' name='equip' value='<?php echo $row['equip'] ?>' placeholder="장비명" required>
-                      <label for="floatingInput">장비명</label>
+                      <label for="floatingInput" style="font-size: .75rem;">장비명</label>
                     </div>
 
                     <div class='form-floating mb-1'>
                       <input type='text' class='form-control' name='model_p' value='<?php echo $row['model_p'] ?>' placeholder="모델명" required>
-                      <label for="floatingInput">모델명</label>
+                      <label for="floatingInput" style="font-size: .75rem;">모델명</label>
                     </div>
 
                     <div class='form-floating mb-1'>
                       <input type='text' class='form-control' name='equip_ver' value='<?php echo $row['equip_ver'] ?>' placeholder="버젼">
-                      <label for="floatingInput">버젼</label>
+                      <label for="floatingInput" style="font-size: .75rem;">버젼</label>
 
                     </div>
                     <div class='form-floating mb-1'>
                       <input type='text' class='form-control' name='pic' value='<?php echo $row['pic'] ?>' placeholder="작성자">
-                      <label for="floatingInput">작성자</label>
+                      <label for="floatingInput" style="font-size: .75rem;">작성자</label>
                     </div>
                     <div class='form-floating mb-1'>
                       <input type='text' class='form-control' name='regi_date' value='<?php echo $row['regi_date'] ?>' placeholder="등록일자">
-                      <label for="floatingInput">등록일자</label>
+                      <label for="floatingInput" style="font-size: .75rem;">등록일자</label>
                     </div>
 
                     <div class='form-floating mb-1'>
                       <input type='text' class='form-control' name='jobcode_specifi' value='<?php echo $row['jobcode_specifi'] ?>' placeholder="특기사항">
-                      <label for="floatingInput">특기사항</label>
+                      <label for="floatingInput" style="font-size: .75rem;">특기사항</label>
                     </div>
           </div>
           <div class="footer">
-            <button type="submit" name='update_btn' class="btn btn-info btn-sm" btn-sm>UPDATE</button>
+            <button type="submit" name='update_btn' class="btn btn-outline-info btn-sm" btn-sm>UPDATE</button>
             <a class='btn btn-outline-danger btn-sm ms-2 me-1' href="jobcode_index.php" role="button">취소</a>
           </div>
           </form>

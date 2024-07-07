@@ -68,97 +68,57 @@ if (isset($_POST['quot_num'])) {
         exit();
         }
 }
-//상세정보 저장
-//var_dump($_POST);
-//exit(); 
-if(isset($_POST['slno'])){
-//Array에 저장된 입력값들을 DB로~
-    for($i=0;$i<count($_POST['sub_no']);$i++){
-    $sub_no = mysqli_real_escape_string($conn, $_POST['sub_no'][$i]);
-    $group_p = mysqli_real_escape_string($conn, $_POST['group_p'][$i]);
-    $sulbi = mysqli_real_escape_string($conn, $_POST['sulbi'][$i]);
-    $model = mysqli_real_escape_string($conn, $_POST['model'][$i]);
-    $apart = mysqli_real_escape_string($conn, $_POST['apart'][$i]);
-    $product_na = mysqli_real_escape_string($conn, $_POST['product_na'][$i]);
-    $product_sp = mysqli_real_escape_string($conn, $_POST['product_sp'][$i]);
-    $p_code = mysqli_real_escape_string($conn, $_POST['p_code'][$i]);
-    $price = mysqli_real_escape_string($conn, $_POST['price'][$i]);
-    $qty = mysqli_real_escape_string($conn, $_POST['qty'][$i]);
-    $amt = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['amt'][$i]));
-    $progress = mysqli_real_escape_string($conn, $_POST['progress'][$i]);
-    $r_quot = mysqli_real_escape_string($conn, $_POST['r_quot'][$i]);
-    $specif = mysqli_real_escape_string($conn, $_POST['specif'][$i]);
-    $quote_no = isset($_POST['quote_no']) ? mysqli_real_escape_string($conn, $_POST['quote_no']) : null;
-    if(empty($price) || empty($qty)){
-        continue;
-    }
-
-$sql="INSERT INTO quote_data(quote_no,sub_no,group_p,sulbi,model,apart,product_na,product_sp,p_code,price,qty,amt,progress,r_quot,specif)
-        VALUES('$quote_no','$sub_no','$group_p','$sulbi','$model','$apart','$product_na','$product_sp','$p_code','$price','$qty','$amt','$progress','$r_quot','$specif')";
-$result = mysqli_query($conn, $sql);
-
-    if (!$result) {
-      // 폼을 제출한 후, 데이터 처리 페이지에서
-    // 실패 메시지와 함께 원래 페이지로 리다이렉트
-    header('Location: new_quote.php?error=failed&data=' . urlencode(serialize($_POST)));
-    exit;
-}
-    header("Location: quote_index.php?quote_no=$quote_no&status=saved");
-}
-}
-
-
-// var_dump($_POST);
-// exit();
-/* 견적 상세정보 Update */
+// 견적 상세정보 Update
 if (isset($_POST['update_btn'])) {
     $quote_no = trim($_POST['quote_no'], "'"); // 양쪽 끝의 따옴표 제거
     $quote_no = mysqli_real_escape_string($conn, $quote_no);
     $updateSuccess = false;
     $updateFailed = false;
 
-    for ($i = 0; $i < count($_POST['sub_no']); $i++) {
-        $sub_no = mysqli_real_escape_string($conn, $_POST['sub_no'][$i]);
-        $group_p = mysqli_real_escape_string($conn, $_POST['group_p'][$i]);
-        $sulbi = mysqli_real_escape_string($conn, $_POST['sulbi'][$i]);
-        $model = mysqli_real_escape_string($conn, $_POST['model'][$i]);
-        $apart = mysqli_real_escape_string($conn, $_POST['apart'][$i]);
-        $product_na = mysqli_real_escape_string($conn, $_POST['product_na'][$i]);
-        $product_sp = mysqli_real_escape_string($conn, $_POST['product_sp'][$i]);
-        $p_code = mysqli_real_escape_string($conn, $_POST['p_code'][$i]);
-        $price = mysqli_real_escape_string($conn, $_POST['price'][$i]);
-        $qty = mysqli_real_escape_string($conn, $_POST['qty'][$i]);
-        $amt = mysqli_real_escape_string($conn, $_POST['amt'][$i]);
-        $progress = mysqli_real_escape_string($conn, $_POST['progress'][$i]);
-        $r_quot = mysqli_real_escape_string($conn, $_POST['r_quot'][$i]);
-        $specif = mysqli_real_escape_string($conn, $_POST['specif'][$i]);
-        
-        $price = str_replace(',', '', $price); // 콤마 제거
-        $amt = str_replace(',', '', $amt); // 콤마 제거
+    if (isset($_POST['sub_no'])) {
+        for ($i = 0; $i < count($_POST['sub_no']); $i++) {
+            $sub_no = mysqli_real_escape_string($conn, $_POST['sub_no'][$i]);
+            $group_p = mysqli_real_escape_string($conn, $_POST['group_p'][$i]);
+            $sulbi = mysqli_real_escape_string($conn, $_POST['sulbi'][$i]);
+            $model = mysqli_real_escape_string($conn, $_POST['model'][$i]);
+            $apart = mysqli_real_escape_string($conn, $_POST['apart'][$i]);
+            $product_na = mysqli_real_escape_string($conn, $_POST['product_na'][$i]);
+            $product_sp = mysqli_real_escape_string($conn, $_POST['product_sp'][$i]);
+            $p_code = mysqli_real_escape_string($conn, $_POST['p_code'][$i]);
+            $price = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['price'][$i]));
+            $qty = mysqli_real_escape_string($conn, $_POST['qty'][$i]);
+            $amt = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['amt'][$i]));
+            $progress = mysqli_real_escape_string($conn, $_POST['progress'][$i]);
+            $r_quot = mysqli_real_escape_string($conn, $_POST['r_quot'][$i]);
+            $specif = mysqli_real_escape_string($conn, $_POST['specif'][$i]);
 
-        $stmt = $conn->prepare("UPDATE quote_data SET group_p=?, sulbi=?, model=?, apart=?, product_na=?, product_sp=?, p_code=?, price=?, qty=?, amt=?, progress=?, r_quot=?, specif=? WHERE quote_no=? AND sub_no=?");
-        $stmt->bind_param("sssssssssssssss", $group_p, $sulbi, $model, $apart, $product_na, $product_sp, $p_code, $price, $qty, $amt, $progress, $r_quot, $specif, $quote_no, $sub_no);
+            // 로그 추가
+            error_log("sub_no: $sub_no, group_p: $group_p, sulbi: $sulbi, model: $model, apart: $apart, product_na: $product_na, product_sp: $product_sp, p_code: $p_code, price: $price, qty: $qty, amt: $amt, progress: $progress, r_quot: $r_quot, specif: $specif, quote_no: $quote_no");
 
-        if ($stmt->execute()) {
-            if ($stmt->affected_rows > 0) {
-                $updateSuccess = true;
+            if (empty($price) || empty($qty)) {
+                continue;
             }
-        } else {
-            $updateFailed = true;
-            $_SESSION['status'] = "데이터 저장에 실패했습니다: " . $stmt->error;
-            break; // 에러 발생 시 루프 중단
+
+            $sql = "INSERT INTO quote_data (quote_no, sub_no, group_p, sulbi, model, apart, product_na, product_sp, p_code, price, qty, amt, progress, r_quot, specif)
+                    VALUES ('$quote_no', '$sub_no', '$group_p', '$sulbi', '$model', '$apart', '$product_na', '$product_sp', '$p_code', '$price', '$qty', '$amt', '$progress', '$r_quot', '$specif')";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                $updateSuccess = true;
+            } else {
+                // 로그 추가
+                error_log("MySQL Error: " . mysqli_error($conn));
+                $updateFailed = true;
+            }
         }
     }
-    $stmt->close();
 
-    if ($updateFailed) {
-        header("Location: quot_index.php?quote_no=$quote_no&status=error");
-    } else if ($updateSuccess) {
-        $_SESSION['status'] = "성공적으로 데이터를 저장했습니다.";
-        header("Location: quot_index.php?quote_no=$quote_no&status=saved");
+    if ($updateSuccess && !$updateFailed) {
+        $_SESSION['message'] = '상세 정보 저장 성공';
+        header("Location: quote_index.php?quote_no=$quote_no&status=saved");
     } else {
-        $_SESSION['status'] = "변경된 데이터가 없습니다.";
-        header("Location: quot_index.php?quote_no=$quote_no&status=unchanged");
+        $_SESSION['message'] = '상세 정보 저장 실패';
+        header("Location: edit_quot.php?quote_no=$quote_no&status=error");
     }
     exit;
 }

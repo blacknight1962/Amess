@@ -40,63 +40,61 @@ if ($e_no !== 'undefined') {
         <h6 class="modal-title fs-6" id="staticBackdropLabel">설비 추가</h6>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <div class="modal-body">
-          <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
-            <div class='container-fluid' style='width: 1550px me-0 ms-0'>
-              <form action="facility_process.php" method="post">
-                <input type="hidden" name="action" value="save">
-                <input type="hidden" name="e_no" value="<?php echo $e_no; ?>">
-              <table class='table table-bordered mt-1' style="font-size: .65rem; width: 100%;">
-                <thead style="max-width: 1500px; text-align: center;">
-                  <tr class='table table-secondary'>
-                    <th style="width: 6%;">No</th>
-                    <th style="width: 10%;">S/N</th>
-                    <th style="width: 10%;">납품일자</th>
-                    <th style="width: 10%;">사업장</th>
-                    <th style="width: 7%;">설치라인</th>
-                    <th style="width: 12%;">고객명칭</th>
-                    <th style="width: 14%;">S/W ver.</th>
-                    <th style="width: 10%;">가동상황</th>
-                    <th style="width: 16%;">특기사항</th>
-                    <th style="width: 5%;"><button type="button" id="addbutton" class="btn btn-success" style="font-size: .65rem; padding: 2px 0px;" onclick="F_BtnAdd()">+</button></th>
-                </tr>
-              </thead>
-              <tbody id='T_Body' style="width: 1500px; font-size: .65rem;">
-                <tr id='T_Row'>
-                  <td><input type="text" class="form-control sub_no" style="text-align: center; width: 100%;" name="sub_no[]" value="<?php echo isset($row["sub_no"]) ? $row["sub_no"] : "1"; ?>"></td>
-                  <td><input type="text" class="form-control seri_no" style="font-size: .65rem; width: 100%;" name="seri_no[]" value="<?php echo isset($row["seri_no"]) ? $row["seri_no"] : ""; ?>"></td>
-                  <td><input type="date" class="form-control date_supply" style="font-size: .65rem; width: 100%;" name="date_supply[]" value="<?php echo isset($row["date_supply"]) ? $row["date_supply"] : ""; ?>"></td>
-                  <td><input type="text" class="form-control place_fac" style="font-size: .65rem; width: 100%;" name="place_fac[]" value="<?php echo isset($row["place_fac"]) ? $row["place_fac"] : ""; ?>"></td>
-                  <td><input type="text" class="form-control line_no" style="font-size: .65rem; width: 100%;" name="line_no[]" value="<?php echo isset($row["line_no"]) ? $row["line_no"] : ""; ?>"></td>
-                  <td><input type="text" class="form-control custo_nick" style="font-size: .65rem; width: 100%;" name="custo_nick[]" value="<?php echo isset($row["custo_nick"]) ? $row["custo_nick"] : ""; ?>"></td>
-                  <td><input type="text" class="form-control sw_ver" style="font-size: .65rem; width: 100%;" name="sw_ver[]" value="<?php echo isset($row["sw_ver"]) ? $row["sw_ver"] : ""; ?>"></td>
-                  <td><select class="form-select" name="manage_stat[]" aria-label="" style="font-size: .65rem; width: 100%;" value="<?php echo isset($row['manage_stat']) ? $row['manage_stat'] : ''; ?>">
-                      <option selected>선택</option>
-                      <option value="정상작동">정상가동</option>
-                      <option value="수리진행">수리진행</option>
-                      <option value="작업대기" selected>작업대기</option>
-                      <option value="장비점검">장비점검</option>
-        <option value="개조진행">개조진행</option>
-        <option value="기타사항">기타사항</option>
-      </select></td>
-    <td><input type="text" class="form-control specif" style="font-size: .65rem; width: 100%;" name="specif[]" value="<?php echo isset($row["specif"]) ? $row["specif"] : ""; ?>"></td>
-    <td>
-      <button type="button" class="btn link-danger small-btn" style="font-size: .65rem" onclick="BtnDelM(this)">
-        <i class="fa-solid fa-trash fs-6"></i></button>
-    </td>
-  </tr>
-</tbody>
-</table>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary btn-sm" style="font-size: .65rem;" data-bs-dismiss="modal">Close</button>
-  <button type="submit" class="btn btn-primary btn-sm" style="font-size: .65rem;">Save changes</button>
-</div>
-</form>
-</div>
-</section>
-</div>
-</div>
-</div>
+      <div class="modal-body">
+        <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
+          <div class='container-fluid' style='width: 1550px me-0 ms-0'>
+            <form action="facility_process.php" method="post">
+              <input type="hidden" name="action" value="save">
+              <input type="hidden" name="e_no" value="<?php echo $e_no; ?>">
+                <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
+                  <thead style="max-width: 1500px; text-align: center;">
+                    <tr class='table table-secondary'>
+                      <th style="width: 6%;">No</th>
+                      <th style="width: 10%;">S/N</th>
+                      <th style="width: 10%;">납품일자</th>
+                      <th style="width: 10%;">사업장</th>
+                      <th style="width: 7%;">설치라인</th>
+                      <th style="width: 12%;">고객명칭</th>
+                      <th style="width: 14%;">S/W ver.</th>
+                      <th style="width: 10%;">가동상황</th>
+                      <th style="width: 16%;">특기사항</th>
+                      <th style="width: 5%;"><button type="button" id="addbutton" class="btn btn-success" style="font-size: .65rem; padding: 2px 0px;" onclick="F_BtnAdd()">+</button></th>
+                    </tr>
+                  </thead>
+                  <tbody id='T_Body' style="width: 1500px; font-size: .65rem;">
+                    <tr id='T_Row'>
+                      <td><input type="text" class="form-control sub_no" style="text-align: center; width: 100%;" name="sub_no[]" value="<?php echo isset($row["sub_no"]) ? $row["sub_no"] : "1"; ?>"></td>
+                      <td><input type="text" class="form-control seri_no" style="font-size: .65rem; width: 100%;" name="seri_no[]" value="<?php echo isset($row["seri_no"]) ? $row["seri_no"] : ""; ?>"></td>
+                      <td><input type="date" class="form-control date_supply" style="font-size: .65rem; width: 100%;" name="date_supply[]" value="<?php echo isset($row["date_supply"]) ? $row["date_supply"] : ""; ?>"></td>
+                      <td><input type="text" class="form-control place_fac" style="font-size: .65rem; width: 100%;" name="place_fac[]" value="<?php echo isset($row["place_fac"]) ? $row["place_fac"] : ""; ?>"></td>
+                      <td><input type="text" class="form-control line_no" style="font-size: .65rem; width: 100%;" name="line_no[]" value="<?php echo isset($row["line_no"]) ? $row["line_no"] : ""; ?>"></td>
+                      <td><input type="text" class="form-control custo_nick" style="font-size: .65rem; width: 100%;" name="custo_nick[]" value="<?php echo isset($row["custo_nick"]) ? $row["custo_nick"] : ""; ?>"></td>
+                      <td><input type="text" class="form-control sw_ver" style="font-size: .65rem; width: 100%;" name="sw_ver[]" value="<?php echo isset($row["sw_ver"]) ? $row["sw_ver"] : ""; ?>"></td>
+                      <td><select class="form-select" name="manage_stat[]" aria-label="" style="font-size: .65rem; width: 100%;" value="<?php echo isset($row['manage_stat']) ? $row['manage_stat'] : ''; ?>">
+                          <option selected>선택</option>
+                          <option value="정상작동">정상가동</option>
+                          <option value="수리진행">수리진행</option>
+                          <option value="작업대기" selected>작업대기</option>
+                          <option value="장비점검">장비점검</option>
+                          <option value="개조진행">개조진행</option>
+                          <option value="기타사항">기타사항</option>
+                        </select></td>
+                      <td><input type="text" class="form-control specif" style="font-size: .65rem; width: 100%;" name="specif[]" value="<?php echo isset($row["specif"]) ? $row["specif"] : ""; ?>"></td>
+                      <td><button type="button" class="btn link-danger small-btn" style="font-size: .65rem" onclick="BtnDelM(this)">
+                          <i class="fa-solid fa-trash fs-6"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-sm" style="font-size: .65rem;" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary btn-sm" style="font-size: .65rem;">Save changes</button>
+                </div>
+            </form>
+        </section>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- 설비관리 메인화면 -->
@@ -105,12 +103,13 @@ if ($e_no !== 'undefined') {
   <section class="shadow-lg mt-2 p-2 pt-0 my-4 rounded-3 container-custom text-center justify-content-center">
     <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
       <!-- 검색란 -->
-      <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
+      <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchfacility" autocomplete="off" placeholder="Search....">
       <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;">통합검색</button>
     </div>
     <!-- 장비관리- 설비 추가 -->
     <div class='card-body'>
-      <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .65rem'>
+      <div id="searchResultContainer_f"></div>
+      <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .75rem'>
         <thead>
           <tr>
             <th style="width: 4%;">no</th>
@@ -125,7 +124,7 @@ if ($e_no !== 'undefined') {
             <th style="width: 9%;">편집</th>
           </tr>
         </thead>
-        <tbody class='' style="font-size: .65rem;">
+        <tbody class='' style="font-size: .75rem;">
           <?php
           $sql = "SELECT * FROM equipment WHERE e_no = '$e_no'";
           $result = mysqli_query($conn, $sql);
@@ -143,24 +142,24 @@ if ($e_no !== 'undefined') {
                 'specif' => htmlspecialchars($row['specif'])
               );
                   ?>
-                      <tr class="table table-hover" style="line-height: 20px !important;">
-                        <td><?= $filtered['e_no'] ?></td>
-                        <td><?= $filtered['picb'] ?></td>
-                        <td><?= $filtered['equip'] ?></td>
-                        <td><?= $filtered["model_p"] ?></td>
-                        <td><?= $filtered["regi_date"] ?></td>
-                        <td><?= $filtered['customer'] ?></td>
-                        <td><?= $filtered['supplyer'] ?></td>
-                        <td><?= $filtered["process_p"] ?></td>
-                        <td><?= $filtered['specif'] ?></td>
-                        <td>
-                            <!-- Icon button trigger modal with e_no parameter -->
-                            <a href="#" onclick="openPopupWindow(<?= $filtered['e_no'] ?>);" class="link-secondary" title="편집"><i class="fa-solid fa-pen-to-square fs-6" style="padding: 0px 2px;"></i></a>
-                            <button type="button" class="btn btn-link delete-button btn-minimal-padding" data-equip-id="<?= $filtered['e_no']; ?>" title="삭제">
-                                <i class="fa-solid fa-trash fs-6" style="padding: 0px 2px;"></i>
-                            </button>  
-                        </td>
-                      </tr>
+            <tr class="table table-hover" style="line-height: 20px !important;">
+              <td><?= $filtered['e_no'] ?></td>
+              <td><?= $filtered['picb'] ?></td>
+              <td><?= $filtered['equip'] ?></td>
+              <td><?= $filtered["model_p"] ?></td>
+              <td><?= $filtered["regi_date"] ?></td>
+              <td><?= $filtered['customer'] ?></td>
+              <td><?= $filtered['supplyer'] ?></td>
+              <td><?= $filtered["process_p"] ?></td>
+              <td><?= $filtered['specif'] ?></td>
+              <td>
+                  <!-- Icon button trigger modal with e_no parameter -->
+                  <a href="#" onclick="openPopupWindow(<?= $filtered['e_no'] ?>);" class="link-secondary" title="편집"><i class="fa-solid fa-pen-to-square fs-6" style="padding: 0px 2px;"></i></a>
+                  <button type="button" class="btn btn-link delete-button btn-minimal-padding" data-equip-id="<?= $filtered['e_no']; ?>" title="삭제">
+                      <i class="fa-solid fa-trash fs-6" style="padding: 0px 2px;"></i>
+                  </button>  
+              </td>
+            </tr>
                     <?php
                     }
                   } else {
@@ -201,7 +200,7 @@ if ($e_no !== 'undefined') {
 
         <?php endif; ?>
       </div>
-      <table class='table table-bordered mt-1' style="font-size: .65rem; width: 100%;">
+      <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
         <thead style="max-width: 1500px; text-align: center; vertical-align: middle;">
           <tr class='table table-secondary'>
             <th style="width: 4%;">No</th>
@@ -216,7 +215,7 @@ if ($e_no !== 'undefined') {
             <th style="width: 5%;"><button type="button" id="addBtton" class="btn btn-success btn-sm" style="font-size: .65rem" onclick="FT_BtnAdd()">+</button></th>
           </tr>
         </thead>
-        <tbody id='FT_Body' style="width: 1500px; font-size: .65rem;">
+        <tbody id='FT_Body' style="width: 1500px; font-size: .75rem;">
           <?php
           // $e_no 변수가 설정되어 있는지 확인하고, 없으면 기본값으로 처리
             $sql_data = "SELECT * FROM facility ORDER BY e_no DESC LIMIT 30";
@@ -238,15 +237,15 @@ if ($e_no !== 'undefined') {
               ); //array 출력 
         ?>
           <tr id='FT_Row' data-e-no="<?php echo $filtered['e_no']; ?>"> <!-- e_no 값을 data 속성으로 추가 -->
-            <td><input type="text" class="form-control sub_no" style="text-align: center;" name="sub_no[]" value="<?php echo $filtered["sub_no"]; ?>"></td>
-            <td><input type="text" class="form-control seri_no"  name="seri_no[]" value="<?php echo $filtered["seri_no"]; ?>"></td>
-            <td><input type="text" class="form-control date_supply" name="date_supply[]" value="<?php echo $filtered["date_supply"]; ?>"></td>
-            <td><input type="text" class="form-control place_fac" name="place_fac[]" value="<?php echo $filtered["place_fac"]; ?>"></td>
-            <td><input type="text" class="form-control line_no" name="line_no[]" value="<?php echo $filtered["line_no"]; ?>"></td>
-            <td><input type="text" class="form-control custo_nick" name="custo_nick[]" value="<?php echo $filtered["custo_nick"]; ?>"></td>
-            <td><input type="text" class="form-control sw_ver" name="sw_ver[]" value="<?php echo $filtered["sw_ver"]; ?>"></td>
+            <td><input type="text" class="form-control sub_no" style="border: none; text-align: center;" name="sub_no[]" value="<?php echo $filtered["sub_no"]; ?>"></td>
+            <td><input type="text" class="form-control seri_no" style="border: none; text-align: center;" name="seri_no[]" value="<?php echo $filtered["seri_no"]; ?>"></td>
+            <td><input type="text" class="form-control date_supply" style="border: none; text-align: center;" name="date_supply[]" value="<?php echo $filtered["date_supply"]; ?>"></td>
+            <td><input type="text" class="form-control place_fac" style="border: none; text-align: center;" name="place_fac[]" value="<?php echo $filtered["place_fac"]; ?>"></td>
+            <td><input type="text" class="form-control line_no" style="border: none; text-align: center;" name="line_no[]" value="<?php echo $filtered["line_no"]; ?>"></td>
+            <td><input type="text" class="form-control custo_nick" style="border: none; text-align: center;" name="custo_nick[]" value="<?php echo $filtered["custo_nick"]; ?>"></td>
+            <td><input type="text" class="form-control sw_ver" style="border: none; text-align: center;" name="sw_ver[]" value="<?php echo $filtered["sw_ver"]; ?>"></td>
             <td><?= createSelectStatus($conn, 'manage_stat[]', $filtered['manage_stat']); ?></td>
-            <td><input type="text" class="form-control specif" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
+            <td><input type="text" class="form-control specif" style="border: none; text-align: center;" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
             <td><button type="button" class="btn link-danger small-btn btn-delete-db BtnDelF" style="font-size: .65rem">
                 <i class="fa-solid fa-trash fs-6"></i></button>
                 <a href="task_index.php?e_no=<?= $filtered['e_no'] ?>&sub_no=<?= $filtered['sub_no'] ?>&seri_no=<?= $filtered['seri_no'] ?>"" class="link-secondary" title="상세정보">
@@ -272,6 +271,7 @@ if ($e_no !== 'undefined') {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/equipment.js"></script>
 <script src="js/facility.js"></script>
+<script src="js/facility_search_M.js"></script>
 </body>
 <?php include('include/footer.php'); ?>
 

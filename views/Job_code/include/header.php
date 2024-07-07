@@ -32,7 +32,7 @@ $user_name = htmlspecialchars($row['ep_name']);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <!-- jQuery 최신 버전 (3.7.1) -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <link rel="stylesheet" href="/practice/AMESystem/public/css/style.css">
   <link rel="stylesheet" href="css/style_jobcode.css">

@@ -4,48 +4,61 @@ include('include/header.php');
 include(__DIR__ . '/../../db.php');
 
 function fetchOrderInfo($conn, $order_no) {
+    $order_no = trim($order_no); // 앞뒤 공백 제거
     $query = "SELECT * FROM `order` WHERE order_no = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $order_no);
+    if (!$stmt) {
+        die('쿼리 준비 실패: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $order_no); // 숫자형으로 처리
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    } else {
-        return null;
+    if (!$result) {
+        die('쿼리 실행 오류: ' . $conn->error);
     }
+    $order_info = [];
+    while ($row = $result->fetch_assoc()) {
+        $order_info[] = $row;
+    }
+    return $order_info;
 }
 
-$order_info = array();
+$order_info = [];
 $order_no = ""; // 초기 order_no를 빈 문자열로 설정
+$o_no = ""; // 초기 o_no를 빈 문자열로 설정
 
 if (isset($_GET['order_no'])) {
-    $order_no = $_GET['order_no'];
+    $order_no = trim($_GET['order_no']); // 앞뒤 공백 제거
+
     $order_info = fetchOrderInfo($conn, $order_no);
+    if (!empty($order_info)) {
+        $order_info = $order_info[0]; // 배열의 첫 번째 요소만 사용
+    } else {
+        echo "Order not found.<br>";
+    }
 }
 ?>
-  <!-- 발주 기본정보 입력 -->
-<div class='bg-info bg-opacity-10 mt-1' style="width: 1920px; margin: 0 auto;">
-  <div class='container mt-1'>
+<!-- 발주 기본정보 입력 -->
+<div class='bg-info bg-opacity-10 mt-1' style="width: 100%; margin: 0 auto;">
+  <div class='container mt-1' style="max-width: 1450px;">
     <div class='row justify-content-center'>
-      <div class='bg-warning bg-opacity-10'>
+      <div class='bg-warning bg-opacity-10' style="width: 100%;">
         <h4 class='bg-primary bg-opacity-10 justify-content-center text-center p-2'>
             발주관리 - <?php echo isset($order_no) && $order_no != "" ? '정보 UPDATE' : '신규등록'; ?></h4>
-          <section class="shadow-lg p-1 my-1 rounded-3 container text-center">
+          <section class="shadow-lg p-1 my-1 rounded-3 container text-center" style="max-width: 1400px;">
             <h6 class='mt-1'>기본정보</h6>
-            <div class='container-fluid' style='width: 1920px me-1 ms-1'>
+            <div class='container-fluid' style='width: 100%;'>
               <form action="order_process.php" method='post'>
                 <input type="hidden" name="action_type" value="save_basic">
-                <table class='table table-bordered mt-1' style="font-size: .65rem; width: 1820px;">
-                  <thead style="max-width: 1820px; text-align: center;">
-                    <tr class='table table-warning' style="margin: 0 auto;">
+                <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
+                  <thead style="text-align: center;">
+                    <tr class='table table-warning'>
                       <th style="width: 10%;">발주번호</th>
                       <th style="width: 10%;">발주사</th>
                       <th style="width: 13%;">고객사</th>
                       <th style="width: 10%;">발주일자</th>
                       <th style="width: 10%;">담당자</th>
 
-                      <th style="width: 12%;">특기사항</th>
                       <th style="width: 13%;">생산코드</th>
                       <th style="width: 12%;">착수일자</th>
                       <th style="width: 10%;"></th>
@@ -55,10 +68,10 @@ if (isset($_GET['order_no'])) {
                     <tr class='custom-tr'>
                       <td><input type='text' class='form-control' style='border:none' placeholder="발주번호" name='order_no' value="<?php echo isset($order_info['order_no']) ? $order_info['order_no'] : ''; ?>" required></td>
                       <td><?= createSelectOrderCustomer($conn, isset($order_info['order_custo']) ? $order_info['order_custo'] : ''); ?></td>
-                      <td><?= createSelectCustomer($conn, isset($order_info['customer']) ? $order_info['customer'] : ''); ?></td>
+                      <td><?= createSelectCustomer1($conn, isset($order_info['customer']) ? $order_info['customer'] : ''); ?></td>
                       <td><input type='date' class='form-control' name='order_date' value="<?php echo isset($order_info['order_date']) ? $order_info['order_date'] : date('Y-m-d'); ?>" required></td>
                       <td><input type='text' class='form-control' placeholder='담당자' name='custo_name' value="<?php echo isset($order_info['custo_name']) ? $order_info['custo_name'] : ''; ?>"></td>
-                      <td><input type='text' class='form-control' placeholder='특기사항' name='specifi' value="<?php echo isset($order_info['specifi']) ? $order_info['specifi'] : ''; ?>"></td>
+
                       <td><input type='text' class='form-control' placeholder='생산코드' name='production_code' value="<?php echo isset($order_info['production_code']) ? $order_info['production_code'] : ''; ?>"></td>
                       <td><input type='date' class='form-control' placeholder='착수일자' name='production_start' value="<?php echo isset($order_info['production_start']) ? $order_info['production_start'] : ''; ?>"></td>
                       <td><button type="submit" id="saveButton" class="btn btn-outline-success btn-sm" style="font-size: .65rem"><?php echo !empty($order_info) ? 'UPDATE' : '저장'; ?></button></td>
@@ -88,33 +101,35 @@ function fetchOrderDetails($conn, $order_no) {
 ?>
 <!-- 발주 상세정보 입력 -->
 <div class='bg-info bg-opacity-10' style="width: 1920px; margin: 0 auto;">
-  <div class='row justify-content-center' style="max-width: 1920px; margin: 0 auto;">
+  <div class='row justify-content-center' style="max-width: 2000px; margin: 0 auto;">
   <h6 class='mt-2' style="text-align: center;">상세정보</h6>
   <section class="shadow-lg mt-0 p-2 pt-0 my-0 rounded-3 container-fluid justify-content-center text-center ms-0">
-    <div class='container-fluid' style='width: 1890px; padding-left: 0;'>
+    <div class='container-fluid' style='width: 2000px; padding-left: 0;'>
       <form action="order_process.php" method='post'>
         <input type='hidden' name='action_type' value='save_detail'>
         <input type='hidden' name='order_no' value='<?php echo $order_no;ENT_QUOTES ?>'>
-          <table table class='table table-bordered mt-1' style="font-size: .65rem; width: 1900px;">
+        <input type='hidden' name='o_no' value='<?php echo $o_no;?>'>
+          <table table class='table table-bordered mt-1' style="font-size: .75rem; width: 1990px;">
             <thead style="text-align: center;">
               <tr class='table table-warning custom-tr'>
                 <th style="width: 3%;">No</th>
-                <th style="width: 5%;">부서</th>
-                <th style="width: 5%;">구분</th>
-                <th style="width: 9%;">자재코드</th>
+                <th style="width: 3%;">부서</th>
+                <th style="width: 4%;">구분</th>
+                <th style="width: 6%;">특기사항</th>
+                <th style="width: 6%;">자재코드</th>
                 <th style="width: 13%;">품명</th>
 
                 <th style="width: 12%;">사양</th>
                 <th style="width: 8%;">요청납기</th>
                 <th style="width: 7%;">단 가</th>
-                <th style="width: 5%;">단위</th>
+                <th style="width: 4%;">단위</th>
                 <th style="width: 4%;">수량</th>
 
                 <th style="width: 8%;">합계(원화)</th>
                 <th style="width: 4%;">환율</th>
                 <th style="width: 8%;">매출예정일자</th>
-                <th style="width: 6%;">조건(%)</th>
-                <th style="width: 3%;"><button type="button" id="addButton" class="btn btn-sm" style="font-size: .65rem" onclick="BtnAdd_o()"><i class="fa-solid fa-plus"></i></button></th>
+                <th style="width: 5%;">조건(%)</th>
+                <th style="width: 5%;"><button type="button" id="addButton" class="btn btn-sm" style="font-size: .65rem" onclick="BtnAdd_o()"><i class="fa-solid fa-plus"></i></button></th>
               </tr>
             </thead>
             <tbody id="orderItemBody">
@@ -126,6 +141,7 @@ function fetchOrderDetails($conn, $order_no) {
                       <td><input type='text' class='form-control' style='border:none' name='o_no[]' value="<?php echo isset($detail['o_no']) ? htmlspecialchars($detail['o_no']) : ''; ?>"></td>
                       <td><input type='text' class='form-control' style='border:none' name='picb[]' value="<?php echo isset($detail['picb']) ? htmlspecialchars($detail['picb']) : ''; ?>"></td>
                       <td><input type='text' class='form-control' style='border:none' name='aparts[]' value="<?php echo isset($detail['aparts']) ? htmlspecialchars($detail['aparts']) : ''; ?>"></td>
+                      <td><input type='text' class='form-control' style='border:none' name='specifi[]' value="<?php echo isset($detail['specifi']) ? htmlspecialchars($detail['specifi']) : ''; ?>"></td>                      
                       <td><input type='text' class='form-control' style='border:none' name='parts_code[]' value="<?php echo isset($detail['parts_code']) ? htmlspecialchars($detail['parts_code']) : ''; ?>"></td>
                       <td><input type='text' class='form-control' style='border:none' name='product_na[]' value="<?php echo isset($detail['product_na']) ? htmlspecialchars($detail['product_na']) : ''; ?>"></td>
                       <td><input type='text' class='form-control' style='border:none' name='product_sp[]' value="<?php echo isset($detail['product_sp']) ? htmlspecialchars($detail['product_sp']) : ''; ?>"></td>
@@ -152,6 +168,7 @@ function fetchOrderDetails($conn, $order_no) {
                   echo "<td><input type='text' class='form-control o_no' style='border:none' name='o_no[]' value='1'></td>";
                   echo "<td>".createSelectPicb($conn, 'division', 'picb', 'picb', 'picb[]')."</td>";
                   echo "<td>".createSelectOptions($conn, 'apart', 'aparts', 'aparts', 'aparts[]')."</td>";
+                  echo "<td><input type='text' class='form-control specifi', style='border:none' name='specifi[]' placeholder='특기사항' value=''></td>";                  
                   echo "<td><input type='text' style='border:none' class='form-control' placeholder='자재코드' name='parts_code[]'></td>";
                   echo "<td><input type='text' style='border:none' class='form-control' placeholder='품명' name='product_na[]'></td>";
                   echo "<td><input type='text' style='border:none' class='form-control' placeholder='사양' name='product_sp[]'></td>";

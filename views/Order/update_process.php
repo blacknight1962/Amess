@@ -159,4 +159,36 @@ case 'update_basic':
         }
     
     break;
+        case 'delete_order':
+        error_log("Entered delete_order case");
+        if (isset($_POST['order_no'])) {
+            $orderNo = $_POST['order_no'];
+            error_log($orderNo);
+            $conn->begin_transaction();
+            try {
+                $stmt = $conn->prepare("DELETE FROM order_data WHERE order_no = ?");
+                $stmt->bind_param("s", $orderNo);
+                $stmt->execute();
+                if ($stmt->affected_rows == 0) {
+                    throw new Exception("상세 정보 삭제 실패");
+                }
+
+                $stmt = $conn->prepare("DELETE FROM `order` WHERE order_no = ?");
+                $stmt->bind_param("s", $orderNo);
+                $stmt->execute();
+                if ($stmt->affected_rows == 0) {
+                    throw new Exception("기본 정보 삭제 실패");
+                }
+
+                $conn->commit();
+                echo json_encode(['status' => 'success', 'message' => '삭제 성공']);
+            } catch (Exception $e) {
+                $conn->rollback();
+                echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            }
+            $stmt->close();
+        } else {
+            echo json_encode(['status' => 'error', 'message' => '잘못된 요청입니다.']);
+        }
+        break;
 }

@@ -55,7 +55,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
         <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
         <!-- 검색란 -->
         <!-- 검색 버튼 -->
-          <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchInput" autocomplete="off" placeholder="Search....">
+          <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="searchtask" autocomplete="off" placeholder="Search....">
       <button type="button" class="btn btn-outline-primary btn-sm me-2" id="searchButton_t" style="font-size: .65rem; width: 6%; text-decoration: none; color:inherit;">통합검색</button>
         </div>
         <table class="table table-striped table-bordered table-hover mt-1 table-xl" style='font-size: .75rem'>
@@ -222,7 +222,8 @@ if (isset($seri_no) && $seri_no !== '') {
 </div>
 <?php 
 } ?>
-
+<!-- 검색 결과 컨테이너 -->
+<div id="searchResultContainer_t"></div>
 <!-- 작업 정보 요약 버젼 화면-->
 <div class='bg-dark bg-opacity-10'>
   <div class='row justify-content-center' style="max-width: 1550px; margin: 0 auto;">
@@ -273,6 +274,7 @@ if (isset($seri_no) && $seri_no !== '') {
   <script src="js/facility.js"></script>
   <script src="js/task.js"></script>
   <script src="js/delete_task.js"></script>
+  <script src="js/task_search_M.js"></script>
             
 </body>
 <?php include('include/footer.php'); ?>

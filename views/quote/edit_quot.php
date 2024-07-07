@@ -15,7 +15,7 @@ if (!isset($_SESSION['ss_id']) or $_SESSION['ss_id'] == '') {
 
 // 세션 메시지 확인 및 출력
 if (isset($_SESSION['message'])) {
-    echo '<div class="alert alert-info">' . $_SESSION['message'] . '</div>';
+    echo '<div class="alert alert-info" id="sessionMessage">' . $_SESSION['message'] . '</div>';
     unset($_SESSION['message']); // 메시지 출력 후 세션에서 제거
 }
 
@@ -32,7 +32,7 @@ if ($quote_no) {
     } else {
         echo "Error: " . mysqli_error($conn);
     }
-  }
+}
 
 ?>
 <script>
@@ -45,6 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (saveButton) {
             saveButton.textContent = '저장됨';
         }
+    }
+
+    // 성공 메시지를 일정 시간 후에 숨기기
+    const sessionMessage = document.getElementById('sessionMessage');
+    if (sessionMessage) {
+        setTimeout(() => {
+            sessionMessage.style.display = 'none';
+        }, 5000); // 5초 후에 메시지 숨기기
     }
 });
 </script>
@@ -157,9 +165,8 @@ if (isset($_GET['data'])) {
                     $sql_data = "SELECT * FROM quote_data WHERE quote_no = '$quote_no'";
                     $result_data = mysqli_query($conn, $sql_data);
 
-                  if (mysqli_num_rows($result_data) > 0) {
-                    while ($row_data = mysqli_fetch_array($result_data)) {
-                      if ($row_data !== null) { // 배열이 null이 아닌지 확인
+                    if (mysqli_num_rows($result_data) > 0) {
+                      while ($row_data = mysqli_fetch_array($result_data)) {
                         $filtered = array(
                           'sub_no' => htmlspecialchars($row_data["sub_no"]),
                           'group_p' => htmlspecialchars($row_data["group_p"]),
@@ -176,13 +183,13 @@ if (isset($_GET['data'])) {
                           'r_quot' => htmlspecialchars($row_data["r_quot"]),
                           'specif' => htmlspecialchars($row_data["specif"]),
                         );
-                ?>
+                  ?>
                       <tr id='TRow'>
                         <td><input type="text" class="form-control sub_no" style="text-align: center; border: none;" name="sub_no[]" value="<?php echo $filtered["sub_no"]; ?>"></td>
                         <td><input type="text" class="form-control group_p" style="font-size: .75rem; border: none;" name="group_p[]" value="<?php echo $filtered["group_p"]; ?>"></td>
                         <td><input type="text" class="form-control sulbi" style="font-size: .75rem; border: none;" name="sulbi[]" value="<?php echo $filtered["sulbi"]; ?>"></td>
                         <td><input type="text" class="form-control model" style="font-size: .75rem; border: none;" name="model[]" value="<?php echo $filtered["model"]; ?>"></td>
-                        <td><select name="apart[]; ?>]" class="form-select" style="font-size: .75rem">
+                        <td><select name="apart[]" class="form-select" style="font-size: .75rem">
                               <option value="개조" <?php echo ($filtered['apart'] == '개조') ? 'selected' : ''; ?>>개조</option>
                               <option value="부품" <?php echo ($filtered['apart'] == '부품') ? 'selected' : ''; ?>>부품</option>
                               <option value="설비" <?php echo ($filtered['apart'] == '설비') ? 'selected' : ''; ?>>설비</option>
@@ -195,7 +202,7 @@ if (isset($_GET['data'])) {
                         <td><input type="text" class="form-control price small-input" style="text-align: right; border: none;" name="price[]" value="<?php echo number_format($filtered["price"]); ?>" oninput="updatePrice(this)"></td>
                         <td><input type="number" class="form-control qty small-input" style="text-align: right; border: none;" name="qty[]" value="<?php echo $filtered["qty"]; ?>" oninput="updateLineTotal(this)"></td>
                         <td><input type="text" class="form-control amt small-input" style="text-align: right; border: none;" name="amt[]" value="<?php echo number_format($filtered["amt"]); ?>" readonly></td>
-                        <td><select name="progress[]; ?>]" class="form-select" style="font-size: .75rem; border: none;">
+                        <td><select name="progress[]" class="form-select" style="font-size: .75rem; border: none;">
                               <option value="진행" <?php echo ($filtered['progress'] == '진행') ? 'selected' : ''; ?>>진행</option>
                               <option value="대기" <?php echo ($filtered['progress'] == '대기') ? 'selected' : ''; ?>>대기</option>
                               <option value="변경" <?php echo ($filtered['progress'] == '변경') ? 'selected' : ''; ?>>변경</option>
@@ -203,16 +210,49 @@ if (isset($_GET['data'])) {
                               <option value="기타" <?php echo ($filtered['progress'] == '기타') ? 'selected' : ''; ?>>기타</option>
                             </select></td>
                         <td><input type="text" class="form-control r_quot" style="font-size: .75rem; border: none;" name="r_quot[]" value="<?php echo $filtered["r_quot"]; ?>"></td>
-                        <td><input type="text" class="form-control specif" style="font-size: .75rem; border: none;" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
+                                                <td><input type="text" class="form-control specif" style="font-size: .75rem; border: none;" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
                         <td><button type="button" class="btn link-danger small-btn" style="font-size: .75rem" onclick="IcoDel(this)"><i class="fa-solid fa-trash fs-6"></i></button></td>
                       </tr> 
                     <?php
                       }
-                    } 
-                  }else {
-                        echo "0 results";
+                    } else {
+                      // quote_data 테이블에 데이터가 없는 경우 빈 입력 필드 생성
+                      ?>
+                      <tr id='TRow'>
+                        <td><input type="text" class="form-control sub_no" style="text-align: center; border: none;" name="sub_no[]" value=""></td>
+                        <td><input type="text" class="form-control group_p" style="font-size: .75rem; border: none;" name="group_p[]" value=""></td>
+                        <td><input type="text" class="form-control sulbi" style="font-size: .75rem; border: none;" name="sulbi[]" value=""></td>
+                        <td><input type="text" class="form-control model" style="font-size: .75rem; border: none;" name="model[]" value=""></td>
+                        <td><select name="apart[]" class="form-select" style="font-size: .75rem">
+                              <option value="개조">개조</option>
+                              <option value="부품">부품</option>
+                              <option value="설비">설비</option>
+                              <option value="SW">SW</option>
+                              <option value="기타">기타</option>
+                            </select></td>
+                        <td><input type="text" class="form-control product_na" style="font-size: .75rem; border: none;" name="product_na[]" value=""></td>
+                        <td><input type="text" class="form-control product_sp" style="font-size: .75rem; border: none;" name="product_sp[]" value=""></td>
+                        <td><input type="text" class="form-control p_code" style="font-size: .75rem; border: none;" name="p_code[]" value=""></td>
+                        <td><input type="text" class="form-control price small-input" style="text-align: right; border: none;" name="price[]" value="" oninput="updatePrice(this)"></td>
+                        <td><input type="number" class="form-control qty small-input" style="text-align: right; border: none;" name="qty[]" value="" oninput="updateLineTotal(this)"></td>
+                        <td><input type="text" class="form-control amt small-input" style="text-align: right; border: none;" name="amt[]" value="" readonly></td>
+                        <td><select name="progress[]" class="form-select" style="font-size: .75rem; border: none;">
+                              <option value="진행">진행</option>
+                              <option value="대기">대기</option>
+                              <option value="변경">변경</option>
+                              <option value="취소">취소</option>
+                              <option value="기타">기타</option>
+                            </select></td>
+                        <td><input type="text" class="form-control r_quot" style="font-size: .75rem; border: none;" name="r_quot[]" value=""></td>
+                        <td><input type="text" class="form-control specif" style="font-size: .75rem; border: none;" name="specif[]" value=""></td>
+                        <td><button type="button" class="btn link-danger small-btn" style="font-size: .75rem" onclick="IcoDel(this)"><i class="fa-solid fa-trash fs-6"></i></button></td>
+                      </tr>
+                    <?php
+                    }
+                  } else {
+                    echo "0 results";
                   }
-                }
+                
               ?> 
                 </tbody>
               </table>

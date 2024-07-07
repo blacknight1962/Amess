@@ -13,7 +13,7 @@ error_log("Period: $period, Year: $year, Input: $input");
 
 $tables = [
     '`order` o',
-    'LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no'
+    'LEFT JOIN `order_data` od ON o.order_no = od.order_no'
 ];
 
 $result = performOrderSearch($conn, $tables, 'o.order_date', $period, $year, $input);
@@ -55,26 +55,26 @@ if ($totalRows > 0) { ?>
     <?php
     while ($row = mysqli_fetch_array($result)) {
       $filtered = array(
-        'o_no' => htmlspecialchars($row['o_no']),
-        'picb' => htmlspecialchars($row['picb']),
-        'order_date' => htmlspecialchars($row['order_date']),
-        'order_no' => htmlspecialchars($row['order_no']),
-        'order_custo' => htmlspecialchars($row['order_custo']),
-        'customer' => htmlspecialchars($row['customer']),
-        'specifi' => htmlspecialchars($row['specifi']),
-        'aparts' => htmlspecialchars($row['aparts']),
-        'custo_name' => htmlspecialchars($row['custo_name']),
-        'parts_code' => htmlspecialchars($row['parts_code']),
-        'product_na' => htmlspecialchars($row['product_na']),
-        'product_sp' => htmlspecialchars($row['product_sp']),
-        'requi_date' => htmlspecialchars($row['requi_date']),
-        'price' => htmlspecialchars($row['price']),
-        'currency' => htmlspecialchars($row['currency']),
-        'qty' => htmlspecialchars($row['qty']),
-        'amt' => htmlspecialchars($row['amt']),
-        'curency_rate' => htmlspecialchars($row['curency_rate']),
-        'sales_date' => htmlspecialchars($row['sales_date']),
-        'condit' => htmlspecialchars($row['condit']),
+        'o_no' => htmlspecialchars($row['o_no'] ?? ''),
+        'picb' => htmlspecialchars($row['picb'] ?? ''),
+        'order_date' => htmlspecialchars($row['order_date'] ?? ''),
+        'order_no' => htmlspecialchars($row['order_no'] ?? ''),
+        'order_custo' => htmlspecialchars($row['order_custo'] ?? ''),
+        'customer' => htmlspecialchars($row['customer'] ?? ''),
+        'specifi' => htmlspecialchars($row['specifi'] ?? ''),
+        'aparts' => htmlspecialchars($row['aparts'] ?? ''),
+        'custo_name' => htmlspecialchars($row['custo_name'] ?? ''),
+        'parts_code' => htmlspecialchars($row['parts_code'] ?? ''),
+        'product_na' => htmlspecialchars($row['product_na'] ?? ''),
+        'product_sp' => htmlspecialchars($row['product_sp'] ?? ''),
+        'requi_date' => htmlspecialchars($row['requi_date'] ?? ''),
+        'price' => htmlspecialchars($row['price'] ?? ''),
+        'currency' => htmlspecialchars($row['currency'] ?? ''),
+        'qty' => htmlspecialchars($row['qty'] ?? ''),
+        'amt' => htmlspecialchars($row['amt'] ?? ''),
+        'curency_rate' => htmlspecialchars($row['curency_rate'] ?? ''),
+        'sales_date' => htmlspecialchars($row['sales_date'] ?? ''),
+        'condit' => htmlspecialchars($row['condit'] ?? ''),
       );
     ?>
     <tr class="table table-hover">
@@ -92,10 +92,10 @@ if ($totalRows > 0) { ?>
       <td><?= $filtered['product_na'] ?></td>
       <td><?= $filtered['product_sp'] ?></td>
       <td><?= $filtered['requi_date'] ?></td>
-      <td class='text-right'><?= number_format($filtered['price']) ?></td>
+      <td style="text-align: right;"><?= number_format((float)$filtered['price']) ?></td>
       <td><?= $filtered['currency'] ?></td>
       <td><?= $filtered['qty'] ?></td>
-      <td class='text-right'><?= number_format($filtered['amt']) ?></td>
+      <td style="text-align: right;"><?= number_format((float)$filtered['amt']) ?></td>
       <td><?= $filtered['curency_rate'] ?></td>
       <td><?= $filtered['sales_date'] ?></td>
       <td><?= $filtered['condit'] ?></td>              

@@ -75,7 +75,7 @@ if (isset($_SESSION['status'])) {
               <option value="">선택</option>
               <?php
               $currentYear = date("Y");
-              for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
+              for ($year = $currentYear; $year >= $currentYear - 14; $year--) {
                   echo "<option value='$year'>$year</option>";
               }
               ?>

@@ -28,7 +28,7 @@ function performOrderSearch($conn, $tables, $dateColumn, $period = '', $year = '
     }
 
     if (!empty($input)) {
-        $conditions[] = "(od.product_na LIKE '%$input%' OR od.product_sp LIKE '%$input%' OR od.parts_code LIKE '%$input%' OR od.order_no LIKE '%$input%' OR o.o_no LIKE '%$input%' OR o.order_custo LIKE '%$input%' OR o.customer LIKE '%$input%' OR o.custo_name LIKE '%$input%' OR o.order_date LIKE '%$input%' OR od.condit LIKE '%$input%' OR o.specifi LIKE '%$input%')";
+        $conditions[] = "(od.product_na LIKE '%$input%' OR od.product_sp LIKE '%$input%' OR od.parts_code LIKE '%$input%' OR od.order_no LIKE '%$input%'  OR o.order_custo LIKE '%$input%' OR o.customer LIKE '%$input%' OR o.custo_name LIKE '%$input%' OR o.order_date LIKE '%$input%' OR od.condit LIKE '%$input%' OR od.specifi LIKE '%$input%')";
     }
 
     if (!empty($conditions)) {

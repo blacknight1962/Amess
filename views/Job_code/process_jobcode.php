@@ -2,7 +2,8 @@
 session_start();
 include(__DIR__ . '/../../db.php');
 
-/* 장비등록 데이터 저장 */
+
+/* 작업코드 신규 저장 */
 if (isset($_POST['save_data'])) {
   $no = mysqli_real_escape_string($conn, $_POST['j_no']);
   $seri_no = mysqli_real_escape_string($conn, $_POST['seri_no']);

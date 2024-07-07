@@ -25,49 +25,6 @@ if (!$result) {
 
 $totalRows = mysqli_num_rows($result);
 
-if ($totalRows > 0) { ?>
-    <table class="table table-bordered mt-2 table-xl table-hover" style='font-size: .75rem'>
-        <thead class="table-secondary" style='background-color: gray; text-align: center;'>
-            <tr>
-                <th style="width: 3%;">#</th>
-                <th style="width: 3%;">부서</th>
-                <th style="width: 5%;">매출일자</th>
-                <th style="width: 6%;">발주번호</th>
-                <th style="width: 5%;">발주사</th>
-                <th style="width: 5%;">발주일자</th>
-                <th style="width: 5%;">담당자</th>
-                <th style="width: 7%;">자재코드</th>
-                <th style="width: 12%;">품명</th>
-                <th style="width: 12%;">사양</th>
-                <th style="width: 5%;">요청납기</th>
-                <th style="width: 4%;">단가</th>
-                <th style="width: 5%;">단위</th>
-                <th style="width: 3%;">수량</th>
-                <th style="width: 6%;">합계</th>
-                <th style="width: 4%;">환율</th>
-                <th style="width: 4%;">조건</th>
-            </tr>
-        </thead>
-        <tbody class='table table-bordered table-striped'>
-        <?php
-        while ($row = mysqli_fetch_array($result)) {
-            $filtered = array(
-                'picb' => htmlspecialchars($row['picb'] ?? ''),
-                'sales_date' => htmlspecialchars($row['sales_date'] ?? ''),
-                'order_no' => htmlspecialchars($row['order_no'] ?? ''),
-                'order_custo' => htmlspecialchars($row['order_custo'] ?? ''),
-                'custo_name' => htmlspecialchars($row['custo_name'] ?? ''),
-                'parts_code' => htmlspecialchars($row['parts_code'] ?? ''),
-                'product_na' => htmlspecialchars($row['product_na'] ?? ''),
-                'product_sp' => htmlspecialchars($row['product_sp'] ?? ''),
-                'requi_date' => htmlspecialchars($row['requi_date'] ?? ''),
-                'price' => htmlspecialchars($row['price'] ?? ''),
-                'currency' => htmlspecialchars($row['currency'] ?? ''),
-                'qty' => htmlspecialchars($row['qty'] ?? ''),
-                'amt' => htmlspecialchars($row['amt'] ?? ''),
-                'curency_rate' => htmlspecialchars($row['curency_rate'] ?? ''),
-                'condit' => htmlspecialchars($row['condit'] ?? '')
-            );
     if (mysqli_num_rows($result) > 0) { ?>
         <table class="table table-bordered mt-2 table-xl table-hover" style='font-size: .75rem'>
             <thead class="table-secondary" style='background-color: gray; text-align: center;'>
@@ -144,7 +101,6 @@ if ($totalRows > 0) { ?>
             ?>
             </tbody>
         </table>
-        <?php }?>
         <div class="row">
             <div class="col-1">
                 <button type="submit" class="btn btn-secondary" style="font-size: .65rem; margin-left: 10px;">검색 결과</button>
@@ -157,9 +113,5 @@ if ($totalRows > 0) { ?>
                 </div>
             </div>
         </div>
-    <?php 
-    } 
-
-?>
 
 
