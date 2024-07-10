@@ -5,7 +5,13 @@ include(__DIR__ . '/../../db.php');
 
 // 세션 메시지 확인 및 출력
 if (isset($_SESSION['message'])) {
-    echo '<div class="alert alert-info" id="sessionMessage">' . $_SESSION['message'] . '</div>';
+    if (is_array($_SESSION['message'])) {
+        foreach ($_SESSION['message'] as $message) {
+            echo '<div class="alert alert-info" id="sessionMessage">' . htmlspecialchars($message) . '</div>';
+        }
+    } else {
+        echo '<div class="alert alert-info" id="sessionMessage">' . htmlspecialchars($_SESSION['message']) . '</div>';
+    }
     unset($_SESSION['message']); // 메시지 출력 후 세션에서 제거
 }
 
@@ -143,7 +149,7 @@ if (isset($_GET['id'])) {
               'order_custo' => htmlspecialchars($row['order_custo'] ?? ''),
 
               'customer' => htmlspecialchars($row['customer'] ?? ''),
-              'specifi' => htmlspecialchars($row['od.specifi'] ?? ''),
+              'specifi' => htmlspecialchars($row['specifi'] ?? ''),
               'aparts' => htmlspecialchars($row['aparts'] ?? ''),
               'custo_name' => htmlspecialchars($row['custo_name'] ?? ''),
               'parts_code' => htmlspecialchars($row['parts_code'] ?? ''),

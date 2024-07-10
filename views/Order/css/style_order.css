@@ -151,7 +151,7 @@ table {
 
 th,
 td {
-  padding: 2px; /* 셀 패딩 */
+  padding: 1px; /* 셀 패딩 */
   border-bottom: 1px solid #ddd; /* 하단 경계선 */
 }
 
@@ -203,4 +203,11 @@ button1:hover {
 .table-xl th,
 .table-xl td {
   padding: 2px 1px;
+}
+.form-control {
+  border: none;
+  padding-top: 4px;
+  margin: 1px 2px;
+  text-align: center;
+  vertical-align: middle;
 }

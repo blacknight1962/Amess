@@ -13,7 +13,7 @@ error_log("Period: $period, Year: $year, Input: $input");
 
 $tables = [
     '`order` o',
-    'LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no',
+    'LEFT JOIN `order_data` od ON o.order_no = od.order_no',
     'LEFT JOIN `sales_data` s ON od.order_no = s.order_no AND od.o_no = s.serial_no'
 ];
 

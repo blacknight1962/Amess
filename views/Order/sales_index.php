@@ -65,7 +65,7 @@ $currentYear = date("Y");
             <?php
             $sql = 'SELECT o.*, od.*, s.*
                     FROM `order` o
-                    INNER JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no
+                    INNER JOIN `order_data` od ON o.order_no = od.order_no
                     INNER JOIN `sales_data` s ON od.order_no = s.order_no AND od.o_no = s.serial_no
                     ORDER BY o.order_date DESC';
               $result = mysqli_query($conn, $sql);

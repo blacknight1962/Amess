@@ -4,11 +4,15 @@ session_start();
 header('Content-Type: application/json');
 include(__DIR__ . '/../../db.php');
 
+// var_dump($_POST);
+// exit();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action_type = isset($_POST['action_type']) ? $_POST['action_type'] : '';
 
     switch ($action_type) {
         case 'save_basic':
+            error_log("Executing save_basic case"); // 디버깅 코드 추가
             $order_no = isset($_POST['order_no']) ? mysqli_real_escape_string($conn, $_POST['order_no']) : '';   
             $order_custo = mysqli_real_escape_string($conn, $_POST['order_custo']);
             $customer = mysqli_real_escape_string($conn, $_POST['customer_na']);
@@ -24,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             }
 
+
             // 발주번호 중복체크
             $Duple_check = "SELECT * FROM `order` WHERE order_no = '$order_no'";
             $result = mysqli_query($conn, $Duple_check);
@@ -38,30 +43,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (mysqli_query($conn, $sql)) {
                 $_SESSION['message'] = '발주가 성공적으로 저장되었습니다.';
-                header('Location: order_index.php?status=saved');
+                header("Location: order_new.php?order_no=$order_no&status=saved");
                 exit();
             } else {
                 $_SESSION['message'] = '발주 저장에 실패했습니다.';
-                header('Location: order_index.php?status=error');
+                header('Location: order_new.php?status=error');
                 exit();
             }
             break;
 
         case 'save_detail':
+            error_log("Executing save_detail case"); // 디버깅 코드 추가
             $conn->begin_transaction();
             try {
+                $has_sales_data = false; // 분할매출 정보가 있는지 확인하기 위한 변수
+
+                if (!isset($_POST['o_no']) || !is_array($_POST['o_no'])) {
+                    throw new Exception('o_no 데이터가 없습니다.');
+                }
+
                 foreach ($_POST['o_no'] as $i => $o_no) {
+                    // 상세정보 및 분할매출 정보 저장 로직
                     $order_no = mysqli_real_escape_string($conn, $_POST['order_no']);
-                    $o_no = mysqli_real_escape_string($conn, $_POST['o_no'][$i]);
                     $picb = mysqli_real_escape_string($conn, $_POST['picb'][$i]);
+                    $aparts = mysqli_real_escape_string($conn, $_POST['aparts'][$i]);
                     $specifi = mysqli_real_escape_string($conn, $_POST['specifi'][$i]);
                     $parts_code = mysqli_real_escape_string($conn, $_POST['parts_code'][$i]);
                     $product_na = mysqli_real_escape_string($conn, $_POST['product_na'][$i]);
                     $product_sp = mysqli_real_escape_string($conn, $_POST['product_sp'][$i]);
                     $requi_date = mysqli_real_escape_string($conn, $_POST['requi_date'][$i]);
-                    $price = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['price'][$i]));
-                    $qty = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['qty'][$i]));
-                    $amt = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['amt'][$i]));
+                    $price = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['price'][$i])); // 쉼표 제거
+                    $currency = mysqli_real_escape_string($conn, $_POST['currency'][$i]);
+                    $qty = mysqli_real_escape_string($conn, $_POST['qty'][$i]);
+                    $amt = mysqli_real_escape_string($conn, str_replace(',', '', $_POST['amt'][$i])); // 쉼표 제거
                     $curency_rate = mysqli_real_escape_string($conn, $_POST['curency_rate'][$i]);
                     $sales_date = mysqli_real_escape_string($conn, $_POST['sales_date'][$i]);
                     $condit = mysqli_real_escape_string($conn, $_POST['condit'][$i]);
@@ -77,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if (mysqli_num_rows($result_check) > 0) {
                         $sql = "UPDATE `order_data` SET picb = '$picb', specifi = '$specifi', parts_code = '$parts_code', product_na = '$product_na', product_sp = '$product_sp', requi_date = '$requi_date', price = '$price', currency = '$currency', qty = '$qty', amt = '$amt', curency_rate = '$curency_rate', sales_date = '$sales_date', condit = '$condit' WHERE order_no = '$order_no' AND o_no = '$o_no'";
                     } else {
-                        $sql = "INSERT INTO `order_data` (order_no, o_no, picb, specifi, parts_code, product_na, product_sp, requi_date, price, currency, qty, amt, curency_rate, sales_date, condit) VALUES ('$order_no', '$o_no', '$picb', '$specifi', '$parts_code', '$product_na', '$product_sp', '$requi_date', '$price', '$currency', '$qty', '$amt', '$curency_rate', '$sales_date', '$condit')";
+                        $sql = "INSERT INTO `order_data` (order_no, o_no, picb, aparts, specifi, parts_code, product_na, product_sp, requi_date, price, currency, qty, amt, curency_rate, sales_date, condit) VALUES ('$order_no', '$o_no', '$picb', '$aparts', '$specifi', '$parts_code', '$product_na', '$product_sp', '$requi_date', '$price', '$currency', '$qty', '$amt', '$curency_rate', '$sales_date', '$condit')";
                     }
 
                     if (!mysqli_query($conn, $sql)) {
@@ -85,12 +99,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 }
 
-                // sales_data에 데이터 삽입
-                $sales_remark = ''; // 비고 정보가 없으므로 빈 문자열 사용
-                $stmt = $conn->prepare("INSERT INTO sales_data (order_no, serial_no, sales_date, sales_rate, sales_amt, sales_remark) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("ssssss", $order_no, $o_no, $sales_date, $condit, $amt, $sales_remark);
-                if (!$stmt->execute()) {
-                    throw new Exception("Sales data insertion failed: " . $stmt->error);
+                // 분할매출 정보 저장
+                if (!empty($_POST['serial_no'])) {
+                    $has_sales_data = true; // 분할매출 정보가 있음을 표시
+                    foreach ($_POST['serial_no'] as $i => $serial_no) {
+                        $order_price = str_replace(',', '', $_POST['order_price'][$i]); // 쉼표 제거
+                        $order_sales_rate = $_POST['order_sales_rate'][$i];
+                        $order_sales_date = $_POST['order_sales_date'][$i];
+                        $order_sales_remark = $_POST['order_sales_remark'][$i];
+
+                        $stmt = $conn->prepare("INSERT INTO sales_data (order_no, serial_no, sales_date, sales_rate, sales_amt, sales_remark) VALUES (?, ?, ?, ?, ?, ?)");
+                        $stmt->bind_param("ssssss", $order_no, $serial_no, $order_sales_date, $order_sales_rate, $order_price, $order_sales_remark);
+                        if (!$stmt->execute()) {
+                            throw new Exception("Sales data insertion failed: " . $stmt->error);
+                        }
+                    }
                 }
 
                 // 모든 작업이 성공적으로 완료되면 커밋
@@ -101,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // 오류 발생 시 롤백
                 $conn->rollback();
                 $_SESSION['message'] = '저장에 문제가 있습니다. 관리자에게 연락하십시오: ' . $e->getMessage();
-                header("Location: order_new.php");
+                header("Location: order_index.php");
             }
             exit();
             break;

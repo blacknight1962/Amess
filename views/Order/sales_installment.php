@@ -2,67 +2,76 @@
 $pageTitle = "매출관리-매출등록";
 include('include/header.php');
 include(__DIR__ . '/../../db.php');
-// header('Content-Type: application/json');
-
 
 function fetchOrderInfo($conn, $order_no) {
+    $order_no = trim($order_no); // 앞뒤 공백 제거
     $query = "SELECT * FROM `order` WHERE order_no = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $order_no);
+    if (!$stmt) {
+        die('쿼리 준비 실패: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $order_no); // 숫자형으로 처리
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    } else {
-        return null;
+    if (!$result) {
+        die('쿼리 실행 오류: ' . $conn->error);
     }
+    $order_info = [];
+    while ($row = $result->fetch_assoc()) {
+        $order_info[] = $row;
+    }
+    return $order_info;
 }
 
-$order_info = array();
+$order_info = [];
 $order_no = ""; // 초기 order_no를 빈 문자열로 설정
 
 if (isset($_GET['order_no'])) {
-    $order_no = $_GET['order_no'];
+    $order_no = trim($_GET['order_no']); // 앞뒤 공백 제거
+
     $order_info = fetchOrderInfo($conn, $order_no);
+    if (!empty($order_info)) {
+        $order_info = $order_info[0]; // 배열의 첫 번째 요소만 사용
+    } else {
+        echo "Order not found.<br>";
+    }
 }
 ?>
   <!-- 발주 기본정보 입력 -->
-<div class='bg-info bg-opacity-10 mt-1' style="width: 1920px; margin: 0 auto;">
-  <div class='container mt-1'>
+<div class='bg-info bg-opacity-10 mt-10' style="width: 1920px; margin: 0 auto;">
+  <div class='container mt-10'>
     <div class='row justify-content-center'>
       <div class='bg-warning bg-opacity-10'>
-        <h4 class='bg-primary bg-opacity-10 mb-1 p-2' style='text-align: center'>매출등록</h4>
-          <section class="shadow-lg p-0 my-1 rounded-3 container text-center">
-            <div class='container-fluid' style='width: 1920px me-1 ms-1'>
+        <h4 class='bg-primary bg-opacity-10 mb-1 p-2' style='text-align: center; margin-bottom: 20px;'>매출등록</h4> <!-- margin-bottom 추가 -->
+          <section class="shadow-lg p-0 my-1 rounded-4 container text-center">
+            <div class='container-fluid d-flex justify-content-center' style='width: 1300px; margin-top: 20px;'> <!-- d-flex와 justify-content-center 추가 -->
               <form action="order_process.php" method='post'>
                 <input type="hidden" name="action_type" value="save_basic">
-                <table class='table table-bordered mt-1' style="font-size: .65rem; width: 1820px;">
-                  <thead style="max-width: 1820px; text-align: center;">
+                <table class='table table-bordered mt-20' style="font-size: .75rem; width: 1520px; margin: 0 auto;"> <!-- margin: 0 auto 추가 -->
+                  <thead style="max-width: 1520px; text-align: center;">
                     <tr class='table table-warning' style="margin: 0 auto;">
                       <th style="width: 10%;">발주번호</th>
                       <th style="width: 10%;">발주사</th>
                       <th style="width: 13%;">고객사</th>
                       <th style="width: 10%;">발주일자</th>
                       <th style="width: 10%;">담당자</th>
-
                       <th style="width: 12%;">특기사항</th>
                       <th style="width: 13%;">생산코드</th>
                       <th style="width: 12%;">착수일자</th>
-                      <th style="width: 10%;"></th>
                     </tr>
                   </thead>
                   <tbody style="text-align: center !important;">
-                    <tr>
-                      <td><input type='text' class='form-control' style='border:none' placeholder="발주번호" name='order_no' value="<?php echo isset($order_info['order_no']) ? $order_info['order_no'] : ''; ?>" required></td>
-                      <td><?= createSelectOrderCustomer($conn, isset($order_info['order_custo']) ? $order_info['order_custo'] : ''); ?></td>
-                      <td><?= createSelectCustomer($conn, isset($order_info['customer']) ? $order_info['customer'] : ''); ?></td>
-                      <td><input type='date' class='form-control' name='order_date' value="<?php echo isset($order_info['order_date']) ? $order_info['order_date'] : date('Y-m-d'); ?>" required></td>
-                      <td><input type='text' class='form-control' placeholder='담당자' name='custo_name' value="<?php echo isset($order_info['custo_name']) ? $order_info['custo_name'] : ''; ?>"></td>
-                      <td><input type='text' class='form-control' placeholder='특기사항' name='specifi' value="<?php echo isset($order_info['specifi']) ? $order_info['specifi'] : ''; ?>"></td>
-                      <td><input type='text' class='form-control' placeholder='생산코드' name='production_code' value="<?php echo isset($order_info['production_code']) ? $order_info['production_code'] : ''; ?>"></td>
-                      <td><input type='date' class='form-control' placeholder='착수일자' name='production_start' value="<?php echo isset($order_info['production_start']) ? $order_info['production_start'] : ''; ?>"></td>
-                      <td></td>
-                      </tr>
+                  <tr>
+                    <td><?php echo isset($order_info['order_no']) ? htmlspecialchars($order_info['order_no']) : ''; ?></td>
+                    <td><?php echo isset($order_info['order_custo']) ? htmlspecialchars($order_info['order_custo']) : ''; ?></td>
+                    <td><?php echo isset($order_info['customer']) ? htmlspecialchars($order_info['customer']) : ''; ?></td>
+                    <td><?php echo isset($order_info['order_date']) ? htmlspecialchars($order_info['order_date']) : date('Y-m-d'); ?></td>
+                    <td><?php echo isset($order_info['custo_name']) ? htmlspecialchars($order_info['custo_name']) : ''; ?></td>
+                    <td><?php echo isset($order_info['specifi']) ? htmlspecialchars($order_info['specifi']) : ''; ?></td>
+                    <td><?php echo isset($order_info['production_code']) ? htmlspecialchars($order_info['production_code']) : ''; ?></td>
+                    <td><?php echo isset($order_info['production_start']) ? htmlspecialchars($order_info['production_start']) : ''; ?></td>
+                  </tr>
+                </tbody>
                   </tbody>
                 </table>
               </form>
@@ -74,27 +83,36 @@ if (isset($_GET['order_no'])) {
 </div>   
 <?php
 function fetchOrderDetails($conn, $order_no) {
+    $order_no = trim($order_no); // 앞뒤 공백 제거
     $query = "SELECT * FROM order_data WHERE order_no = ? ORDER BY o_no ASC";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $order_no);
+    if (!$stmt) {
+        die('쿼리 준비 실패: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $order_no); // 숫자형으로 처리
     $stmt->execute();
     $result = $stmt->get_result();
+    if (!$result) {
+        die('쿼리 실행 오류: ' . $conn->error);
+    }
     $details = [];
     while ($row = $result->fetch_assoc()) {
         $details[] = $row;
     }
     return $details;
 }
+$order_data = fetchOrderDetails($conn, $order_no);
+$totalAmt = 0; // 총 합계를 계산하기 위한 변수 초기화
 ?>
 <!-- 발주 상세정보 -->
 <div class='bg-info bg-opacity-10' style="width: 1920px; margin: 0 auto;">
   <div class='row justify-content-center' style="max-width: 1920px; margin: 0 auto;">
   <section class="shadow-lg mt-0 p-2 pt-0 my-3 rounded-3 container-fluid justify-content-center text-center ms-0">
-    <div class='container-fluid' style='width: 1890px; padding-left: 0;'>
+    <div class='container-fluid' style='width: 1900px; padding-left: 0;'>
       <form action="order_process.php" method='post'>
         <input type='hidden' name='action_type' value='save_detail'>
         <input type='hidden' name='order_no' value='<?php echo $order_no;ENT_QUOTES ?>'>
-          <table table class='table table-bordered mt-1' style="font-size: .65rem; width: 1900px;">
+          <table table class='table table-bordered mt-1' style="font-size: .75rem; width: 1900px;">
             <thead style="text-align: center;">
               <tr class='table table-warning'>
                 <th style="width: 3%;">No</th>
@@ -121,48 +139,31 @@ function fetchOrderDetails($conn, $order_no) {
               // print_r($order_data);
               if (count($order_data) > 0) {
                   foreach ($order_data as $detail) { ?>
-                    <tr id='orderItemRow' class='custom-tr'>
-                      <td><?php echo isset($detail['o_no']) ? htmlspecialchars($detail['o_no']) : ''; ?></td>
-                      <td><?php echo isset($detail['picb']) ? htmlspecialchars($detail['picb']) : ''; ?></td>
-                      <td><?php echo isset($detail['aparts']) ? htmlspecialchars($detail['aparts']) : ''; ?></td>
-                      <td><?php echo isset($detail['parts_code']) ? htmlspecialchars($detail['parts_code']) : ''; ?></td>
-                      <td><?php echo isset($detail['product_na']) ? htmlspecialchars($detail['product_na']) : ''; ?></td>
-                      <td><?php echo isset($detail['product_sp']) ? htmlspecialchars($detail['product_sp']) : ''; ?></td>
-                      <td><?php echo isset($detail['requi_date']) ? htmlspecialchars($detail['requi_date']) : ''; ?></td>
-                      <td><?php echo isset($detail['price']) ? htmlspecialchars(number_format($detail['price'])) : ''; ?></td>
-                      <td><?php echo isset($detail['currency']) ? htmlspecialchars($detail['currency']) : ''; ?></td>
-                      <td><?php echo isset($detail['qty']) ? htmlspecialchars($detail['qty']) : ''; ?></td>
-                      <td><input type='text' class='form-control amt small-input right-align' style='border:none' name='amt[]' value="<?php echo isset($detail['amt']) ? htmlspecialchars(number_format($detail['amt'])) : ''; ?>"></td>
-                      <td><?php echo isset($detail['curency_rate']) ? htmlspecialchars($detail['curency_rate']) : ''; ?></td>
-                      <td><input type='date' class='form-control' style='border:none' name='sales_date[]' value="<?php echo isset($detail['sales_date']) ? htmlspecialchars($detail['sales_date']) : ''; ?>"></td>
-                      <td><select class="form-select" name='condit[]' aria-label="" style="font-size: .65rem">
-                          <option value="선택" <?php echo (!isset($detail['condit']) || $detail['condit'] == '선택') ? 'selected' : ''; ?>>선택</option>
-                          <option value="일시불" <?php echo (isset($detail['condit']) && $detail['condit'] == '일시불') ? 'selected' : ''; ?>>일시불</option>
-                          <option value="분할" <?php echo (isset($detail['condit']) && $detail['condit'] == '분할') ? 'selected' : ''; ?>>분할</option>
-                          <option value="완료" <?php echo (isset($detail['condit']) && $detail['condit'] == '완료') ? 'selected' : ''; ?>>완료</option>
-                      </select></td>                      
-                    </tr>
+                <tr id='orderItemRow' class='custom-tr'>
+                  <td><?php echo isset($detail['o_no']) ? htmlspecialchars($detail['o_no']) : ''; ?></td>
+                  <td><?php echo isset($detail['picb']) ? htmlspecialchars($detail['picb']) : ''; ?></td>
+                  <td><?php echo isset($detail['aparts']) ? htmlspecialchars($detail['aparts']) : ''; ?></td>
+                  <td><?php echo isset($detail['parts_code']) ? htmlspecialchars($detail['parts_code']) : ''; ?></td>
+                  <td><?php echo isset($detail['product_na']) ? htmlspecialchars($detail['product_na']) : ''; ?></td>
+                  <td><?php echo isset($detail['product_sp']) ? htmlspecialchars($detail['product_sp']) : ''; ?></td>
+                  <td><?php echo isset($detail['requi_date']) ? htmlspecialchars($detail['requi_date']) : ''; ?></td>
+                  <td style="text-align: right;"><?php echo isset($detail['price']) ? htmlspecialchars(number_format($detail['price'])) : ''; ?></td>
+                  <td><?php echo isset($detail['currency']) ? htmlspecialchars($detail['currency']) : ''; ?></td>
+                  <td><?php echo isset($detail['qty']) ? htmlspecialchars($detail['qty']) : ''; ?></td>
+                  <td style="text-align: right;"><?php echo isset($detail['amt']) ? htmlspecialchars(number_format($detail['amt'])) : ''; ?></td>
+                  <td><?php echo isset($detail['curency_rate']) ? htmlspecialchars($detail['curency_rate']) : ''; ?></td>
+                  <td><?php echo isset($detail['sales_date']) ? htmlspecialchars($detail['sales_date']) : ''; ?></td>
+                  <td><?php echo isset($detail['condit']) ? htmlspecialchars($detail['condit']) : ''; ?></td>
+                </tr>
                     <?php
                   }
               }
               ?>
             </tbody>
-              <tr>
-                <td colspan="14" class="text-right">NonePO 매출합계: <span id="totalSalesAmount">금액</span></td>
+              <tr style="margin-top: 5px; vertical-align: middle;">
+                <td colspan="11" class="text-right">발주 합계: <span id="FTotal"><?php echo number_format($totalAmt); ?> 원</span></td>
               </tr>
-        </table>
-        <div class='row'>
-          <div class='col-1'>            
-          </div>
-          <div class='col-6'></div>
-          <div class='col-3'>
-            <div class='input-group mb-1'>
-              <span class='input-group-text' style="font-size: .65rem;">발주 합계</span>
-              <input type='text' class='form-control text-end large-bold-text' id='FTotal' name='FTotal' disabled=''/>
-            </div>
-          </div>
-          <div class='col-2'>     
-          </div>
+          </table>
         </div>
       </div>
     </form>
@@ -173,16 +174,26 @@ function fetchOrderDetails($conn, $order_no) {
 <!-- 일시불 매출등록 -->
 <?php
 $order_no = $_GET['order_no'];
-$query = "SELECT o_no FROM order_data WHERE order_no = ?";
+$query = "SELECT od.o_no, od.order_no, o.order_date, od.sales_date, od.amt, od.condit 
+          FROM order_data od 
+          JOIN `order` o ON od.order_no = o.order_no 
+          WHERE od.order_no = ? AND od.condit = '일시불'";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $order_no);
 $stmt->execute();
 $result = $stmt->get_result();
-if ($row = $result->fetch_assoc()) {
-    $o_no = $row['o_no'];
-} else {
-    $o_no = "Not found";
-} ?>
+$order_data = [];
+while ($row = $result->fetch_assoc()) {
+    $order_data[] = $row;
+}
+// 쿼리 결과 디버깅
+// echo "<pre>";
+// print_r($order_data);
+// echo "</pre>";
+
+
+$o_no = isset($order_data[0]['o_no']) ? $order_data[0]['o_no'] : 'Not found';
+?>
 <div class='bg-info bg-opacity-10 mt-1' style="width: 1920px; margin: 0 auto;">
   <div class='container mt-1'>
     <div class='row justify-content-center'>
@@ -192,7 +203,7 @@ if ($row = $result->fetch_assoc()) {
               <form id='paymentForm' action="sales_process.php" method='post'>
                 <input type="hidden" name="action_type" value="save_sales">
                 <input type="hidden" name="order_no" value="<?php echo $order_no; ?>">
-                <input type="hidden" name="o_no[]" value="<?php echo $o_no; ?>">
+                <input type="hidden" name="o_no[]" value="<?php echo htmlspecialchars($o_no); ?>">
                 <table class='table table-bordered mt-1' style="font-size: .75rem; width: 1100px;">
                   <thead style="max-width: 1000px; text-align: center;">
                     <tr class='table table-danger' style="margin: 0 auto;">
@@ -202,34 +213,34 @@ if ($row = $result->fetch_assoc()) {
                       <th>매출일자</th>
                       <th>매출금액</th>
                       <th>비고</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
+                    <?php foreach ($order_data as $detail) { ?>
                     <tr class='custom-tr'>
                       <td></td>
-                      <td><input type='text' class='form-control' style='border:none' placeholder="발주번호" name='order_no' value="<?php echo isset($order_info['order_no']) ? $order_info['order_no'] : ''; ?>" required></td>
-                      <td><input type='date' class='form-control' name='order_date[]' value="<?php echo isset($order_info['order_date']) ? $order_info['order_date'] : date('Y-m-d'); ?>" required></td>
-                      <td><input type='date' class='form-control' style='border:none' placeholder='일자' name='sales_date[]' value="<?php echo isset($detail['sales_date']) ? $detail['sales_date'] : date('Y-m-d'); ?>"></td>
-                      <td><input type='text' class='form-control text-end' style='border:none' placeholder='금액' oninput="applyFormatNumber(this)" name='amt[]' value="<?php echo isset($detail['amt']) ? number_format($detail['amt']) : ''; ?>"></td>
-                      <td><input type='text' class='form-control' style='border:none' placeholder='비고' name='sales_remark[]' value="<?php echo isset($detail['sales_remark']) ? $detail['sales_remark'] : ''; ?>"></td>
-                          <td>
-                            <button type='button' class='btn btn-outline-success' style='font-size: .65rem' id="confirmButton">
-                              <?php echo (isset($detail['condit']) && $detail['condit'] == '완료') ? '완료' : '입금 확인'; ?>
-                            </button>
-                        </td>
+                      <td><input type='text' class='form-control' style='border:none' placeholder="발주번호" name='order_no' value="<?php echo htmlspecialchars($detail['order_no']); ?>" required></td>
+                      <td><input type='date' class='form-control' name='order_date[]' value="<?php echo htmlspecialchars($detail['order_date']); ?>" required></td>
+                      <td><input type='date' class='form-control' style='border:none' placeholder='일자' name='sales_date[]' value="<?php echo htmlspecialchars($detail['sales_date']); ?>"></td>
+                      <td><input type='text' class='form-control text-end' style='border:none' placeholder='금액' oninput="applyFormatNumber(this)" name='amt[]' value="<?php echo htmlspecialchars(number_format($detail['amt'])); ?>"></td>
+                      <td>
+                        <button type='button' class='btn btn-outline-success' style='font-size: .65rem' id="confirmButton">
+                          <?php echo ($detail['condit'] == '완료') ? '완료' : '입금 확인'; ?>
+                        </button>
+                      </td>
                     </tr>
+                    <?php } ?>
                   </tbody>
                 </table>
               </form>
-            </div>
+            </div
           </section>
       </div>
     </div>
   </div>
 </div>   
 <?php
-// 분할 매출 정보 입력 
+// 분할 매출 정보 
 function fetchOrderSales($conn, $order_no) {
     // '분할 매출' 데이터만 가져오도록 쿼리 
     $query = "SELECT * FROM order_data LEFT JOIN sales_data ON order_data.order_no = sales_data.order_no WHERE order_data.order_no = ? AND order_data.condit = '분할' ORDER BY order_data.o_no ASC";
@@ -325,8 +336,8 @@ foreach ($order_data as $sale) {
               <div class='header-container'>
                 <h6 id="totalSalesAmount">누적 매출금액: <?php echo number_format($totalSalesAmount); ?>원</h6>
                 <h6 id="totalSalesRate">누적 매출비율: <?php echo $totalSalesRate; ?>%</h6>
-                <button type='submit' class='btn btn-success' style='font-size: .65rem'>저장</button>
-                <button type='button' class='btn btn-warning' style='font-size: .65rem; margin-left: 10px;' onclick="confirmAndClose()">Close</button>
+                <button type='submit' class='btn btn-outline-success' style='font-size: .65rem'>저장</button>
+                <button type='button' class='btn btn-outline-warning' style='font-size: .65rem; margin-left: 10px;' onclick="confirmAndClose()">Close</button>
               </div>
             </div>
           </div>
@@ -340,7 +351,7 @@ foreach ($order_data as $sale) {
 <script>
 var totalPartialSales = <?php echo json_encode($totalPartialSales); ?>;
 </script>
-<script src="js/order.js"></script>
+<!-- <script src="js/order.js"></script> -->
 <script src="js/sales.js"></script> 
 <script>
 //분할 매출 금액 입력 시 누적 매출 비율 계산

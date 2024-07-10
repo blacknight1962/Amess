@@ -18,7 +18,7 @@ function createSelectCustomer1($conn) {
     $stmt = $conn->prepare("SELECT * FROM customers");
     $stmt->execute();
     $result = $stmt->get_result();
-    $cho_customer = '<select name="customer_na" style="font-size: .75rem; border: none;">';
+    $cho_customer = '<select name="customer_na" style="font-size: .75rem; border: none; text-align: center;">';
     while ($row = $result->fetch_assoc()) {
         $cho_customer .= '<option value="' . htmlspecialchars($row['customer_na']) . '">' . htmlspecialchars($row['customer_na']) . '</option>';
     }
@@ -39,7 +39,19 @@ function createSelectOrderCustomer($conn, $nameAttribute = 'customer_na') {
     $stmt->close();
     return $cho_od_customer;
 }
-
+function createSelectOrderCustomer1($conn, $selected_value = '') {
+    $stmt = $conn->prepare("SELECT * FROM customers");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $select_html = '<select name="order_custo" class="form-control" style="font-size: .75rem; border: none; text-align: center;">'; // name 속성 설정
+    while ($row = $result->fetch_assoc()) {
+        $selected = ($row['customer_na'] == $selected_value) ? 'selected' : '';
+        $select_html .= '<option value="' . htmlspecialchars($row['customer_na']) . '" ' . $selected . '>' . htmlspecialchars($row['customer_na']) . '</option>';
+    }
+    $select_html .= '</select>';
+    $stmt->close();
+    return $select_html;
+}
 // 배열이 필요한 경우
 //echo createSelectOrderCustomer($conn, true);
 
@@ -100,24 +112,26 @@ function createSelectNoPO($conn) {
 }
 /*-- 견적관리 구분 (개조, 부품, 설비, SW, 기타) --*/
 
-function createSelectOptions($conn) {
-    $stmt = $conn->prepare("SELECT * FROM apart");
+function createSelectOptions($conn, $table, $id_field, $name_field, $select_name, $selected_values = []) {
+    $stmt = $conn->prepare("SELECT * FROM $table");
     $stmt->execute();
     $result = $stmt->get_result();
-    $choose_ap_form = '<select name="aparts[]" style="font-size: .65rem; border: none;">';
+    $select_html = "<select name='$select_name' class='form-control' style='font-size: .75rem; border: none; text-align: center;'>";
     while ($row = $result->fetch_assoc()) {
-        $choose_ap_form .= '<option value="' . htmlspecialchars($row['aparts']) . '">' . htmlspecialchars($row['aparts']) . '</option>';
+        $selected = in_array(trim($row[$id_field]), array_map('trim', $selected_values)) ? 'selected' : '';
+        $select_html .= "<option value='" . htmlspecialchars($row[$id_field]) . "' $selected>" . htmlspecialchars($row[$name_field]) . "</option>";
     }
-    $choose_ap_form .= '</select>';
+    $select_html .= '</select>';
     $stmt->close();
-    return $choose_ap_form;
+    error_log("Select HTML: " . $select_html); // 디버깅 코드 추가
+    return $select_html;
 }
 /*-- 작업관리 구분 (설치 / 점검 / 수리 / 개조 / 이설 / SW / 기타 --*/
 function createSelectTask($conn) {
     $stmt = $conn->prepare("SELECT * FROM task_aparts");
     $stmt->execute();
     $result = $stmt->get_result();
-    $cho_task_aparts = '<select name="task_aparts[]" style="font-size: .65rem; border: none;">';
+    $cho_task_aparts = '<select name="task_aparts[]" style="font-size: .75rem; border: none; text-align: center;">';
     while ($row = $result->fetch_assoc()) {
         $cho_task_aparts .= '<option value="' . htmlspecialchars($row['taskparts']) . '">' . htmlspecialchars($row['taskparts']) . '</option>';
     }
