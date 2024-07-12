@@ -137,6 +137,6 @@ header .title {
   height: 50px; /* 원하는 높이로 설정 */
   padding: 5px; /* 상하 좌우 패딩 조정 */
 }
-table td {
+/* table td {
   height: 40px;
-}
+} */

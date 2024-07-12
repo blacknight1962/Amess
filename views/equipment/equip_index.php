@@ -27,7 +27,7 @@ if (isset($_SESSION['status'])) {
           <option value="">선택</option>
           <?php
           $currentYear = date("Y");
-          for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
+          for ($year = $currentYear; $year >= $currentYear - 14; $year--) {
               echo "<option value='$year'>$year</option>";
           }
           ?>
@@ -51,12 +51,12 @@ if (isset($_SESSION['status'])) {
         <thead>
           <tr>
             <th style="width: 4%;">no</th>
-            <th style="width: 6%;">부서</th>
+            <th style="width: 5%;">부서</th>
             <th style="width: 15%;">장비명</th>
             <th style="width: 16%;">모델명</th>
             <th style="width: 8%;">등록일자</th>
 
-            <th style="width: 7%;">고객명</th>
+            <th style="width: 8%;">고객명</th>
             <th style="width: 8%;">공급사</th>
             <th style="width: 12%;">공정</th>
             <th style="width: 15%;">특기사항</th>
@@ -82,21 +82,18 @@ if (isset($_SESSION['status'])) {
               );
                   ?>
                       <tr class="table table-hover">
-                        <td><?= $filtered['e_no'] ?></td>
-                        <td><?= $filtered['picb'] ?></td>
-                        <td><?= $filtered['equip'] ?></td>
-                        <td><?= $filtered["model_p"] ?></td>
-                        <td><?= $filtered["regi_date"] ?></td>
-                        <td><?= $filtered['customer'] ?></td>
-                        <td><?= $filtered['supplyer'] ?></td>
-                        <td><?= $filtered["process_p"] ?></td>
-                        <td><?= $filtered['specif'] ?></td>
+                        <td style="text-align: center;"><?= $filtered['e_no'] ?></td>
+                        <td style="text-align: center;"><?= $filtered['picb'] ?></td>
+                        <td style="text-align: left;"><?= $filtered['equip'] ?></td>
+                        <td style="text-align: left;"><?= $filtered["model_p"] ?></td>
+                        <td style="text-align: center;"><?= $filtered["regi_date"] ?></td>
+                        <td style="text-align: left;"><?= $filtered['customer'] ?></td>
+                        <td style="text-align: left;"><?= $filtered['supplyer'] ?></td>
+                        <td style="text-align: left;"><?= $filtered["process_p"] ?></td>
+                        <td style="text-align: left;"><?= $filtered['specif'] ?></td>
                         <td style="padding: 1px 10px;">
                             <!-- Icon button trigger modal with e_no parameter -->
                             <a href="#" onclick="openPopupWindow(<?= $filtered['e_no'] ?>);" class="link-secondary" title="편집"><i class="fa-solid fa-pen-to-square fs-6"></i></a>
-                            <!-- <button type="button" class="btn btn-link p-0 border-0 background-transparent" data-bs-toggle="modal" data-bs-target="#editEquipData" data-equipmentId="<?= $filtered['e_no']; ?>" title="편집" style="background: none; border: none;"> -->
-                            <!-- <i class="fa-solid fa-pen-to-square fs-6"></i> -->
-                            </a>
                             <button type="button" class="btn btn-link delete-button btn-minimal-padding btn-sm" data-equip-id="<?= $filtered['e_no']; ?>" title="삭제">
                                 <i class="fa-solid fa-trash fs-6" style="padding: 0px 2px;"></i>
                             </button>  

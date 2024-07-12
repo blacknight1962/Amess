@@ -4,7 +4,7 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
-include('../../db.php');
+include(__DIR__ . '/../../db.php');
 
 // var_dump($_POST);
 // exit();
@@ -57,14 +57,14 @@ if ($action == 'save') {
             }
             $conn->commit();
             $_SESSION['message'] = '저장이 완료되었습니다.';
-            header("Location: facility.php?id=$e_no&status=saved");
+            header("Location: facility_index.php?id=$e_no&status=saved");
             } catch (mysqli_sql_exception $exception) {
                 $conn->rollback();
                 echo "Error occurred: " . $exception->getMessage();
             }
             } else {
             $_SESSION['message'] = '저장이 완료되었습니다.';
-            header("Location: facility.php");
+            header("Location: facility_index.php");
             }
 } elseif ($action == 'delete') {
     $e_no = $_POST['e_no'];

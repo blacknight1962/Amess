@@ -1,14 +1,15 @@
 <?php
+$pageTitle = "AMESS 견적등록";
 session_start();
 
 include('include/header.php');
 include(__DIR__ . '/../../public/Selection_kit.php');
-include(__DIR__ . '/../../db.php'); // 이곳에서 $conn이 정의될 것입니다.
+include(__DIR__ . '/../../db.php'); 
 
 if (!isset($_SESSION['ss_id']) or $_SESSION['ss_id'] == '') {
   echo "<script> 
   alert('로그인 후 사용가능합니다');
-  self.location.href='/practice/AMESystem/views/login/login.php';
+  self.location.href='login/login.php';
   </script>";
   exit();
 }
@@ -33,7 +34,7 @@ $result = $stmt->get_result();
     }
 }
 ?>
-<script src="/practice/AMESystem/views/quote/js/quot.js"></script>
+
 
 <?php
 if (isset($_GET['id'])) {
@@ -98,16 +99,16 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
 ?>
   <!-- 견적 기본정보 입력 -->
 <div class='basic_info_container mt-1'>
-  <div class='container mt-1' style="max-width: 1520px; margin: 0 auto;">
+  <div class='container mt-1'>
     <div class='row justify-content-center'>
       <div class='bg-warning bg-opacity-10'>
         <h4 class='bg-primary bg-opacity-10 justify-content-center text-center mb-2 p-2'>견적관리 - 신규등록</h4>
           <section class="shadow-lg p-2 my-4 rounded-3 container text-center">
             <h6 class='mt-1'>기본정보</h6>
-            <div class='container-fluid' style='width: 1420px me-1 ms-1'>
+            <div class='container-fluid' style='width: 1820px me-1 ms-1'>
               <form action="quot1_process.php" method='post'>
-                <table class='table table-bordered  mt-1' style="font-size: .75rem">
-                  <thead style="font-size: .75rem;">
+                <table class='table table-bordered  mt-1 table-sm' style="font-size: .75rem">
+                  <thead>
                       <tr class='table table-secondary'>
                         <th class='col-xl-2'>견적번호</th>
                         <th class='col-xl-2'>견적일자</th>
@@ -120,20 +121,20 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
                     </thead>
                     <tbody>
                       <tr>
-                        <td><input type='text' name='quot_num' style='border:none; font-size: .75rem;' value="<?php echo isset($quote_info['quote_no']) ? $quote_info['quote_no'] : $quot_num; ?>"></td>
-                        <td><input type='text' name='quot_date' style='border:none; font-size: .75rem;' value="<?php echo isset($quote_info['quote_date']) ? $quote_info['quote_date'] : date('Y-m-d'); ?>"></td>
+                        <td><input type='text' name='quot_num' style='border:none' value="<?php echo isset($quote_info['quote_no']) ? $quote_info['quote_no'] : $quot_num; ?>"></td>
+                        <td><input type='text' name='quot_date' style='border:none' value="<?php echo isset($quote_info['quote_date']) ? $quote_info['quote_date'] : date('Y-m-d'); ?>"></td>
                         <td>
-                        <select class="form-select" name='customer' aria-label="" style="font-size: .75rem">
+                        <select class="form-select" name='customer' aria-label="" style="font-size: .65rem">
                             <option value="<?php echo isset($quote_info['customer']) ? $quote_info['customer'] : ''; ?>" selected><?php echo isset($quote_info['customer']) ? $quote_info['customer'] : '선택'; ?></option>
                             <option value="삼성전자">삼성전자</option>
                             <option value="SK 하이닉스">SK 하이닉스</option>
                             <option value="기타">기타</option>
                         </select>
                         </td>
-                        <td><input type='text' name='customer_name' style='border:none; font-size: .75rem;' value="<?php echo isset($quote_info['customer_name']) ? $quote_info['customer_name'] : ''; ?>"></td>
-                        <td><input type='text' name='user_name' style='border:none; font-size: .75rem;' value="<?php echo isset($quote_info['user_name']) ? $quote_info['user_name'] : $user_name; ?>"></td>
+                        <td><input type='text' name='customer_name' style='border:none' value="<?php echo isset($quote_info['customer_name']) ? $quote_info['customer_name'] : ''; ?>"></td>
+                        <td><input type='text' name='user_name' style='border:none' value="<?php echo isset($quote_info['user_name']) ? $quote_info['user_name'] : $user_name; ?>"></td>
                         <td>
-                        <select class="form-select" name='picb' aria-label="" style="font-size: .75rem">
+                        <select class="form-select" name='picb' aria-label="" style="font-size: .65rem">
                             <option value="<?php echo isset($quote_info['picb']) ? $quote_info['picb'] : ''; ?>" selected><?php echo isset($quote_info['picb']) ? $quote_info['picb'] : '선택'; ?></option>
                             <option value="1팀">1팀</option>
                             <option value="2팀">2팀</option>
@@ -182,13 +183,13 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
           onclick="BtnAdd()">+</button></th>
         </tr>
       </thead>
-      <tbody id='TBody' style="width: 1920px; font-size: .75rem;">
+      <tbody id='TBody' style="width: 1920px;">
         <tr id='TRow'>
-          <td><input type="text" class="form-control sub_no" style="border:none" name="sub_no[]" id="sub_no" value="<?php echo isset($row['sub_no']) ? $row['sub_no'] : '1'; ?>" readonly=""/></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='그룹' name='group_p[]' value="<?php echo isset($quote_info['group_p']) ? $quote_info['group_p'] : ''; ?>"></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='설비명' name='sulbi[]' value="<?php echo isset($quote_info['sulbi']) ? $quote_info['sulbi'] : ''; ?>"></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='모델명' name='model[]' value="<?php echo isset($quote_info['model']) ? $quote_info['model'] : ''; ?>"></td>
-          <td><select class="form-select" name='apart[]' aria-label="" style="font-size: .75rem" value="<?php echo isset($quote_info['apart']) ? $quote_info['apart'] : ''; ?>">
+          <td><input type="text" class="form-control sub_no" style='border:none; text-align:center' name="sub_no[]" id="sub_no" value="<?php echo isset($row['sub_no']) ? $row['sub_no'] : '1'; ?>" readonly=""/></td>
+          <td><input type='text' class="form-control group_p" style='border:none; text-align:center' placeholder='그룹' name='group_p[]' value="<?php echo isset($quote_info['group_p']) ? $quote_info['group_p'] : ''; ?>"></td>
+          <td><input type='text' class="form-control sulbi" style='border:none; text-align:center' placeholder='설비명' name='sulbi[]' value="<?php echo isset($quote_info['sulbi']) ? $quote_info['sulbi'] : ''; ?>"></td>
+          <td><input type='text' class="form-control model" style='border:none; text-align:center' placeholder='모델명' name='model[]' value="<?php echo isset($quote_info['model']) ? $quote_info['model'] : ''; ?>"></td>
+          <td><select class="form-select apart" name='apart[]' aria-label="" style="font-size: .75rem; border:none;" value="<?php echo isset($quote_info['apart']) ? $quote_info['apart'] : ''; ?>">
             <option selected>선택</option>
             <option value="개조">개조</option>
             <option value="부품">부품</option>
@@ -197,15 +198,14 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
             <option value="기타">기타</option>
           </select></td>
 
-          <td><input type='text' class="form-control" style='border:none' placeholder='품명' name='product_na[]' value="<?php echo isset($quote_info['product_na']) ? $quote_info['product_na'] : ''; ?>"></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='사양' name='product_sp[]' value="<?php echo isset($quote_info['product_sp']) ? $quote_info['product_sp'] : ''; ?>"></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='자재코드' name='p_code[]' value="<?php echo isset($quote_info['p_code']) ? $quote_info['p_code'] : ''; ?>"></td>
-          <td><input type='text' class="form-control" style='border:none; font-size:14px' name='price[]' onchange='Calc(this);' value="<?php echo isset($quote_info['price']) ? $quote_info['price'] : ''; ?>"></td>
-          <td><input type='number' class="form-control" style='border:none; font-size:14px' name='qty[]' onchange='Calc(this);' value="<?php echo isset($quote_info['qty']) ? $quote_info['qty'] : ''; ?>"></td>
+          <td><input type='text' class="form-control" style='border:none; text-align:center' placeholder='품명' name='product_na[]' value="<?php echo isset($quote_info['product_na']) ? $quote_info['product_na'] : ''; ?>"></td>
+          <td><input type='text' class="form-control" style='border:none; text-align:center' placeholder='사양' name='product_sp[]' value="<?php echo isset($quote_info['product_sp']) ? $quote_info['product_sp'] : ''; ?>"></td>
+          <td><input type='text' class="form-control" style='border:none; text-align:center' placeholder='자재코드' name='p_code[]' value="<?php echo isset($quote_info['p_code']) ? $quote_info['p_code'] : ''; ?>"></td>
+          <td><input type='text' class="form-control price" style='border:none; text-align:right; font-size:14px' name='price[]' onchange='Calc(this);' value="<?php echo isset($quote_info['price']) ? $quote_info['price'] : ''; ?>"></td>
+          <td><input type='number' class="form-control qty" style='border:none; text-align:center; font-size:14px' name='qty[]' onchange='Calc(this);' value="<?php echo isset($quote_info['qty']) ? $quote_info['qty'] : ''; ?>"></td>
 
-
-          <td><input type='text' class="form-control" style='border:none; font-size:14px' name='amt[]' value="<?php echo isset($quote_info['amt']) ? $quote_info['amt'] : ''; ?>"></td>
-          <td><select class="form-select" name='progress[]' aria-label="" style="font-size: .75rem">
+          <td><input type='text' class="form-control amt" style='border:none; text-align:right; font-size:14px' name='amt[]' value="<?php echo isset($quote_info['amt']) ? $quote_info['amt'] : ''; ?>"></td>
+          <td><select class="form-select" name='progress[]' aria-label="" style="font-size: .75rem; text-align:center;border:none;">
             <option selected>선택</option>
             <option value="진행">진행</option>
             <option value="대기">대기</option>
@@ -213,34 +213,31 @@ $quot_num = "ASQ-" . $currentYearMonth . '-' . $newSequence;
             <option value="취소">취소</option>
             <option value="기타">기타</option>
           </select></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='관련견적' name='r_quot[]' value="<?php echo isset($quote_info['r_quot']) ? $quote_info['r_quot'] : ''; ?>"></td>
-          <td><input type='text' class="form-control" style='border:none' placeholder='특기사항' name='specif[]' value="<?php echo isset($quote_info['specif']) ? $quote_info['specif'] : ''; ?>"></td>
-          <td><button type="button" class="btn btn-danger btn-sm" style="font-size: .65rem" onclick="BtnDel(this)">X</button></td>
+          <td><input type='text' class="form-control r_quot" style='border:none; text-align:center; border-radius:0px' placeholder='관련견적' name='r_quot[]' value="<?php echo isset($quote_info['r_quot']) ? $quote_info['r_quot'] : ''; ?>"></td>
+          <td><input type='text' class="form-control specif" style='border:none; text-align:center; border-radius:0px' placeholder='특기사항' name='specif[]' value="<?php echo isset($quote_info['specif']) ? $quote_info['specif'] : ''; ?>"></td>
+          <td><button type="button" class="btn btn-danger" style="font-size: .65rem" onclick="BtnDel(this)">X</button></td>
         </tr> 
           <input type="hidden" name="quote_no" value="<?php echo $quote_no; ?>">       
       </tbody>
     </table>
     <div class="row">
-      <div class="col-1">
-        <button type="submit" class="btn btn-outline-success btn-sm" style="font-size: .65rem;">저장</button>
-      </div>
       <div class='col-7'></div>
         <div class="col-3">
           <div class="input-group mb-1">
-            <span class="input-group-text">Total</span>
-            <input type="text" class="form-control text-end" style="font-size: .85rem;" id='FTotal' name='FTotal' disabled=""/>
+            <span class="input-group-tex">Total  </span>
+            <input type="text" class="form-control text-end" id='FTotal' name='FTotal' disabled=""/>
+          <div class="col-2">
+            <button type="submit" class="btn btn-outline-success" style="font-size: .65rem">저장</button>
           </div>
         </div>
+      </div>
     </div>
-    </form>
+  </form>
   </div>
-  </section>
-  </div>
-</div>
-              <!-- Bootstrap Bundle JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"></script>
+<script src="/practice/AMESystem/views/quote/js/quot.js" defer></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+  crossorigin="anonymous"></script>
 
 </body>

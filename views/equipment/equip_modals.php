@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include('../../db.php');
+
 ?>
 <link rel="stylesheet" href="css/style_equip.css">
 <!--신규장비 등록 Modal -->
@@ -33,11 +34,11 @@ include('../../db.php');
                 <tbody>
                   <tr style="font-size: .75rem;">
                     <td><input type='text' class='form-control' name='e_no' value="<?php echo $equip_num ?>" required></td>
-                    <td><?= createSelectPicb($conn, 'division', 'picb', 'picb', 'picb'); ?></td>
+                    <td><?= createSelectPicb1($conn, 'division', 'picb', 'picb', 'picb'); ?></td>
                     <td><input type='text' class='form-control' name='equip' placeholder="장비명" required></td>
                     <td><input type='text' class='form-control' name='model_p' placeholder="모델명" required></td>
                     <td><input type='date' class='form-control' name='regi_date' value="<?php echo date('Y-m-d') ?>" required></td>
-                    <td><?= createSelectCustomer($conn, 'customers', 'customer_na', 'customer_na', 'customer_na'); ?></td>
+                    <td><?= createSelectCustomer1($conn, 'customers', 'customer_na', 'customer_na', 'customer_na'); ?></td>
                     <td><input type='text' class='form-control' name='supplyer' placeholder="공급사"></td>
                     <td><input type='text' class='form-control' name='process_p' placeholder="공정"></td>
                     <td><input type='text' class='form-control' name='specif' placeholder="특기사항"></td>

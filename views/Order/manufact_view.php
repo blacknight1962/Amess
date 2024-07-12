@@ -6,13 +6,12 @@ include('include/header.php');
     <!-- equipment main screen -->
 <div class="bg-success bg-opacity-10" style='max-width: 1920px; margin: 0 auto; overflow-x: auto;'>
   <h4 class='bg-primary bg-opacity-10 mb-2 p-2' style='text-align: center'>영업관리 - 생산관리</h4>
-  <section class="shadow-lg p-2 my-1 rounded-3 container text-center justify-content-center" style='max-width: 100%; margin: 0 auto; overflow-x: auto;'>
+  <section class="shadow-lg p-0 my-1 rounded-3 container text-center justify-content-center" style='max-width: 100%; margin: 0 auto; overflow-x: auto;'>
     <div class='container' style='max-width: 100%; overflow-x: auto;'>
       <div class='card-body'>
-        <table class="table table-striped table-bordered table-hover mt-3 table-xl" style='font-size: .75rem; width: 1900px; margin: 0 auto;'>
+        <table class="table table-striped table-bordered table-hover mt-3 table-xl" style='font-size: .75rem; width: 1900px; margin: 0 auto; vertical-align: middle;'>
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">부서</th>
               <th scope="col">생산코드</th>
               <th scope="col">생산지시</th>
@@ -32,15 +31,16 @@ include('include/header.php');
 
               <th scope="col">매출일자</th>
               <th scope="col">진행</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
               <?php
               $sql = 'SELECT o.*, od.*, s.*
               FROM `order` o
-              LEFT JOIN `order_data` od ON o.order_no = od.order_no AND o.o_no = od.o_no
+              LEFT JOIN `order_data` od ON o.order_no = od.order_no
               LEFT JOIN `sales_data` s ON od.order_no = s.order_no AND od.o_no = s.serial_no
-              ORDER BY o.order_no DESC, o.o_no ASC';
+              ORDER BY o.order_no DESC, od.o_no ASC';
               $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_array($result)) {
@@ -68,7 +68,6 @@ include('include/header.php');
                   );
                 ?>
                     <tr>
-                      <td class="center-checkbox"><input type="checkbox" class="row-checkbox" value="<?= $row['order_no'] ?>"></td>
                       <td><?= $filtered['picb'] ?></td>
                       <td><?= $filtered['production_code'] ?></td>
                       <td><?= $filtered['production_start'] ?></td>
@@ -89,8 +88,8 @@ include('include/header.php');
                       <td><?= $filtered['sales_date'] ?></td>
                       <td><?= $filtered['condit'] ?></td>
                       <td>
-                        <a href="order_update.php?order_no=<?= $filtered['order_no'] ?>" class="link-primary" target="_blank">
-                          <i class="fa-solid fa-pen-to-square fs-6 me-3"></i>
+                        <a href="order_edit.php?order_no=<?= $filtered['order_no'] ?>" class="link-primary" target="_blank">
+                          <i class="fa-solid fa-pen-to-square fs-6 me-3 ms-0"></i>
                         </a>
                         <a href="javascript:void()" onClick="deleteSelectedManufact(<?php echo $row['order_no'] ?? 'null' ?>)" class="link-secondary">
                           <i class="fa-solid fa-trash fs-6"></i>

@@ -3,7 +3,7 @@
   table-layout: fixed; /* 테이블 레이아웃을 고정으로 설정 */
 }
 .container-custom {
-  max-width: 1550px !important; /* 최대 너비 설정 */
+  max-width: 1650px !important; /* 최대 너비 설정 */
   margin: auto; /* 중앙 정렬 */
 }
 
@@ -11,7 +11,10 @@
   max-width: 100%; /* 테이블 최대 너비를 컨테이너 너비에 맞춤 */
   overflow-x: auto; /* 너비가 넘칠 경우 스크롤바 생성 */
 }
-
+.table-custom th,
+.table-custom td {
+  height: 30px !important; /* 높이를 30px로 강제 설정 */
+}
 @media (max-width: 1550px) {
   .container-custom {
     padding: 0 15px; /* 모바일 화면에서의 패딩 조정 */
@@ -106,7 +109,7 @@
   gap: 20px; /* 버튼들 사이의 간격을 20px로 설정 */
 }
 .table-custom {
-  height: 140px; /* 원하는 높이 설정 */
+  height: 40px; /* 원하는 높이 설정 */
   overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 생성 */
   font-size: 0.75rem !important;
 }
@@ -117,4 +120,7 @@
 #data-table tr:hover {
   background-color: #56d88c; /* 회색 톤으로 하이라이트 */
   cursor: pointer; /* 마우스 오버 시 포인터 변경 */
+}
+#FT_Row td {
+  height: 10px !important;
 }

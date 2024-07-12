@@ -203,6 +203,7 @@ button1:hover {
 .table-xl th,
 .table-xl td {
   padding: 2px 1px;
+  height: 40px !important;
 }
 .form-control {
   border: none;

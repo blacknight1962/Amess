@@ -15,6 +15,11 @@ $user_name = htmlspecialchars($row['ep_name']);
     </script>";
     exit();
   }
+
+  // $pageTitle 변수가 정의되지 않았을 때 기본값 설정
+if (!isset($pageTitle)) {
+    $pageTitle = "Default Title";
+}
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,7 +37,8 @@ $user_name = htmlspecialchars($row['ep_name']);
   <link rel="stylesheet" href="/practice/AMESystem/public/css/style.css">
   <link rel="stylesheet" href="/practice/AMESystem/views/quote/css/style_quote.css">
   
-  <title>AMESS 견적관리</title>
+  <title><?php echo htmlspecialchars($pageTitle); ?></title>
+  
 </head>
 <body>
   <header id='navbar'>

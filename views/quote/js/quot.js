@@ -8,9 +8,6 @@ $(document).ready(function () {
     }
   );
 
-  // 편집 버튼에 대한 이벤트 리스너 설정
-  // $('#edit-button').off('click').on('click', redirectToEdit);
-
   // 기타 초기화 함수 호출
   initializeEditButton();
   setupCheckboxHandlers();
@@ -83,6 +80,7 @@ function IcoDel(v) {
 // 견적관리에서 직접 견적전체를 삭제 요청시
 function deleteSelectedQuotes() {
   const selectedQuotes = getSelectedRows(); // 선택된 견적 번호 가져오기
+  console.log('Selected quotes:', selectedQuotes); // 로그 추가
   if (selectedQuotes.length === 0) {
     alert('삭제할 항목을 선택하세요.');
     return;
@@ -94,22 +92,28 @@ function deleteSelectedQuotes() {
 
 function deleteAllQuotes(quoteNo) {
   if (confirm('정말로 이 견적번호에 대한 모든 데이터를 삭제하시겠습니까?')) {
+    console.log('Deleting quote number:', quoteNo); // 로그 추가
     $.ajax({
-      url: '/practice/AMESystem/views/quote/quot1_process.php',
+      url: '/practice/AMESystem/views/quote/delete_process.php',
       type: 'POST',
       data: { quote_no: quoteNo },
       dataType: 'json',
       success: function (response) {
+        console.log('Server response:', response); // 로그 추가
         if (response.status === 'success') {
-          alert(response.message); // 성공 메시지 표시
+          // 성공 시 페이지 새로고침
+          location.reload();
         } else {
-          alert('삭제 실패: ' + response.message); // 실패 메시지 표시
+          // 실패 시 페이지 새로고침
+          location.reload();
         }
       },
       error: function (xhr, status, error) {
         // 요청이 실패했을 때 실행될 코드
         console.error('Error:', status, error);
         console.log('Server response:', xhr.responseText);
+        // 에러 시 페이지 새로고침
+        location.reload();
       },
     });
   }
@@ -298,4 +302,22 @@ $('#threeYearsBtn').click(function () {
 $('#yearSelect').change(function () {
   var selectedYear = $(this).val();
   fetchQuotesByPeriod(selectedYear);
+});
+// 체크박스 클릭 시 다른 체크박스 선택 해제
+$(document).on('click', '.row-checkbox', function () {
+  $('.row-checkbox').not(this).prop('checked', false);
+});
+
+// 전체 선택/해제 기능
+$('#selectAll').on('click', function () {
+  $('.row-checkbox').prop('checked', this.checked);
+});
+
+// 개별 체크박스 선택 시 전체 선택 체크박스 상태 업데이트
+$(document).on('change', '.row-checkbox', function () {
+  if ($('.row-checkbox:checked').length === $('.row-checkbox').length) {
+    $('#selectAll').prop('checked', true);
+  } else {
+    $('#selectAll').prop('checked', false);
+  }
 });

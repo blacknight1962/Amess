@@ -6,12 +6,25 @@ include('include/header.php');
 include(__DIR__ . '/../../public/Selection_kit.php');
 include(__DIR__ . '/../../db.php');
 
-if (isset($_SESSION['status'])) {
-  echo "<div class='alert alert-info' role='alert'>" . $_SESSION['status'] . "</div>";
-  unset($_SESSION['status']); // 메시지를 한 번만 표시하고 세션에서 제거
+// 세션 메시지 확인 및 출력
+if (isset($_SESSION['message'])) {
+    $messageType = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'info';
+    echo '<div class="alert alert-' . htmlspecialchars($messageType) . '" id="sessionMessage">' . htmlspecialchars($_SESSION['message']) . '</div>';
+    unset($_SESSION['message']); // 메시지 출력 후 세션에서 제거
+    unset($_SESSION['message_type']); // 메시지 타입 제거
 }
-
 ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 성공 메시지를 일정 시간 후에 숨기기
+    const sessionMessage = document.getElementById('sessionMessage');
+    if (sessionMessage) {
+        setTimeout(() => {
+            sessionMessage.style.display = 'none';
+        }, 5000); // 5초 후에 메시지 숨기기
+    }
+});
+</script>
 <!-- insert model -->
 <div class="modal fade" id="insertdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="insertdata" aria-hidden="true">
   <div class="modal-dialog">
@@ -23,31 +36,31 @@ if (isset($_SESSION['status'])) {
       <form action='process_jobcode.php' method="POST">
         <div class="modal-body" style="font-size: .65rem;">
           <div class='form-floating mb-1'>
-            <input type='text' class='form-control' style="font-size: .65rem;" name='seri_no' placeholder="코드그룹">
+            <input type='text' class='form-control' style="font-size: .75rem;" name='seri_no' placeholder="코드그룹">
             <label for="floatingInput">코드그룹</label>
           </div>
           <div class='form-floating mb-1'>
-            <input type='text' class='form-control' style="font-size: .65rem;" name='equip' placeholder="장비명" required>
+            <input type='text' class='form-control' style="font-size: .75rem;" name='equip' placeholder="장비명" required>
             <label for="floatingInput">장비명</label>
           </div>
           <div class='form-floating mb-1'>
-            <input type='text' class='form-control' style="font-size: .65rem;" name='model_p' placeholder="모델명" required>
+            <input type='text' class='form-control' style="font-size: .75rem;" name='model_p' placeholder="모델명" required>
             <label for="floatingInput">모델명</label>
           </div>
           <div class='form-floating mb-1'>
-            <input type='text' class='form-control' style="font-size: .65rem;" name='equip_ver' placeholder="버젼" required>
+            <input type='text' class='form-control' style="font-size: .75rem;" name='equip_ver' placeholder="버젼" required>
             <label for="floatingInput">버젼</label>
           </div>
           <div class='form-floating mb-1'>
-            <input type='text' class='form-control' style="font-size: .65rem;" name='pic' placeholder="등록자"  value="<?= htmlspecialchars($userName) ?>"required>
+            <input type='text' class='form-control' style="font-size: .75rem;" name='pic' placeholder="등록자"  value="<?= htmlspecialchars($userName) ?>"required>
             <label for="floatingInput">등록자</label>
           </div>
-          <div class='form-group mb-1'>
-            <label for="" name='reg_date'>등록일자</label>
-            <?php echo date('Y-m-d') ?>
+          <div class='form-floating mb-1'>
+            <input type='date' class='form-control' style="font-size: .75rem;" name='reg_date' value="<?= date('Y-m-d') ?>" required>
+            <label for="floatingInput">등록일자</label>
           </div>
           <div class='form-floating mb-1'>
-            <input type='text' class='form-control' style="font-size: .65rem;" name='jobcode_specifi' placeholder="비고">
+            <input type='text' class='form-control' style="font-size: .75rem;" name='jobcode_specifi' placeholder="비고">
             <label for="floatingInput">비고</label>
           </div>
           <div class="modal-footer">

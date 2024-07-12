@@ -102,7 +102,7 @@ if (isset($_GET['id'])) {
     </div>
     <div class='card-body'>
         <div id="searchResultContainer_o"></div>
-        <table class="table table-striped table-bordered table-hover mt-2 table-xl" style='font-size: .75rem'>
+        <table class="table table-striped table-bordered table-hover mt-2 table-xl" style='font-size: .75rem; vertical-align: middle;'>
           <thead style="text-align: center;">
             <tr>
               <th style="width: 3%;">#</th>

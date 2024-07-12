@@ -19,6 +19,17 @@ if(mysqli_num_rows($result) > 0){
   }
 }
 ?>
+<?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        저장이 성공적으로 완료되었습니다.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php elseif (isset($_GET['success']) && $_GET['success'] == '0'): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        저장 중 오류가 발생했습니다.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
 <!-- Modal -->
 <div class="modal fade" id="addOptionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog"> <!-- 모달 크기를 크게 설정 -->
@@ -28,10 +39,15 @@ if(mysqli_num_rows($result) > 0){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;"> <!-- 스크롤 추가 -->
-        <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .75rem" name="tp_no" placeholder="항목번호" value="<?= htmlspecialchars($part_no) ?>">
-
-        <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .75rem" name="hangmok" placeholder="추가 할 항목명">
-        <br>
+        <form id="add_Task_Part" action="task_parts_save.php" method="POST">
+          <input type="hidden" name="add_task_part" value="1">
+          <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .75rem" name="tp_no" placeholder="항목번호" value="<?= htmlspecialchars($part_no) ?>">
+          <input type="text" class="form-control" style="margin-bottom: 5px; font-size: .75rem" name="hangmok" placeholder="추가 할 항목명">        
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" style="font-size: .65rem" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary btn-sm" style="font-size: .65rem">저장</button>
+          </div>
+        </form>
         <table class="table table-bordered table-striped" style="font-size: .75rem">
           <thead>
             <tr>
@@ -48,10 +64,6 @@ if(mysqli_num_rows($result) > 0){
             <?php endforeach; ?>
           </tbody>
         </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" style="font-size: .65rem" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary btn-sm" style="font-size: .65rem">저장</button>
       </div>
     </div>
   </div>

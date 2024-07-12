@@ -14,14 +14,34 @@ var sessionDate = "<?= $_SESSION['date'] ?? ''; ?>";
 var sessionUsername = "<?= htmlspecialchars($_SESSION['username'] ?? ''); ?>";
 </script>
 <?php
-if (isset($_SESSION['message']) && isset($_SESSION['seri_no'])) {
+if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
-    $seri_no = $_SESSION['seri_no'];
     // 세션 메시지 출력 후 세션 클리어
-    echo "<script>alert('$message');</script>";
+    echo '<div class="alert alert-info" id="sessionMessage">' . htmlspecialchars($message) . '</div>';
     unset($_SESSION['message']);
-    unset($_SESSION['seri_no']);
+}?>
+<script>
+// 페이지 로드 시 세션에서 조회 파라미터 사용
+if (isset($_SESSION['lastSearch'])) {
+    var searchParameter = <?= json_encode($_SESSION['lastSearch']); ?>;
+    // 데이터 로드 로직
 }
+
+// 메시지를 몇 초 후에 사라지게 하는 로직
+document.addEventListener('DOMContentLoaded', function() {
+    var sessionMessage = document.getElementById('sessionMessage');
+    if (sessionMessage) {
+        setTimeout(function() {
+            sessionMessage.style.transition = 'opacity 0.5s ease';
+            sessionMessage.style.opacity = '0';
+            setTimeout(function() {
+                sessionMessage.remove();
+            }, 500); // 0.5초 후에 요소 제거
+        }, 3000); // 3초 후에 메시지 사라짐
+    }
+});
+</script>
+<?php
 // 페이지 로드 시 세션에서 조회 파라미터 사용
 if (isset($_SESSION['lastSearch'])) {
     $searchParameter = $_SESSION['lastSearch'];
@@ -29,7 +49,6 @@ if (isset($_SESSION['lastSearch'])) {
 }
 $dataExist = false; // 초기화
 
-// $e_no 변수 초기화
 // $e_no 변수 초기화
 if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
     $e_no = mysqli_real_escape_string($conn, $_GET['e_no']);
@@ -50,7 +69,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
 <!-- 설비 정보 화면 -->
 <div class='bg-dark bg-opacity-10' style='text-align: center;'>
   <h4 class='bg-danger bg-opacity-10 mt-1 mb-1 p-2' style='text-align: center'>장비 - 설비 - 작업관리</h4>
-    <div class='row justify-content-center' style="max-width: 1550px; margin: 3px auto;">
+    <div class='row justify-content-center' style="max-width: 1650px; margin: 3px auto;">
       <section class="shadow-lg mt-2 p-2 pt-0 my-4 rounded-3 container-custom text-center justify-content-center">
         <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
         <!-- 검색란 -->
@@ -135,7 +154,7 @@ if (isset($_GET['e_no']) && isset($_GET['sub_no']) && isset($_GET['seri_no'])) {
 <!-- 작업 상세 정보 -->
 <?php
 $date_task = isset($_POST['date_task']) ? $_POST['date_task'] : date('Y-m-d');
-if (isset($seri_no) && $seri_no !== '') {
+if (isset($seri_no) && $seri_no !== '' ? $seri_no : '0') {
   $sql_data = "SELECT * FROM task_manage WHERE seri_no = '$seri_no'";
   $result_data = mysqli_query($conn, $sql_data);
   $dataExists = mysqli_num_rows($result_data) > 0;
@@ -243,7 +262,7 @@ if (isset($seri_no) && $seri_no !== '') {
         <tbody style="width: 1550px; font-size: .75rem;">
           <?php
           // print_r($_GET);
-              $query = "SELECT * FROM task_manage ORDER BY t_no DESC LIMIT 30";
+              $query = "SELECT * FROM task_manage ORDER BY date_task DESC LIMIT 30";
               $result = mysqli_query($conn, $query);
               
               if (mysqli_num_rows($result) > 0) {

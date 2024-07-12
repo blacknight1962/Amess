@@ -1,17 +1,18 @@
 <?php
 session_start();
+$pageTitle = "AMESS - 견적편집";
 
-include('include/header.php');
-include(__DIR__ . '/../../public/Selection_kit.php');
-include(__DIR__ . '/../../db.php'); 
-
-if (!isset($_SESSION['ss_id']) or $_SESSION['ss_id'] == '') {
+if (!isset($_SESSION['ss_id']) || $_SESSION['ss_id'] == '') {
   echo "<script> 
   alert('로그인 후 사용가능합니다');
   self.location.href='/practice/AMESystem/views/login/login.php';
   </script>";
   exit();
 }
+
+include('include/header.php');
+include(__DIR__ . '/../../public/Selection_kit.php');
+include(__DIR__ . '/../../db.php'); 
 
 // 세션 메시지 확인 및 출력
 if (isset($_SESSION['message'])) {
@@ -33,7 +34,6 @@ if ($quote_no) {
         echo "Error: " . mysqli_error($conn);
     }
 }
-
 ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -111,7 +111,7 @@ if (isset($_GET['data'])) {
                         <td><input type="text" class="form-control customer_name" style="font-size: .65rem; border: none; text-align: center;" value="<?php echo $filtered["customer_name"]; ?>"></td>
                         <td><?php echo $filtered["user_name"] ?></td>
                         <td><?php echo $filtered["picb"] ?></td>
-                        <td><button type="submit" id="update" class="btn btn-success" style="font-size: .65rem">Update</button></td>
+                        <td><button type="submit" id="update" class="btn btn-outline-success" style="font-size: .65rem">Update</button></td>
                       </tr>
                     <?php }
                   } else {
@@ -257,9 +257,7 @@ if (isset($_GET['data'])) {
                 </tbody>
               </table>
                 <div class="row">
-                  <div class="col-1">
-                  <button type="submit" name='update_btn' class="btn btn-outline-success" style="font-size: .65rem">UPDATE</button>
-                  </div>
+
                     <script>
                       document.addEventListener('DOMContentLoaded', function() {
                         updateTotal();
@@ -270,6 +268,9 @@ if (isset($_GET['data'])) {
                       <div class="input-group mb-1">
                         <span class="input-group-tex">Total  </span>
                         <input type="text" class="form-control text-end" style="font-size: .85rem;" id='FTotal' name='FTotal' disabled=""/>
+                      
+                      <div class="col-2">
+                        <button type="submit" name='update_btn' class="btn btn-outline-success" style="font-size: .65rem">UPDATE</button>
                       </div>
                     </div>
                 </div>

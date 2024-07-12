@@ -138,15 +138,7 @@ document.querySelectorAll('.btn-delete-db').forEach((button) => {
   });
 });
 //작업 추가 모달에서 직접 입력 처리
-function handleDirectInput(select) {
-  if (select.value === 'direct_input') {
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.name = select.name;
-    input.className = 'form-control';
-    select.parentNode.replaceChild(input, select);
-  }
-}
+
 $(document).ready(function () {
   // 모달 저장 버튼 클릭 이벤트 핸들러
   $('button[name="save_data"]').click(function () {
@@ -166,21 +158,20 @@ function openAddOptionModal() {
 }
 
 // 항목 호출 모달
-// 항목 호출 모달
-$(document).ready(function () {
-  console.log('항목호출 모달');
-  // 기존 모달에서 항목추가를 위해 새모달 호출
-  $('#taskPartSelect').change(function () {
-    if ($(this).val() == '항목추가') {
-      openAddOptionModal(); // 새 항목 추가 모달을 열기
-    }
-  });
+// $(document).ready(function () {
+//   console.log('항목호출 모달');
+//   // 기존 모달에서 항목추가를 위해 새모달 호출
+//   $('#taskPartSelect').change(function () {
+//     if ($(this).val() == '항목추가') {
+//       openAddOptionModal(); // 새 항목 추가 모달을 열기
+//     }
+//   });
 
-  // 모달 저장 버튼 클릭 이벤트 핸들러 추가
-  $('#addOptionModal .btn-primary').click(function () {
-    addNewTaskPart(); // 저장 버튼 클릭 시 addNewTaskPart 함수 호출
-  });
-});
+// 모달 저장 버튼 클릭 이벤트 핸들러 추가
+//   $('#addOptionModal .btn-primary').click(function () {
+//     addNewTaskPart(); // 저장 버튼 클릭 시 addNewTaskPart 함수 호출
+//   });
+// });
 
 // 작업 항목 불러오기
 function addNewTaskPart() {

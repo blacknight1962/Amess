@@ -48,7 +48,7 @@ if ($e_no !== 'undefined') {
               <input type="hidden" name="e_no" value="<?php echo $e_no; ?>">
                 <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
                   <thead style="max-width: 1500px; text-align: center;">
-                    <tr class='table table-secondary'>
+                    <tr class='table table-warning'>
                       <th style="width: 6%;">No</th>
                       <th style="width: 10%;">S/N</th>
                       <th style="width: 10%;">납품일자</th>
@@ -58,7 +58,7 @@ if ($e_no !== 'undefined') {
                       <th style="width: 14%;">S/W ver.</th>
                       <th style="width: 10%;">가동상황</th>
                       <th style="width: 16%;">특기사항</th>
-                      <th style="width: 5%;"><button type="button" id="addbutton" class="btn btn-success" style="font-size: .65rem; padding: 2px 0px;" onclick="F_BtnAdd()">+</button></th>
+                      <th style="width: 5%;"><button type="button" id="addbutton" class="btn btn-success" style="font-size: .75rem; padding: 2px 2px;" onclick="F_BtnAdd()">+</button></th>
                     </tr>
                   </thead>
                   <tbody id='T_Body' style="width: 1500px; font-size: .65rem;">
@@ -87,8 +87,8 @@ if ($e_no !== 'undefined') {
                   </tbody>
                 </table>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary btn-sm" style="font-size: .65rem;" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary btn-sm" style="font-size: .65rem;">Save changes</button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" style="font-size: .65rem;" data-bs-dismiss="modal">닫기</button>
+                  <button type="submit" class="btn btn-outline-primary btn-sm" style="font-size: .65rem;">저장</button>
                 </div>
             </form>
         </section>
@@ -175,9 +175,9 @@ if ($e_no !== 'undefined') {
 </div class=>
 <!-- 설비 조회 및 update -->
 <div class='bg-warning bg-opacity-10'>
-  <div class='row justify-content-center' style="max-width: 1550px; margin: 0 auto;">
+  <div class='row justify-content-center' style="max-width: 1650px; margin: 0 auto;">
     <section class="shadow-lg mt-1 p-1 pt-0 my-4 rounded-3 container-fluid justify-content-center text-center ms-0">
-      <div class='container-fluid' style='width: 1550px me-0 ms-0'>
+      <div class='container-fluid' style='width: 1650px me-0 ms-0'>
         <form action="facility_process.php" method="post">
           <input type="hidden" name="e_no" value="<?php echo $e_no; ?>">
           <input type="hidden" name="action" value="save">
@@ -200,22 +200,22 @@ if ($e_no !== 'undefined') {
 
         <?php endif; ?>
       </div>
-      <table class='table table-bordered mt-1' style="font-size: .75rem; width: 100%;">
+      <table class="table table-bordered table-hover mt-1 table-custom" style='font-size: .75rem'>
         <thead style="max-width: 1500px; text-align: center; vertical-align: middle;">
-          <tr class='table table-secondary'>
+          <tr class='table table-warning'>
             <th style="width: 4%;">No</th>
             <th style="width: 13%;">S/N</th>
             <th style="width: 10%;">납품일자</th>
             <th style="width: 10%;">사업장</th>
             <th style="width: 7%;">설치장소</th>
             <th style="width: 11%;">고객명칭</th>
-            <th style="width: 15%;">S/W ver.</th>
+            <th style="width: 13%;">S/W ver.</th>
             <th style="width: 9%;">가동상황</th>
-            <th style="width: 17%;">특기사항</th>
-            <th style="width: 5%;"><button type="button" id="addBtton" class="btn btn-success btn-sm" style="font-size: .65rem" onclick="FT_BtnAdd()">+</button></th>
+            <th style="width: 14;">특기사항</th>
+            <th style="width: 9%;"><button type="button" id="addBtton" class="btn btn-success btn-sm" style="font-size: .65rem;" onclick="FT_BtnAdd()">+</button></th>
           </tr>
         </thead>
-        <tbody id='FT_Body' style="width: 1500px; font-size: .75rem;">
+        <tbody id='FT_Body' style="width: 1500px; font-size: .75rem; vertical-align: middle;">
           <?php
           // $e_no 변수가 설정되어 있는지 확인하고, 없으면 기본값으로 처리
             $sql_data = "SELECT * FROM facility ORDER BY e_no DESC LIMIT 30";
@@ -246,7 +246,7 @@ if ($e_no !== 'undefined') {
             <td><input type="text" class="form-control sw_ver" style="border: none; text-align: center;" name="sw_ver[]" value="<?php echo $filtered["sw_ver"]; ?>"></td>
             <td><?= createSelectStatus($conn, 'manage_stat[]', $filtered['manage_stat']); ?></td>
             <td><input type="text" class="form-control specif" style="border: none; text-align: center;" name="specif[]" value="<?php echo $filtered["specif"]; ?>"></td>
-            <td><button type="button" class="btn link-danger small-btn btn-delete-db BtnDelF" style="font-size: .65rem">
+            <td><button type="button" class="btn small-btn btn-delete-db BtnDelF" style="font-size: .65rem">
                 <i class="fa-solid fa-trash fs-6"></i></button>
                 <a href="task_index.php?e_no=<?= $filtered['e_no'] ?>&sub_no=<?= $filtered['sub_no'] ?>&seri_no=<?= $filtered['seri_no'] ?>"" class="link-secondary" title="상세정보">
                 <i class="fa-solid fa-arrow-right fs-6"></i></a>
@@ -259,8 +259,9 @@ if ($e_no !== 'undefined') {
           </tbody>
         </table>
         <div class="row">
+          <div class="col-10"></div>
           <div class="col-1">
-            <button type="submit" class="btn btn-success" style="font-size: .65rem">UPDATE</button>
+            <button type="submit" class="btn btn-outline-success" style="font-size: .65rem">UPDATE</button>
           </div>
         </div>
     </div>

@@ -87,7 +87,20 @@ $cho_picb = '<select class="form-select" name="picb[]" style="font-size: .75rem;
     $stmt->close();
     return $cho_picb;
 }
-
+/*-- 부서 선택 콤보 박스 --*/
+function createSelectPicb1($conn) {
+    $conn->begin_transaction();
+$stmt = $conn->prepare("SELECT * FROM division");
+$stmt->execute();
+$result = $stmt->get_result();
+$cho_picb = '<select class="form-select" name="picb" style="font-size: .75rem; border: none; text-align: center;">';
+    while ($row = $result->fetch_assoc()) {
+        $cho_picb .= '<option value="' . htmlspecialchars($row['picb']) . '">' . htmlspecialchars($row['picb']) . "</option>";
+    }
+    $cho_picb .= '</select>';
+    $stmt->close();
+    return $cho_picb;
+}
 /* nonePO 관리번호 */
 function createSelectNoPO($conn) {
     $conn->begin_transaction();
@@ -168,7 +181,7 @@ function createSelectTaskPart($conn, $task_part, $hangmok, $task_class, $selecte
     $result = $stmt->get_result();
     $html = '<select class="'.$task_class.'" name="'.$hangmok.'[]" onchange="handleDirectInput(this);">';
     $html .= '<option value="">선택</option>';
-    $html .= '<option value="direct_input"'.($selectedTaskPart == "direct_input" ? ' selected' : '').'>직접 입력</option>';
+
 
     while ($row = $result->fetch_assoc()) {
         $isSelected = ($row['hangmok'] == $selectedTaskPart) ? 'selected' : '';
@@ -184,7 +197,7 @@ function createSelectStatus($conn, $name = "manage_stat", $selectedValue = "") {
     $stmt = $conn->prepare("SELECT * FROM manage_stat");
     $stmt->execute();
     $result = $stmt->get_result();
-    $cho_mana_stat = '<select name="' . $name . '[]" style="font-size: .65rem; border: none;">';
+    $cho_mana_stat = '<select name="' . $name . '[]" style="font-size: .75rem; border: none;">';
     while ($row = $result->fetch_assoc()) {
         $isSelected = ($row['manage_stat'] == $selectedValue) ? 'selected' : '';
         $cho_mana_stat .= '<option value="' . htmlspecialchars($row['manage_stat']) . '" ' . $isSelected . '>' . htmlspecialchars($row['manage_stat']) . '</option>';
@@ -259,7 +272,15 @@ $cus_num = $filtered['no'];
 $sql = "SELECT * FROM jobcode ORDER BY seri_no DESC limit 1";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-$filtered = array('seri_no' => htmlspecialchars($row['seri_no'] + 1));
+
+// seri_no 필드를 정수로 변환
+$last_seri_no = intval($row['seri_no']);
+
+// 새로운 일련번호 생성
+$new_seri_no = $last_seri_no + 1;
+
+// 필터링된 값을 배열에 저장
+$filtered = array('seri_no' => htmlspecialchars($new_seri_no));
 
 $jobcode_num = $filtered['seri_no'];
 ?>

@@ -4,7 +4,7 @@ include(__DIR__ . '/../../db.php');
 $response = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_task_part'])) {
-    $taskpart = $_POST['taskpart'];
+    $taskpart = $_POST['hangmok'];
     $tp_no = $_POST['tp_no'];
 
     // 데이터베이스에 삽입
@@ -25,4 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_task_part'])) {
 // JSON 응답 반환
 header('Content-Type: application/json');
 echo json_encode($response);
+
+// 리다이렉트
+header("Location: task_index.php?success=" . $response['success']);
+exit();
 ?>

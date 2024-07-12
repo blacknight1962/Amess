@@ -1,21 +1,30 @@
 <?php
+$pageTitle = "AMESS 견적관리";
 session_start();
 include('include/header.php');
 include(__DIR__ . '/../../db.php');
 
-
 // 세션 메시지 확인 및 출력
 if (isset($_SESSION['message'])) {
-    // 메시지가 배열인 경우, 배열의 특정 요소를 출력하거나 배열을 문자열로 변환하여 출력
-    if (is_array($_SESSION['message'])) {
-        echo '<div class="alert alert-info">' . implode(' ', $_SESSION['message']) . '</div>';
-    } else {
-        echo '<div class="alert alert-info">' . $_SESSION['message'] . '</div>';
-    }
+    $messageType = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'info';
+    echo '<div class="alert alert-' . htmlspecialchars($messageType) . '" id="sessionMessage">' . htmlspecialchars($_SESSION['message']) . '</div>';
     unset($_SESSION['message']); // 메시지 출력 후 세션에서 제거
+    unset($_SESSION['message_type']); // 메시지 타입 제거
 }
 ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 성공 메시지를 일정 시간 후에 숨기기
+    const sessionMessage = document.getElementById('sessionMessage');
+    if (sessionMessage) {
+        setTimeout(() => {
+            sessionMessage.style.display = 'none';
+        }, 5000); // 5초 후에 메시지 숨기기
+    }
+});
+</script>
 
+<!-- 견적관리 메인화면 -->
 <div class='bg-success bg-opacity-10' style='text-align: center;'>
   <h4 class='bg-primary bg-opacity-10 mb-1 p-2' style='text-align: center'>견적관리</h4>
   <section class="shadow-lg mt-2 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0" style='width:1920px'>
@@ -126,6 +135,7 @@ if (isset($_SESSION['message'])) {
     <button id="delete-button" onclick="deleteSelectedQuotes()" style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; font-size: 14px;">삭제</button>
 </div>
 <script src="/practice/AMESystem/views/quote/js/quot.js" defer></script>
+
 </body>
 <?php
 include('include/footer.php');

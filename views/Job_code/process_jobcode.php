@@ -2,10 +2,10 @@
 session_start();
 include(__DIR__ . '/../../db.php');
 
-
+// var_dump($_POST);
+// exit();
 /* 작업코드 신규 저장 */
 if (isset($_POST['save_data'])) {
-  $no = mysqli_real_escape_string($conn, $_POST['j_no']);
   $seri_no = mysqli_real_escape_string($conn, $_POST['seri_no']);
   $equip = mysqli_real_escape_string($conn, $_POST['equip']);
   $model_p = mysqli_real_escape_string($conn, $_POST['model_p']);
@@ -21,9 +21,11 @@ if (isset($_POST['save_data'])) {
   $stmt->bind_param("ssssssss", $no, $seri_no, $equip, $model_p, $regi_date, $equip_ver, $pic, $jobcode_specifi);
 
   if ($stmt->execute()) {
-    $_SESSION['status'] = "성공적으로 데이터를 저장했습니다.";
+    $_SESSION['message'] = "성공적으로 데이터를 저장했습니다.";
+    $_SESSION['message_type'] = "success";
   } else {
-    $_SESSION['status'] = "데이터 저장에 실패했습니다: " . $stmt->error;
+    $_SESSION['message'] = "데이터 저장에 실패했습니다: " . $stmt->error;
+    $_SESSION['message_type'] = "error";
   }
   $stmt->close();
   header('location: jobcode_index.php');
@@ -31,7 +33,6 @@ if (isset($_POST['save_data'])) {
 
 /* 장비 UPdate data */
 if (isset($_POST['update_btn'])) {
-  $j_no = mysqli_real_escape_string($conn, $_POST['j_no']);
   $seri_no = mysqli_real_escape_string($conn, $_POST['seri_no']);
   $equip = mysqli_real_escape_string($conn, $_POST['equip']);
   $model_p = mysqli_real_escape_string($conn, $_POST['model_p']);
@@ -55,9 +56,9 @@ if (isset($_POST['update_btn'])) {
 
 /* 장비 Delete data */
 if (isset($_POST["seri_no"])) {
-  $seriNo = $_POST["seri_no"];
+  $seriNo = mysqli_real_escape_string($conn, $_POST["seri_no"]);
 
-  $sql = "DELETE FROM jobcode WHERE j_no = ?";
+  $sql = "DELETE FROM jobcode WHERE seri_no = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $seriNo);
 
