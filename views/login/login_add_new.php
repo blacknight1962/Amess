@@ -90,8 +90,8 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <div bm-3>
-                  <button type="submit" class="btn btn-success mt-3" name="submit" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;">저장</button>
-                  <a href="login_edit.php" class="btn btn-danger mt-3" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;">취소</a>
+                  <button type="submit" class="btn btn-outline-success mt-3" name="submit" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;">저장</button>
+                  <a href="login_edit.php" class="btn btn-outline-danger mt-3" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;">취소</a>
                 </div>
               </form>
             </div>

@@ -8,13 +8,13 @@ if (isset($_POST['input'])) {
   $sql = "SELECT q.*, qd.* 
 FROM quote q
 JOIN quote_data qd ON q.quote_no = qd.quote_no
-WHERE qd.quote_no LIKE '%{$input}%' OR qd.product_na LIKE '%{$input}%' OR qd.product_sp LIKE '%{$input}%'
+WHERE q.customer LIKE '%{$input}%' OR q.customer_name LIKE '%{$input}%' OR qd.apart LIKE '%{$input}%' OR qd.quote_no LIKE '%{$input}%' OR qd.product_na LIKE '%{$input}%' OR qd.product_sp LIKE '%{$input}%'
 OR qd.p_code LIKE '%{$input}%' OR qd.group_p LIKE '%{$input}%' OR qd.sulbi LIKE '%{$input}%'";
 
   $result = mysqli_query($conn, $sql);
   
   if (mysqli_num_rows($result) > 0) { ?>
-      <table class="table table-striped table table-hover tatable-bordered mt-3 table-xl" style='font-size: .65rem'>
+      <table class="table table-hover table-bordered mt-3 table-xl" style='font-size: .65rem'>
         <thead>
           <tr>
             <th style="width: 2%;">#</th>

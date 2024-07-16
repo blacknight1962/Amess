@@ -95,8 +95,8 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <div bm-3>
-                  <button type="submit" class="btn btn-success mt-3" name="submit" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .65rem;">저장</button>
-                  <a href="login_edit.php" class="btn btn-warning mt-3" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .65rem;">취소</a>
+                  <button type="submit" class="btn btn-outline-success mt-3" name="submit" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .65rem;">저장</button>
+                  <a href="login_edit.php" class="btn btn-outline-warning mt-3" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .6rem; --bs-btn-font-size: .65rem;">취소</a>
                 </div>
               </form>
             </div>

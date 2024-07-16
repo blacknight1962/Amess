@@ -243,6 +243,7 @@ function setupCheckboxHandlers() {
 function setupSearchHandler() {
   $('#getWords').keyup(function () {
     var input = $(this).val();
+    console.log('input:', input);
     if (input) {
       $.ajax({
         method: 'POST',

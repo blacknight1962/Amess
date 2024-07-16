@@ -1,6 +1,10 @@
 table {
   margin-top: 0px !important;
 }
+table th,
+td {
+  height: 30px !important;
+}
 .modal-body {
   font-size: 0.75rem !important;
 }
@@ -13,9 +17,6 @@ table {
 .form-control {
   font-size: 0.85rem !important;
   padding-left: 100px !important;
-}
-.card-body {
-  font-size: 0.75rem !important;
 }
 .floatingInput {
   font-size: 0.75rem !important;

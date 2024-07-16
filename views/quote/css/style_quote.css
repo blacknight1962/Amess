@@ -1,12 +1,8 @@
 /* 견적-신규등록*/
 table {
-  width: 1920px;
-  max-width: 1920px;
+  width: 1900px;
+  max-width: 1900px;
   table-layout: fixed;
-}
-.table-container {
-  width: 1920px;
-  overflow-x: auto;
 }
 .table td {
   font-size: 0.75rem;

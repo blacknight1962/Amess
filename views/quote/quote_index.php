@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 견적관리 메인화면 -->
 <div class='bg-success bg-opacity-10' style='text-align: center;'>
   <h4 class='bg-primary bg-opacity-10 mb-1 p-2' style='text-align: center'>견적관리</h4>
-  <section class="shadow-lg mt-2 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0" style='width:1920px'>
-    <div class='container-fluid' style='width: 1920px; padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
+  <section class="shadow-lg mt-1 p-2 pt-0 my-4 rounded-3 container-fluid text-center justify-content-center ms-0">
+    <div class='container-fluid' style='padding: 0 10px; display: flex; align-items: center; margin: 2px 2px;'>
       <!-- 기간 선택 버튼 -->
       <button type="button" id="oneYearBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('1year')">최근 1년</button>
       <button type="button" id="threeYearsBtn" class="btn btn-outline-primary btn-sm me-2" style="font-size: .65rem; padding: .2rem .4rem;" onclick="setPeriod('3years')">최근 3년</button>
@@ -46,21 +46,25 @@ document.addEventListener('DOMContentLoaded', function() {
       <input type='text' class='form-control form-control-sm me-2' style="font-size: .65rem; width: 30%;" name="searchQuery" id="getWords" autocomplete="off" placeholder="Search....">
       <!-- 숨겨진 입력 필드로 선택된 기간 저장 -->
       <input type="hidden" name="selectedPeriod" id="selectedPeriod">
+
       <!-- 신규 견적 등록 버튼 -->
-      <div style="margin-left: auto;">
-      <a class="btn btn-primary btn-sm" target="_blank" href="new_quote.php" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .65rem;">견적 등록</a>
+      <div style="margin-left: auto; margin-right: 20px;">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mt-1 mb-0 float-end" name="submit" style="--bs-btn-padding-y: .4rem; --bs-btn-padding-x: .15rem; --bs-btn-font-size: .65rem;">
+          <a href="new_quote.php" target="_blank" style="color: white; text-decoration: none;">견적 등록</a>
+        </button>
       </div>
     </div>
     <div class='card-body'>
-      <div id="searchResultContainer"></div>
-      <table class="table table-striped table table-hover tatable-bordered mt-3 table-xl" style='font-size: .75rem'>
+        <div id="searchResultContainer"></div>
+        <table class="table table-striped table-bordered table-hover mt-2 table-xl" style='font-size: .75rem; vertical-align: middle;'>
         <thead>
           <tr>
-            <th style="width: 2%;">#</th>
-            <th style="width: 3%;">부서</th>
-            <th style="width: 6%;">견적번호</th>
-            <th style="width: 6%;">견적일자</th>
-            <th style="width: 6%;">고객명</th>
+            <th style="width: 3%;">#</th>
+            <th style="width: 4%;">부서</th>
+            <th style="width: 7%;">견적번호</th>
+            <th style="width: 7%;">견적일자</th>
+            <th style="width: 7%;">고객명</th>
 
             <th style="width: 5%;">담당자</th>
             <th style="width: 5%;">작성자</th>
